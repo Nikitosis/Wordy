@@ -23,15 +23,18 @@ Item {
                     Text{
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
+                        anchors.leftMargin: 5
                         text:word
-                        font.pixelSize: 15
+                        font.pixelSize: 20
                     }
 
                     Text{
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
+                        anchors.rightMargin: 5
                         text:translation
-                        font.pixelSize: 15
+                        font.pixelSize: 20
+
                     }
 
                     Rectangle{    //bottom border

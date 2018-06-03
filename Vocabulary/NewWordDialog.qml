@@ -11,6 +11,8 @@ Dialog{
 
     standardButtons: StandardButton.Save | StandardButton.Cancel
 
+    property string maxWordLength: "10"
+
     onAccepted: {
         console.log("apply")
         database.insertIntoTable(newWordName.text,newWordTranslation.text)
@@ -44,15 +46,16 @@ Dialog{
         Rectangle{
             id:newWordNameRec
             height: parent.height/6
-            width: parent.width/3
+            width: parent.width/2.3
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
             anchors.margins: 5
             color:"white"
-            TextEdit{
+            TextInput{
                 id:newWordName
-                font.pixelSize: parent.height/1.5
                 anchors.fill: parent
+                font.pixelSize: Math.min(parent.height/1.5,width/length*2)
+                validator: RegExpValidator { regExp: /[a-zA-Z]{28}/  }               //maximum 20 letters
             }
         }
 
@@ -60,15 +63,16 @@ Dialog{
         Rectangle{
             id:newWordTranslationRec
             height: parent.height/6
-            width: parent.width/3
+            width: parent.width/2.3
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             anchors.margins: 5
             color:"white"
-            TextEdit{
+            TextInput{
                 id:newWordTranslation
-                font.pixelSize: parent.height/1.5
                 anchors.fill: parent
+                font.pixelSize: Math.min(parent.height/1.5,width/length*2)
+                validator: RegExpValidator { regExp: /[a-zA-Z]{28}/  }               //maximum 20 letters
             }
         }
 
@@ -110,8 +114,8 @@ Dialog{
             z:-1
             onClicked: {
                 console.log("hide keyboard")
-                Qt.inputMethod.hide()
-                newWordName.focus=false
+                Qt.inputMethod.hide()                      //hides keyboard
+                newWordName.focus=false                    //removes the focus from TextEdits(get rid of blue triangle)
                 newWordTranslation.focus=false
             }
         }
