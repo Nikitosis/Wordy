@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MainMenu/MainMenu.qml</file>
+        <file>MainMenu/MainMenuButton.qml</file>
+        <file>Vocabulary/Vocabulary.qml</file>
+        <file>Vocabulary/VocabularyList.qml</file>
+    </qresource>
+</RCC>
