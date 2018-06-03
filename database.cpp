@@ -12,10 +12,22 @@ Database::~Database()
 
 void Database::connectToDatabase()
 {
-    if(!QFile("E:/del/" DATABASE_NAME).exists())   //if doesn't exist
+
+    #ifndef myandroid
+        qDebug()<<"USING DESKTOP";
+    #else
+         qDebug()<<"USING ANDROID";
+    #endif
+
+
+    if(!QFile(MYPATH DATABASE_NAME).exists())   //if doesn't exist
         this->restoreDataBase();    //create new db
     else
+    {
+        QFile(MYPATH DATABASE_NAME).copy("./"DATABASE_NAME);
+        QFile::setPermissions("./"DATABASE_NAME,QFile::WriteOwner |     QFile::ReadOwner);
         this->openDataBase();       //open existing
+    }
 }
 
 bool Database::insertIntoTable(const QVariantList &data)
@@ -69,7 +81,7 @@ bool Database::openDataBase()
 {
     db=QSqlDatabase::addDatabase("QSQLITE");
     db.setHostName(DATABASE_HOSTNAME);
-    db.setDatabaseName("E:/del/" DATABASE_NAME);
+    db.setDatabaseName("./" DATABASE_NAME);
 
     if(db.open())
         return true;

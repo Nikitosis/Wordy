@@ -6,10 +6,17 @@ QT += widgets
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    database.cpp
+    database.cpp \
+    listmodel.cpp
 
 RESOURCES += qml.qrc
 
+
+android {
+    database.files += mybase.sqlite
+    database.path = assets/
+    INSTALLS += database
+}
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
@@ -32,5 +39,14 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
+
+android {
+    database.files += Wordy.db
+    database.path = assets/db
+    INSTALLS += database
+    DEFINES +=myandroid
+}
+
 HEADERS += \
-    database.h
+    database.h \
+    listmodel.h

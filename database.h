@@ -2,7 +2,7 @@
 #define DATABASE_H
 
 #include <QObject>
-#include <QSql>
+#include <QtSql>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QFile>
@@ -16,6 +16,12 @@
 #define TABLE_VOCABULARY        "Vocabulary"
 #define VOCABULARY_WORD         "Word"
 #define VOCABULARY_TRANSLATION  "Translation"
+
+#ifdef myandroid                             //change paths according to our machine
+    #define MYPATH "assets:/db/"
+#else
+    #define MYPATH QDir::currentPath()+"/db"
+#endif
 
 //first row is autoincrement
 

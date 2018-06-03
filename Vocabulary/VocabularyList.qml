@@ -27,7 +27,7 @@ Item {
     ListView{
         id:list
         anchors.fill: parent
-        model:simpleModel
+        model:myModel
 
 
         delegate: Component{
