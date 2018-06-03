@@ -24,7 +24,7 @@ QHash<int, QByteArray> ListModel::roleNames() const
 
 void ListModel::updateModel()
 {
-    this->setQuery("SELECT * FROM " TABLE_VOCABULARY);
+    this->setQuery("SELECT * FROM " TABLE_VOCABULARY " ORDER BY id DESC");
 }
 
 int ListModel::getId(int row)

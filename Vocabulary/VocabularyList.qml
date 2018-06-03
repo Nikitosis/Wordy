@@ -2,50 +2,23 @@ import QtQuick 2.0
 
 Item {
     id:box
-
-    ListModel{
-        id:simpleModel
-
-        ListElement{
-            word:"good"
-            translation:"хороший"
-        }
-        ListElement{
-            word:"bad"
-            translation:"плохой"
-        }
-        ListElement{
-            word:"easy"
-            translation:"легко"
-        }
-        ListElement{
-            word:"hard"
-            translation:"тяжело"
-        }
-    }
+    property alias listView: list
 
     ListView{
         id:list
         anchors.fill: parent
         model:myModel
 
-
         delegate: Component{
             id:mainDelegate
             Item{
                 anchors.left: parent.left
                 anchors.right: parent.right
-                height: 30
-                Rectangle{    //border
-                    z:0
-                    anchors.fill: parent
-                    color:"grey"
-                }
+                height: list.height/9
 
                 Rectangle{   //words
-                    z:1
+                    color:"transparent"
                     anchors.fill: parent
-                    anchors.bottomMargin: 2
 
                     Text{
                         anchors.left: parent.left
@@ -60,8 +33,27 @@ Item {
                         text:translation
                         font.pixelSize: 15
                     }
+
+                    Rectangle{    //bottom border
+                        anchors.bottom: parent.bottom
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        height: 2
+                        color:"grey"
+                    }
+                }
+
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        list.currentIndex=index
+                    }
                 }
             }
+        }
+
+        highlight: Rectangle{
+            color:"lightgrey"
         }
     }
 

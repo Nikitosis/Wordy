@@ -24,8 +24,8 @@ void Database::connectToDatabase()
         this->restoreDataBase();    //create new db
     else
     {
-        QFile(MYPATH DATABASE_NAME).copy("./"DATABASE_NAME);
-        QFile::setPermissions("./"DATABASE_NAME,QFile::WriteOwner |     QFile::ReadOwner);
+        QFile(MYPATH DATABASE_NAME).copy("./" DATABASE_NAME);
+        QFile::setPermissions("./" DATABASE_NAME,QFile::WriteOwner |     QFile::ReadOwner);
         this->openDataBase();       //open existing
     }
 }
@@ -34,7 +34,7 @@ bool Database::insertIntoTable(const QVariantList &data)
 {
     QSqlQuery query;
 
-    query.prepare("INSERT INTO "TABLE_VOCABULARY " ( "
+    query.prepare("INSERT INTO " TABLE_VOCABULARY " ( "
                                                     VOCABULARY_WORD         ", "
                                                     VOCABULARY_TRANSLATION  ") "
                     "VALUES (:Word, :Translation)"

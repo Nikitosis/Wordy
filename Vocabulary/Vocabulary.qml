@@ -11,16 +11,55 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        height: dictionary.height/5
+        height: dictionary.height/7
 
         z:1
         color:"black"
 
         Text{
-            anchors.centerIn: parent
+            id:bannerText
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.left: parent.left
             text:"Vocabulary"
             font.pixelSize: 20
             color:"white"
+            fontSizeMode: Text.Fit
+        }
+
+        Rectangle{
+            id:deleteButton
+            anchors.right: addWordButton.left
+            anchors.verticalCenter: parent.verticalCenter
+            color:"orange"
+
+            height: parent.height
+            width: Math.min(parent.width/4,parent.height)
+
+            z:2
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    dialogDeleteWord.open()                           //when we click on addWord,it opens new word dialog
+                }
+            }
+        }
+
+        Rectangle{
+            id: addWordButton
+            anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
+            color:"lightgreen"
+            height: parent.height
+            width:  Math.min(parent.width/4,parent.height)
+            z:2
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    dialogNewWord.open()                           //when we click on addWord,it opens new word dialog
+                }
+            }
         }
     }
 
@@ -63,131 +102,22 @@ Rectangle {
         }
     }
 
-    Rectangle{
-        id: addWordButton
-        anchors.right: parent.right
-        anchors.top: parent.top
-        anchors.margins: Math.min(parent.width,parent.height)/30
-        radius: 100
-        color:"lightgreen"
-        height: Math.min(parent.width,parent.height)/10
-        width:  Math.min(parent.width,parent.height)/10
-        z:3
 
-        MouseArea{
-            anchors.fill: parent
-            onClicked: {
-                dialogNewWord.open()                           //when we click on addWord,it opens new word dialog
-                myModel.updateModel()
-            }
-        }
-    }
+   NewWordDialog{
+       id:dialogNewWord
+       width: parent.width
+   }
 
-    Dialog{
-        id:dialogNewWord
-        title:"Добавление слова"
-       // height: 400
-        //width: 400
+   MessageDialog{
+       id:dialogDeleteWord
+       title:"Удаление слова"
+       text:"Подтвердите удаление слова"
 
-        standardButtons: StandardButton.Save | StandardButton.Cancel
+       standardButtons: StandardButton.Cancel | StandardButton.Apply
 
-        onAccepted: {
-            console.log("apply")
-            database.insertIntoTable(newWordName.text,newWordTranslation.text)
-            myModel.updateModel()
-            newWordName.text=""
-            newWordTranslation.text=""
-        }
-
-        contentItem: Rectangle{
-            //anchors.fill: parent
-            height: vocabulary.height/2
-            width: vocabulary.width
-            color:"black"
-
-            Text{
-                anchors.bottom: newWordNameRec.top
-                anchors.left: parent.left
-                anchors.margins: 5
-                text:"Слово в оригинале"
-                color:"white"
-            }
-
-            Text{
-                anchors.bottom: newWordTranslationRec.top
-                anchors.right: parent.right
-                anchors.margins: 5
-                text:"Перевод слова"
-                color:"white"
-            }
-
-            Rectangle{
-                id:newWordNameRec
-                height: parent.height/6
-                width: parent.width/3
-                anchors.left: parent.left
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 5
-                color:"white"
-                TextEdit{
-                    id:newWordName
-                    font.pixelSize: parent.height/1.5
-                    anchors.fill: parent
-                }
-            }
-
-
-            Rectangle{
-                id:newWordTranslationRec
-                height: parent.height/6
-                width: parent.width/3
-                anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.margins: 5
-                color:"white"
-                TextEdit{
-                    id:newWordTranslation
-                    font.pixelSize: parent.height/1.5
-                    anchors.fill: parent
-                }
-            }
-
-            Button{
-                anchors.bottom: parent.bottom
-                anchors.left: parent.left
-                height: parent.height/4
-                width: parent.width/3
-                anchors.margins: 5
-                Text{
-                    anchors.centerIn: parent
-                    text:"Apply"
-                    color:"black"
-                }
-                onClicked: {
-                    dialogNewWord.click(StandardButton.Save)
-                }
-            }
-
-            Button{
-                anchors.bottom: parent.bottom
-                anchors.right: parent.right
-                height: parent.height/4
-                width: parent.width/3
-                anchors.margins: 5
-                Text{
-                    anchors.centerIn: parent
-                    text:"Cancel"
-                    color:"black"
-                }
-
-                onClicked: {
-                    dialogNewWord.click(StandardButton.Cancel)
-                }
-            }
-
-
-
-        }
-
-    }
+       onApply: {
+           database.removeRecord(myModel.getId(list.listView.currentIndex))
+           myModel.updateModel()
+       }
+   }
 }
