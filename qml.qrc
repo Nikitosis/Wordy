@@ -5,6 +5,6 @@
         <file>MainMenu/MainMenuButton.qml</file>
         <file>Vocabulary/Vocabulary.qml</file>
         <file>Vocabulary/VocabularyList.qml</file>
-        <file>Vocabulary/NewWordDialog.qml</file>
+        <file>Vocabulary/WordDialog.qml</file>
     </qresource>
 </RCC>

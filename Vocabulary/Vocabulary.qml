@@ -27,7 +27,29 @@ Rectangle {
         }
 
         Rectangle{
-            id:deleteButton
+            id:updateWordButton
+            anchors.right: deleteWordButton.left
+            anchors.verticalCenter: parent.verticalCenter
+            color:"blue"
+
+            height: parent.height
+            width: Math.min(parent.width/4,parent.height)
+
+            z:2
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    dialogUpdateWord.newWordName.text=myModel.getWord(list.listView.currentIndex)        //assign newWordName current word's name
+                    dialogUpdateWord.newWordTranslation.text=myModel.getWord(list.listView.currentIndex) //assign current word's translation
+
+                    dialogUpdateWord.open()
+                }
+            }
+        }
+
+        Rectangle{
+            id:deleteWordButton
             anchors.right: addWordButton.left
             anchors.verticalCenter: parent.verticalCenter
             color:"orange"
@@ -61,6 +83,8 @@ Rectangle {
                 }
             }
         }
+
+
     }
 
     VocabularyList{
@@ -103,10 +127,33 @@ Rectangle {
     }
 
 
-   NewWordDialog{
+   WordDialog{
        id:dialogNewWord
        width: parent.width
+
+       onAccepted: {
+           console.log("apply")
+           database.insertIntoTable(newWordName.text,newWordTranslation.text)
+           myModel.updateModel()
+           newWordName.text=""
+           newWordTranslation.text=""
+       }
    }
+
+   WordDialog{
+       id:dialogUpdateWord
+       width: parent.width
+
+       onAccepted: {
+           console.log("updated", newWordName.text,newWordTranslation.text)
+           database.changeRecord(myModel.getId(list.listView.currentIndex),newWordName.text,newWordTranslation.text)
+           myModel.updateModel()
+           newWordName.text=""
+           newWordTranslation.text=""
+       }
+   }
+
+
 
    MessageDialog{
        id:dialogDeleteWord

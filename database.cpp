@@ -77,6 +77,35 @@ bool Database::removeRecord(const int id)
     return true;
 }
 
+bool Database::changeRecord(const int id, const QVariantList &data)
+{
+    QSqlQuery query;
+
+    query.prepare("UPDATE "TABLE_VOCABULARY " SET Word= :word , Translation= :translation WHERE id= :ID ;");
+
+
+    query.bindValue(":word",data[0].toString());
+    query.bindValue(":translation",data[1].toString());
+    query.bindValue(":ID",id);
+
+    if(!query.exec())
+    {
+        qDebug() <<"error modifying row";
+        qDebug() <<query.lastError().text();
+        return false;
+    }
+    qDebug()<<"UPDATED: "<<data[0].toString()<<data[1].toString()<<id;
+    return true;
+}
+
+bool Database::changeRecord(const int id, const QString &word, const QString &translation)
+{
+    QVariantList list;
+    list<<word<<translation;
+
+    return changeRecord(id,list);
+}
+
 bool Database::openDataBase()
 {
     db=QSqlDatabase::addDatabase("QSQLITE");

@@ -13,6 +13,16 @@ QVariant ListModel::data(const QModelIndex &index, int role) const
     return QSqlQueryModel::data(modelIndex,Qt::DisplayRole);
 }
 
+QString ListModel::getWord(const int row) const
+{
+    return this->data(this->index(row,0),WordRole).toString();
+}
+
+QString ListModel::getTranslation(const int row) const
+{
+    return this->data(this->index(row,0),TranslationRole).toString();
+}
+
 QHash<int, QByteArray> ListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;

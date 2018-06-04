@@ -29,6 +29,7 @@ Item {
                     }
 
                     Text{
+
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 5
@@ -54,7 +55,8 @@ Item {
                 }
             }
         }
-
+        //highlightMoveVelocity: 1000
+        highlightMoveDuration:400
         highlight: Rectangle{
             color:"lightgrey"
         }

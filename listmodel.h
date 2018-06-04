@@ -31,6 +31,8 @@ signals:
 public slots:
     void updateModel();
     int getId(int row);
+    QString getWord(const int row) const;
+    QString getTranslation(const int row) const;
 };
 
 #endif // LISTMODEL_H

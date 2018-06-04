@@ -41,6 +41,8 @@ public slots:
     bool insertIntoTable(const QVariantList &data);
     bool insertIntoTable(const QString &word, const QString &translation);
     bool removeRecord(const int id);
+    bool changeRecord(const int id,const QVariantList &data);
+    bool changeRecord(const int id,const QString &word, const QString &translation);
 
 private:
     QSqlDatabase db;

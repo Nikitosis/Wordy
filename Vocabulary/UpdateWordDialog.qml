@@ -28,6 +28,7 @@ Dialog{
         color:"black"
 
         Text{
+            id:newWordText
             anchors.bottom: newWordNameRec.top
             anchors.left: parent.left
             anchors.margins: 5
@@ -36,6 +37,7 @@ Dialog{
         }
 
         Text{
+            id:newWordTranslationText
             anchors.bottom: newWordTranslationRec.top
             anchors.right: parent.right
             anchors.margins: 5
@@ -48,14 +50,15 @@ Dialog{
             height: parent.height/6
             width: parent.width/2.3
             anchors.left: parent.left
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
             anchors.margins: 5
+            anchors.topMargin: newWordText.height+10
             color:"white"
             TextInput{
                 id:newWordName
                 anchors.fill: parent
                 font.pixelSize: Math.min(parent.height/1.5,width/length*2)
-                validator: RegExpValidator { regExp: /[a-zA-Z]{28}/  }               //maximum 20 letters
+                validator: RegExpValidator { regExp: /[a-zA-Zа-яА-Я-]{20}/  }               //only letters
             }
         }
 
@@ -65,14 +68,15 @@ Dialog{
             height: parent.height/6
             width: parent.width/2.3
             anchors.right: parent.right
-            anchors.verticalCenter: parent.verticalCenter
+            anchors.top: parent.top
             anchors.margins: 5
+            anchors.topMargin: newWordText.height+10
             color:"white"
             TextInput{
                 id:newWordTranslation
                 anchors.fill: parent
                 font.pixelSize: Math.min(parent.height/1.5,width/length*2)
-                validator: RegExpValidator { regExp: /[a-zA-Z]{28}/  }               //maximum 20 letters
+                validator: RegExpValidator { regExp: /[a-zA-Zа-яА-Я-]{20}/  }               //only letters
             }
         }
 
@@ -80,7 +84,7 @@ Dialog{
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             height: parent.height/4
-            width: parent.width/3
+            width: parent.width/2.3
             anchors.margins: 5
             Text{
                 anchors.centerIn: parent
@@ -96,7 +100,7 @@ Dialog{
             anchors.bottom: parent.bottom
             anchors.right: parent.right
             height: parent.height/4
-            width: parent.width/3
+            width: parent.width/2.3
             anchors.margins: 5
             Text{
                 anchors.centerIn: parent
