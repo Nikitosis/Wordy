@@ -15,13 +15,13 @@ Window {
         anchors.fill: parent
 
         onVocabularyClicked: {
-            dictionary.state="opened"
+            vocabulary.state="opened"
             console.log("dict")
         }
     }
 
     Vocabulary{
-        id:dictionary
+        id:vocabulary
         width: parent.width
         height: parent.height
         state:"closed"

@@ -52,7 +52,7 @@ Dialog{
                 id:newWordName
                 anchors.fill: parent
                 font.pixelSize: Math.min(parent.height/1.5,width/length*2)
-                validator: RegExpValidator { regExp: /[a-zA-Zа-яА-Я-]{20}/  }               //only letters
+                validator: RegExpValidator { regExp: /[a-zA-Zа-яА-Я- ()/,.]{25}/  }               //validate
             }
         }
 
@@ -70,7 +70,7 @@ Dialog{
                 id:newWordTranslation
                 anchors.fill: parent
                 font.pixelSize: Math.min(parent.height/1.5,width/length*2)
-                validator: RegExpValidator { regExp: /[a-zA-Zа-яА-Я-]{20}/  }               //only letters
+                validator: RegExpValidator { regExp: /[a-zA-Zа-яА-Я- ()/,.]{25}/  }               //validate
             }
         }
 

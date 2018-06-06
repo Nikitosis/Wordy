@@ -6,20 +6,68 @@ Rectangle {
     id:vocabulary
     color: "white"
 
+    states:[
+        State{
+            name:"closed"
+            PropertyChanges{
+                target:vocabulary
+                x:-width
+            }
+        },
+        State{
+            name:"opened"
+            PropertyChanges{
+                target:vocabulary
+                x:0
+            }
+        }
+    ]
+
+    transitions: Transition{
+        from:"closed"
+        to:"opened"
+        reversible: true
+
+        NumberAnimation{
+            properties: "x"
+            duration: 500
+        }
+    }
+
     Rectangle{
         id:banner
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        height: dictionary.height/7
+        height: 35
 
         z:1
         color:"black"
 
+
+        Rectangle{
+            id:homeButton
+            anchors.left: parent.left
+            anchors.verticalCenter: parent.verticalCenter
+            color:"white"
+
+            height: parent.height
+            width: parent.height
+
+            z:2
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    vocabulary.state="closed"
+                }
+            }
+        }
+
         Text{
             id:bannerText
             anchors.verticalCenter: parent.verticalCenter
-            anchors.left: parent.left
+            anchors.left: homeButton.right
             text:"Vocabulary"
             font.pixelSize: 20
             color:"white"
@@ -33,7 +81,7 @@ Rectangle {
             color:"blue"
 
             height: parent.height
-            width: Math.min(parent.width/4,parent.height)
+            width: parent.height
 
             z:2
 
@@ -41,7 +89,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     dialogUpdateWord.newWordName.text=myModel.getWord(list.listView.currentIndex)        //assign newWordName current word's name
-                    dialogUpdateWord.newWordTranslation.text=myModel.getWord(list.listView.currentIndex) //assign current word's translation
+                    dialogUpdateWord.newWordTranslation.text=myModel.getTranslation(list.listView.currentIndex) //assign current word's translation
 
                     dialogUpdateWord.open()
                 }
@@ -55,7 +103,7 @@ Rectangle {
             color:"orange"
 
             height: parent.height
-            width: Math.min(parent.width/4,parent.height)
+            width: parent.height
 
             z:2
 
@@ -73,7 +121,7 @@ Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             color:"lightgreen"
             height: parent.height
-            width:  Math.min(parent.width/4,parent.height)
+            width: parent.height
             z:2
 
             MouseArea{
@@ -84,8 +132,7 @@ Rectangle {
             }
         }
 
-
-    }
+    }    //end banner
 
     VocabularyList{
         id:list
@@ -95,35 +142,6 @@ Rectangle {
         anchors.right: parent.right
 
         z:0
-    }
-
-
-    states:[
-        State{
-            name:"closed"
-            PropertyChanges{
-                target:dictionary
-                x:-width
-            }
-        },
-        State{
-            name:"opened"
-            PropertyChanges{
-                target:dictionary
-                x:0
-            }
-        }
-    ]
-
-    transitions: Transition{
-        from:"closed"
-        to:"opened"
-        reversible: true
-
-        NumberAnimation{
-            properties: "x"
-            duration: 500
-        }
     }
 
 
@@ -158,7 +176,7 @@ Rectangle {
    MessageDialog{
        id:dialogDeleteWord
        title:"Удаление слова"
-       text:"Подтвердите удаление слова"
+       text:"Подтвердите удаление слова\n"+myModel.getWord(list.listView.currentIndex)
 
        standardButtons: StandardButton.Cancel | StandardButton.Apply
 

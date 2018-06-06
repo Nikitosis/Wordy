@@ -25,7 +25,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.leftMargin: 5
                         text:word
-                        font.pixelSize: 20
+                        font.pixelSize: Math.min(parent.height/1.5,parent.width/25/1.3)
                     }
 
                     Text{
@@ -34,7 +34,7 @@ Item {
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 5
                         text:translation
-                        font.pixelSize: 20
+                        font.pixelSize: Math.min(parent.height/1.5,parent.width/25/1.3)
 
                     }
 
