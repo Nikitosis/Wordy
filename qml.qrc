@@ -8,5 +8,6 @@
         <file>Vocabulary/WordDialog.qml</file>
         <file>Sprint/Sprint.qml</file>
         <file>Sprint/SwipeView.qml</file>
+        <file>Sprint/Card.qml</file>
     </qresource>
 </RCC>

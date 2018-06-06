@@ -23,25 +23,58 @@ Item {
                 width:box.width
                 height: box.height
 
-                /*MouseArea{
+                Card{
+                    id:card
+                    anchors.centerIn: parent
+                    width: parent.width/2
+                    height: parent.height/2
+                    state:"default"
+                }
+
+                Timer{
+                    id:timer
+                    interval:400
+                    running:false
+                    repeat: false
+                    onTriggered: {
+                        list.interactive=true
+                        console.log("TIMER")
+                    }
+                }
+
+
+                MouseArea{
+                    id:swipeHandler
                     anchors.fill: parent
                     property int beginY:0
                     property int endY:0
 
                     onPressed: {
                         beginY=mouseY
-                    }
-
-                    onReleased: {
                         endY=mouseY
-                        console.log(beginY,"   ",endY)
-                        if(beginY-endY>15)
+                    }
+                    onPositionChanged: {
+                        endY=mouseY
+                        if(beginY-endY>20)
                         {
+                            list.interactive=false
+                            timer.start()
+
                             swapFrom("fromBottom")
+                            card.state="rotated"
+
+                        }
+                        if(beginY-endY<-20)
+                        {
+                            list.interactive=false
+                            timer.start()
+
+                            swapFrom("fromTop")
+                            card.state="default"
                         }
                     }
-                }*/
-                SwipeView{
+                }
+                /*SwipeView{
                     id:view
 
                     anchors.fill: parent
@@ -59,7 +92,7 @@ Item {
                             text:translation
                         }
                     }
-                }
+                }*/
 
             }
 
