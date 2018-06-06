@@ -2,6 +2,7 @@ import QtQuick 2.6
 import QtQuick.Window 2.2
 import "./MainMenu"
 import "./Vocabulary"
+import "./Sprint"
 
 
 
@@ -13,10 +14,16 @@ Window {
 
     MainMenu{
         anchors.fill: parent
+        z:0
 
         onVocabularyClicked: {
             vocabulary.state="opened"
-            console.log("dict")
+            console.log("Vocabulary opened")
+        }
+
+        onSprintClicked: {
+            sprint.state="opened"
+            console.log("Sprint opened")
         }
     }
 
@@ -25,6 +32,15 @@ Window {
         width: parent.width
         height: parent.height
         state:"closed"
+        z:1
+    }
+
+    Sprint{
+        id:sprint
+        width: parent.width
+        height: parent.height
+        state:"closed"
+        z:1
     }
 
 }

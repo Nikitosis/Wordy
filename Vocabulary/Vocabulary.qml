@@ -39,7 +39,7 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        height: 35
+        height: 70
 
         z:1
         color:"black"
