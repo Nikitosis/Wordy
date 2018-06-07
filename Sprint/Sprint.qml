@@ -41,6 +41,32 @@ Rectangle {
         color:"black"
 
         z:1
+
+        Rectangle{
+            id:rotateButton
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width:parent.height
+            color:"blue"
+
+            MouseArea{
+                anchors.fill:parent
+                onClicked: {
+                    if(list.defaultState=="default")
+                    {
+                        list.defaultState="rotated"
+                        list.changedState="default"
+                    }
+                    else
+                    {
+                        list.defaultState="default"
+                        list.changedState="rotated"
+                    }
+                }
+            }
+
+        }
     }
 
 

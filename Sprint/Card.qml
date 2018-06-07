@@ -8,7 +8,7 @@ Flipable{
             color:"lightgreen"
             Text{
                 anchors.centerIn: parent
-                text:word
+                text:translation
             }
     }
 
@@ -17,7 +17,7 @@ Flipable{
         color:"grey"
         Text{
             anchors.centerIn: parent
-            text:translation
+            text:word
         }
 }
 

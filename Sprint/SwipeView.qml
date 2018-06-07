@@ -5,6 +5,9 @@ Item {
     id:box
     signal swapFrom(string fromDirection)
 
+    property string defaultState:"default"                  //we can change it in our properties(when we want rotated state to be default)
+    property string changedState:"rotated"
+
     ListView{
         id: list
         anchors.fill: parent
@@ -13,13 +16,27 @@ Item {
         model:myModel
 
 
-        snapMode: ListView.SnapOneItem
+        snapMode: ListView.SnapOneItem                      //only one item per swip
+
+        highlightRangeMode: ListView.StrictlyEnforceRange   //in order to change currentIndex, when swiping
+
+        onFlickStarted:  {                                  //when we leave our item it changes its state to default
+            list.currentItem.getCard.state=defaultState
+            console.log(list.currentIndex)
+        }
+        onFlickEnded: {
+            list.currentItem.getCard.state=defaultState
+            console.log(list.currentIndex)
+        }
 
         delegate: SwipeView{
             id:mainDelegate
             width: box.width
             height: box.height
+            property alias getCard:card
+
             Item{
+                id:abb
                 width:box.width
                 height: box.height
 
@@ -28,10 +45,10 @@ Item {
                     anchors.centerIn: parent
                     width: parent.width/2
                     height: parent.height/2
-                    state:"default"
+                    state: defaultState
                 }
 
-                Timer{
+                Timer{                                         //timer to disable swiping during card rotation
                     id:timer
                     interval:400
                     running:false
@@ -43,7 +60,7 @@ Item {
                 }
 
 
-                MouseArea{
+                MouseArea{                                      //handles vertical swiping
                     id:swipeHandler
                     anchors.fill: parent
                     property int beginY:0
@@ -61,7 +78,8 @@ Item {
                             timer.start()
 
                             swapFrom("fromBottom")
-                            card.state="rotated"
+
+                            card.state=changedState
 
                         }
                         if(beginY-endY<-20)
@@ -70,30 +88,11 @@ Item {
                             timer.start()
 
                             swapFrom("fromTop")
-                            card.state="default"
+
+                            card.state=defaultState
                         }
                     }
                 }
-                /*SwipeView{
-                    id:view
-
-                    anchors.fill: parent
-                    orientation: "Vertical"
-
-                    Rectangle{
-                        Text{
-                            anchors.centerIn: parent
-                            text:word
-                        }
-                    }
-                    Item{
-                        Text{
-                            anchors.centerIn: parent
-                            text:translation
-                        }
-                    }
-                }*/
-
             }
 
         }
