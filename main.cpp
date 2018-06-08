@@ -1,8 +1,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+
 #include <database.h>
 #include <listmodel.h>
-#include <QQmlContext>
+#include <sprintlistmodel.h>
 
 int main(int argc, char *argv[])
 {
@@ -12,6 +14,8 @@ int main(int argc, char *argv[])
     db.connectToDatabase();  //connect to DB
 
     ListModel *model=new ListModel();  //create listModel(without the pointer won't work)
+    SprintListModel *sprintModel=new SprintListModel();
+
 
 
     QQmlApplicationEngine engine;
@@ -19,6 +23,7 @@ int main(int argc, char *argv[])
     QQmlContext * context= engine.rootContext();
     context->setContextProperty("myModel",model);
     context->setContextProperty("database",&db);
+    context->setContextProperty("sprintModel",sprintModel);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

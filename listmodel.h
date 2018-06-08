@@ -14,7 +14,8 @@ public:
     enum Roles{
         IdRole = Qt::UserRole + 1,
         WordRole,
-        TranslationRole
+        TranslationRole,
+        PackRole                                      //in which pack this word is
     };
 
 
@@ -33,6 +34,7 @@ public slots:
     int getId(int row);
     QString getWord(const int row) const;
     QString getTranslation(const int row) const;
+    int getPack(const int row) const;
 };
 
 #endif // LISTMODEL_H

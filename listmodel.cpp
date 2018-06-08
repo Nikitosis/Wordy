@@ -23,13 +23,19 @@ QString ListModel::getTranslation(const int row) const
     return this->data(this->index(row,0),TranslationRole).toString();
 }
 
+int ListModel::getPack(const int row) const
+{
+    return this->data(this->index(row,0),PackRole).toInt();
+}
+
 QHash<int, QByteArray> ListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[IdRole]="id";
     roles[WordRole]="word";
     roles[TranslationRole]="translation";
-    return roles;
+    roles[PackRole]="pack";
+    return roles; 
 }
 
 void ListModel::updateModel()

@@ -19,11 +19,13 @@ Window {
         onVocabularyClicked: {
             vocabulary.state="opened"
             console.log("Vocabulary opened")
+            myModel.updateModel()
         }
 
         onSprintClicked: {
             sprint.state="opened"
             console.log("Sprint opened")
+            sprintModel.updateModel()
         }
     }
 

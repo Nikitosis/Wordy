@@ -7,13 +7,14 @@ Item {
 
     property string defaultState:"default"                  //we can change it in our properties(when we want rotated state to be default)
     property string changedState:"rotated"
+    property alias  listView: list
 
     ListView{
         id: list
         anchors.fill: parent
         orientation: ListView.Horizontal
 
-        model:myModel
+        model:sprintModel
 
 
         snapMode: ListView.SnapOneItem                      //only one item per swip

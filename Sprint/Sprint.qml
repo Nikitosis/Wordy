@@ -37,14 +37,35 @@ Rectangle {
         id:banner
         anchors.left: parent.left
         anchors.right: parent.right
-        height: 50
+        height: 70
         color:"black"
 
         z:1
 
         Rectangle{
-            id:rotateButton
+            id:learnedWord
             anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width:parent.height*2
+            color:"lightgreen"
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    database.changeRecord(sprintModel.getId(list.listView.currentIndex),
+                                          sprintModel.getWord(list.listView.currentIndex),
+                                          sprintModel.getTranslation(list.listView.currentIndex),
+                                          sprintModel.getPack(list.listView.currentIndex)+1);
+                    sprintModel.updateModel()
+                    myModel.updateModel()
+                }
+            }
+        }
+
+        Rectangle{
+            id:rotateButton
+            anchors.right: learnedWord.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             width:parent.height
@@ -67,6 +88,23 @@ Rectangle {
             }
 
         }
+
+        Rectangle{
+            id:homeButton
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: parent.height
+            color:"white"
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    sprint.state="closed"
+                }
+            }
+        }
+
     }
 
 
