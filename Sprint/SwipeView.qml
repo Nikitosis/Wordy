@@ -8,6 +8,11 @@ Item {
     property string defaultState:"default"                  //we can change it in our properties(when we want rotated state to be default)
     property string changedState:"rotated"
     property alias  listView: list
+    function rotateCard()
+    {
+        list.currentItem.getCard.state=defaultState
+        console.log(list.currentIndex)
+    }
 
     ListView{
         id: list
@@ -22,13 +27,12 @@ Item {
         highlightRangeMode: ListView.StrictlyEnforceRange   //in order to change currentIndex, when swiping
 
         onFlickStarted:  {                                  //when we leave our item it changes its state to default
-            list.currentItem.getCard.state=defaultState
-            console.log(list.currentIndex)
+            rotateCard()
         }
         onFlickEnded: {
-            list.currentItem.getCard.state=defaultState
-            console.log(list.currentIndex)
+            rotateCard()
         }
+
 
         delegate: SwipeView{
             id:mainDelegate
@@ -97,6 +101,7 @@ Item {
             }
 
         }
+
     }
 
 }

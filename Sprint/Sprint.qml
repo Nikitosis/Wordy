@@ -42,7 +42,7 @@ Rectangle {
 
         z:1
 
-        Rectangle{
+        /*Rectangle{
             id:learnedWord
             anchors.right: parent.right
             anchors.top: parent.top
@@ -53,26 +53,32 @@ Rectangle {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
+                    var curInd = list.listView.currentIndex
                     database.changeRecord(sprintModel.getId(list.listView.currentIndex),
                                           sprintModel.getWord(list.listView.currentIndex),
                                           sprintModel.getTranslation(list.listView.currentIndex),
                                           sprintModel.getPack(list.listView.currentIndex)+1,
-                                          sprintModel.getDate(list.listView.currentIndex));
+                                          new Date());
+                    if(curInd>0)
+                        list.listView.currentIndex=curInd-1
+
                     sprintModel.updateModel()
                     myModel.updateModel()
                 }
             }
-        }
+        }*/
 
         Rectangle{
             id:rotateButton
-            anchors.right: learnedWord.left
+            anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
             width:parent.height
             color:"blue"
 
+
             MouseArea{
+                id:rotateButtonArea
                 anchors.fill:parent
                 onClicked: {
                     if(list.defaultState=="default")
@@ -85,6 +91,7 @@ Rectangle {
                         list.defaultState="default"
                         list.changedState="rotated"
                     }
+                    list.rotateCard()
                 }
             }
 

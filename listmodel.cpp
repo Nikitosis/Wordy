@@ -49,6 +49,7 @@ void ListModel::updateModel()
     this->setQuery("SELECT * FROM " TABLE_VOCABULARY " ORDER BY id DESC");
 }
 
+
 int ListModel::getId(int row)
 {
     return this->data(this->index(row,0),IdRole).toInt();
