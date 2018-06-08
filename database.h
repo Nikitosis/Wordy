@@ -17,6 +17,7 @@
 #define VOCABULARY_WORD         "Word"
 #define VOCABULARY_TRANSLATION  "Translation"
 #define VOCABULARY_PACK         "Pack"
+#define VOCABULARY_DATE         "Date"
 
 #ifdef myandroid                             //change paths according to our machine
     #define MYPATH "assets:/db/"
@@ -40,10 +41,10 @@ signals:
 
 public slots:
     bool insertIntoTable(const QVariantList &data);
-    bool insertIntoTable(const QString &word, const QString &translation,int pack);
+    bool insertIntoTable(const QString &word, const QString &translation, int pack,const QDate date);
     bool removeRecord(const int id);
     bool changeRecord(const int id,const QVariantList &data);
-    bool changeRecord(const int id,const QString &word, const QString &translation,int pack);
+    bool changeRecord(const int id, const QString &word, const QString &translation, int pack,const QDate date);
 
 private:
     QSqlDatabase db;

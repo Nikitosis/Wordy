@@ -151,7 +151,10 @@ Rectangle {
 
        onAccepted: {
            console.log("apply")
-           database.insertIntoTable(newWordName.text,newWordTranslation.text,1)
+           database.insertIntoTable(newWordName.text,
+                                    newWordTranslation.text,
+                                    1,
+                                    new Date());
            myModel.updateModel()
            sprintModel.updateModel()
            newWordName.text=""
@@ -165,7 +168,13 @@ Rectangle {
 
        onAccepted: {
            console.log("updated", newWordName.text,newWordTranslation.text)
-           database.changeRecord(myModel.getId(list.listView.currentIndex),newWordName.text,newWordTranslation.text,1)
+
+           database.changeRecord(myModel.getId(list.listView.currentIndex),
+                                 newWordName.text,
+                                 newWordTranslation.text,
+                                 1,
+                                 myModel.getDate(list.listView.currentIndex));
+
            myModel.updateModel()
            sprintModel.updateModel()
            newWordName.text=""

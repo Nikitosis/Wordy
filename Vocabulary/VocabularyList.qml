@@ -24,7 +24,7 @@ Item {
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.leftMargin: 5
-                        text:word+pack
+                        text:word+pack+date
                         font.pixelSize: Math.min(parent.height/1.5,parent.width/25/1.3)
                     }
 

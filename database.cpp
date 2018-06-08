@@ -37,12 +37,14 @@ bool Database::insertIntoTable(const QVariantList &data)
     query.prepare("INSERT INTO " TABLE_VOCABULARY " ( "
                                                     VOCABULARY_WORD         ", "
                                                     VOCABULARY_TRANSLATION  ", "
-                                                    VOCABULARY_PACK         ") "
-                    "VALUES (:Word, :Translation, :Pack)"
+                                                    VOCABULARY_PACK         ", "
+                                                    VOCABULARY_DATE         ") "
+                    "VALUES (:Word, :Translation, :Pack, :Date)"
                   );
     query.bindValue(":Word",data[0].toString());
     query.bindValue(":Translation",data[1].toString());
     query.bindValue(":Pack",data[2].toInt());
+    query.bindValue(":Date",data[3].toDate());
 
     if(!query.exec())
     {
@@ -55,10 +57,10 @@ bool Database::insertIntoTable(const QVariantList &data)
 
 }
 
-bool Database::insertIntoTable(const QString &word, const QString &translation, int pack)
+bool Database::insertIntoTable(const QString &word, const QString &translation, int pack, const QDate date)
 {
    QVariantList list;
-   list<<word<<translation<<pack;
+   list<<word<<translation<<pack<<date;
 
    return insertIntoTable(list);
 }
@@ -83,12 +85,13 @@ bool Database::changeRecord(const int id, const QVariantList &data)
 {
     QSqlQuery query;
 
-    query.prepare("UPDATE "TABLE_VOCABULARY " SET Word= :word , Translation= :translation , Pack= :pack WHERE id= :ID ;");
+    query.prepare("UPDATE "TABLE_VOCABULARY " SET Word= :WORD , Translation= :TRANSLATION , Pack= :PACK, Date= :DATE WHERE id= :ID ;");
 
 
-    query.bindValue(":word",data[0].toString());
-    query.bindValue(":translation",data[1].toString());
-    query.bindValue(":pack",data[2].toInt());
+    query.bindValue(":WORD",data[0].toString());
+    query.bindValue(":TRANSLATION",data[1].toString());
+    query.bindValue(":PACK",data[2].toInt());
+    query.bindValue(":DATE",data[3].toDate());
     query.bindValue(":ID",id);
 
     if(!query.exec())
@@ -101,10 +104,10 @@ bool Database::changeRecord(const int id, const QVariantList &data)
     return true;
 }
 
-bool Database::changeRecord(const int id, const QString &word, const QString &translation, int pack)
+bool Database::changeRecord(const int id, const QString &word, const QString &translation, int pack, const QDate date)
 {
     QVariantList list;
-    list<<word<<translation<<pack;
+    list<<word<<translation<<pack<<date;
 
     return changeRecord(id,list);
 }
@@ -146,7 +149,8 @@ bool Database::createTable()
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     VOCABULARY_WORD         " VARCHAR(40) NOT NULL, "
                     VOCABULARY_TRANSLATION  " VARCHAR(40) NOT NULL, "
-                    VOCABULARY_PACK         " INT NOT NULL "
+                    VOCABULARY_PACK         " INT NOT NULL, "
+                    VOCABULARY_DATE         " DATE "
                     " )"
                   );
     if(query.exec())

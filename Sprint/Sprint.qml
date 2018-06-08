@@ -56,7 +56,8 @@ Rectangle {
                     database.changeRecord(sprintModel.getId(list.listView.currentIndex),
                                           sprintModel.getWord(list.listView.currentIndex),
                                           sprintModel.getTranslation(list.listView.currentIndex),
-                                          sprintModel.getPack(list.listView.currentIndex)+1);
+                                          sprintModel.getPack(list.listView.currentIndex)+1,
+                                          sprintModel.getDate(list.listView.currentIndex));
                     sprintModel.updateModel()
                     myModel.updateModel()
                 }

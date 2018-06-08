@@ -28,6 +28,11 @@ int ListModel::getPack(const int row) const
     return this->data(this->index(row,0),PackRole).toInt();
 }
 
+QDate ListModel::getDate(const int row) const
+{
+    return this->data(this->index(row,0),DateRole).toDate();
+}
+
 QHash<int, QByteArray> ListModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
@@ -35,6 +40,7 @@ QHash<int, QByteArray> ListModel::roleNames() const
     roles[WordRole]="word";
     roles[TranslationRole]="translation";
     roles[PackRole]="pack";
+    roles[DateRole]="date";
     return roles; 
 }
 

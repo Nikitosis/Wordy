@@ -15,7 +15,8 @@ public:
         IdRole = Qt::UserRole + 1,
         WordRole,
         TranslationRole,
-        PackRole                                      //in which pack this word is
+        PackRole,                                      //in which pack this word is
+        DateRole                                       //last update date
     };
 
 
@@ -35,6 +36,7 @@ public slots:
     QString getWord(const int row) const;
     QString getTranslation(const int row) const;
     int getPack(const int row) const;
+    QDate getDate(const int row) const;
 };
 
 #endif // LISTMODEL_H
