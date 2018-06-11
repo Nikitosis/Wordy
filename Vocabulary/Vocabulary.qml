@@ -151,6 +151,7 @@ Rectangle {
 
        onAccepted: {
            console.log("apply")
+
            database.insertIntoTable(newWordName.text,
                                     newWordTranslation.text,
                                     1,

@@ -14,7 +14,8 @@ int main(int argc, char *argv[])
     db.connectToDatabase();  //connect to DB
 
     ListModel *model=new ListModel();  //create listModel(without the pointer won't work)
-    SprintListModel *sprintModel=new SprintListModel();
+    SprintListModel *sprintModel=new SprintListModel(&db);
+    sprintModel->updateModel();
 
 
 

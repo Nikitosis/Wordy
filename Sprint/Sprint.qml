@@ -5,6 +5,8 @@ Rectangle {
     id:sprint
     color:"white"
 
+    clip:true
+
     states:[
         State{
             name:"closed"
@@ -41,32 +43,6 @@ Rectangle {
         color:"black"
 
         z:1
-
-        /*Rectangle{
-            id:learnedWord
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            width:parent.height*2
-            color:"lightgreen"
-
-            MouseArea{
-                anchors.fill: parent
-                onClicked: {
-                    var curInd = list.listView.currentIndex
-                    database.changeRecord(sprintModel.getId(list.listView.currentIndex),
-                                          sprintModel.getWord(list.listView.currentIndex),
-                                          sprintModel.getTranslation(list.listView.currentIndex),
-                                          sprintModel.getPack(list.listView.currentIndex)+1,
-                                          new Date());
-                    if(curInd>0)
-                        list.listView.currentIndex=curInd-1
-
-                    sprintModel.updateModel()
-                    myModel.updateModel()
-                }
-            }
-        }*/
 
         Rectangle{
             id:rotateButton
@@ -109,6 +85,7 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     sprint.state="closed"
+                    list.listView.currentIndex=0
                 }
             }
         }
