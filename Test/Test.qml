@@ -29,11 +29,14 @@ Rectangle {
             duration: 500
         }
     }
-    color:"black"
 
-    /*TestCard{
+    TestCard{
+        id:card
         anchors.fill: parent
-    }*/
+
+
+
+    }
 
 
 }

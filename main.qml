@@ -13,7 +13,7 @@ Window {
     height: 480
     title: qsTr("Hello World")
 
-    /*MainMenu{
+    MainMenu{
         anchors.fill: parent
         z:0
 
@@ -26,9 +26,10 @@ Window {
         onSprintClicked: {
             sprintModel.updateModel()
             sprint.state="opened"
-            console.log("Sprint opened")
+            console.log("Sprint opened aaa")
+
         }
-    }*/
+    }
 
     Vocabulary{
         id:vocabulary
@@ -46,11 +47,11 @@ Window {
         z:1
     }
 
-    Rectangle{
+    Test{
         id:test
         anchors.fill: parent
         z:1
-        color:"black"
+        color:"white"
     }
 
 }

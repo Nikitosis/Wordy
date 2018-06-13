@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <random>
 #include <QVariantList>
+#include <QTime>
 
 #include <database.h>
 
@@ -33,16 +34,16 @@ public:
     Test();
 
 public slots:
-    void updateTest();
+    void newTest();
     void resetWords();
     QString getMainWord();
     QString getMainAnsver();
-    QVariantList getOptions();
+    QString getOption(int num);
 
 private:
     QString mainWord;
     QString mainAnsver;
-    QVariantList options;
+    QVector<QString> options;
     QSet<int> usedWords;
 };
 

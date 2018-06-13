@@ -5,8 +5,10 @@ Test::Test()
 
 }
 
-void Test::updateTest()
+void Test::newTest()
 {
+    options.clear();
+
     QSqlQuery query;
     query.exec("SELECT * FROM " TABLE_VOCABULARY );
 
@@ -19,12 +21,12 @@ void Test::updateTest()
                             query.value(3).toInt(),
                             query.value(4).toDate()
                         });
+        qDebug()<<"added";
     }
     qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()));
-    int wordNum= rand()% words.size();
-    qDebug()<<"AA";
+    int wordNum= qrand()% words.size();
 
-    int amount;
+    int amount=0;
     while(usedWords.contains(wordNum))
     {
         wordNum=(wordNum+1) % words.size();
@@ -36,9 +38,12 @@ void Test::updateTest()
         }
     }
 
+
     mainWord=words[wordNum].word;
     mainAnsver=words[wordNum].translation;
+    options.push_back(words[wordNum].translation);
     usedWords.insert(wordNum);
+
 
     QSet<int> UsedOption;
     UsedOption.insert(wordNum);
@@ -51,16 +56,19 @@ void Test::updateTest()
             randNum=(randNum+1)%words.size();
         }
         options.push_back(words[randNum].translation);
-
         UsedOption.insert(randNum);
     }
 
     std::random_shuffle(options.begin(),options.end());
+
+    qDebug()<<options[0]<<" "<<options[1]<<" "<<options[2]<<" "<<options[3];
+
+
 }
 
 void Test::resetWords()
 {
-
+    usedWords.clear();
 }
 
 QString Test::getMainWord()
@@ -73,7 +81,12 @@ QString Test::getMainAnsver()
     return mainAnsver;
 }
 
-QVariantList Test::getOptions()
+QString Test::getOption(int num)
 {
-    return options;
+    if(num>=0 && num<options.size())
+      return options[num];
+    else{
+        qDebug()<<"Out of options range!!!";
+        return "";
+    }
 }
