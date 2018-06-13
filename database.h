@@ -11,13 +11,18 @@
 
 
 #define DATABASE_HOSTNAME  "WordyDB"
-#define DATABASE_NAME      "Wordy.db"
+#define DATABASE_NAME      "Wordy1.db"
 
 #define TABLE_VOCABULARY        "Vocabulary"
 #define VOCABULARY_WORD         "Word"
 #define VOCABULARY_TRANSLATION  "Translation"
 #define VOCABULARY_PACK         "Pack"
 #define VOCABULARY_DATE         "Date"
+
+#define TABLE_LEARNED             "Learned"
+#define LEARNED_VOCABULARY_INDEX  "Vocabulary_Index"
+#define LEARNED_DATE              "Date"
+
 
 #ifdef myandroid                             //change paths according to our machine
     #define MYPATH "assets:/db/"
@@ -40,11 +45,15 @@ public:
 signals:
 
 public slots:
-    bool insertIntoTable(const QVariantList &data);
-    bool insertIntoTable(const QString &word, const QString &translation, int pack,const QDate date);
-    bool removeRecord(const int id);
-    bool changeRecord(const int id,const QVariantList &data);
-    bool changeRecord(const int id, const QString &word, const QString &translation, int pack,const QDate date);
+    bool insertIntoTableVocabulary(const QVariantList &data);
+    bool insertIntoTableVocabulary(const QString &word, const QString &translation, int pack,const QDate date);
+    bool removeRecordVocabulary(const int id);
+    bool changeRecordVocabulary(const int id,const QVariantList &data);
+    bool changeRecordVocabulary(const int id, const QString &word, const QString &translation, int pack,const QDate date);
+
+    bool insertIntoTableLearned(const QVariantList &data);
+    bool insertIntoTableLearned(const int vocabularyIndex,const QDate date);
+    bool clearLearned();
 
 private:
     QSqlDatabase db;

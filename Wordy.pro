@@ -8,7 +8,8 @@ CONFIG += c++11
 SOURCES += main.cpp \
     database.cpp \
     listmodel.cpp \
-    sprintlistmodel.cpp
+    sprintlistmodel.cpp \
+    test.cpp
 
 RESOURCES += qml.qrc
 
@@ -51,4 +52,5 @@ android {
 HEADERS += \
     database.h \
     listmodel.h \
-    sprintlistmodel.h
+    sprintlistmodel.h \
+    test.h

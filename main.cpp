@@ -5,6 +5,7 @@
 #include <database.h>
 #include <listmodel.h>
 #include <sprintlistmodel.h>
+#include <test.h>
 
 int main(int argc, char *argv[])
 {
@@ -15,9 +16,10 @@ int main(int argc, char *argv[])
 
     ListModel *model=new ListModel();  //create listModel(without the pointer won't work)
     SprintListModel *sprintModel=new SprintListModel(&db);
-    sprintModel->updateModel();
+    //sprintModel->updateModel();
 
 
+    Test test;
 
     QQmlApplicationEngine engine;
 
@@ -25,6 +27,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("myModel",model);
     context->setContextProperty("database",&db);
     context->setContextProperty("sprintModel",sprintModel);
+    context->setContextProperty("testInfo",&test);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

@@ -3,6 +3,7 @@ import QtQuick.Window 2.2
 import "./MainMenu"
 import "./Vocabulary"
 import "./Sprint"
+import "./Test"
 
 
 
@@ -12,7 +13,7 @@ Window {
     height: 480
     title: qsTr("Hello World")
 
-    MainMenu{
+    /*MainMenu{
         anchors.fill: parent
         z:0
 
@@ -23,11 +24,11 @@ Window {
         }
 
         onSprintClicked: {
+            sprintModel.updateModel()
             sprint.state="opened"
             console.log("Sprint opened")
-            sprintModel.updateModel()
         }
-    }
+    }*/
 
     Vocabulary{
         id:vocabulary
@@ -43,6 +44,13 @@ Window {
         height: parent.height
         state:"closed"
         z:1
+    }
+
+    Rectangle{
+        id:test
+        anchors.fill: parent
+        z:1
+        color:"black"
     }
 
 }

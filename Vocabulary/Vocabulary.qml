@@ -151,13 +151,15 @@ Rectangle {
 
        onAccepted: {
            console.log("apply")
+           var date=new Date()
+           date.setDate(date.getDate())
 
-           database.insertIntoTable(newWordName.text,
+
+           database.insertIntoTableVocabulary(newWordName.text,
                                     newWordTranslation.text,
                                     1,
-                                    new Date());
+                                    date);
            myModel.updateModel()
-           sprintModel.updateModel()
            newWordName.text=""
            newWordTranslation.text=""
        }
@@ -170,14 +172,13 @@ Rectangle {
        onAccepted: {
            console.log("updated", newWordName.text,newWordTranslation.text)
 
-           database.changeRecord(myModel.getId(list.listView.currentIndex),
+           database.changeRecordVocabulary(myModel.getId(list.listView.currentIndex),
                                  newWordName.text,
                                  newWordTranslation.text,
                                  1,
                                  myModel.getDate(list.listView.currentIndex));
 
            myModel.updateModel()
-           sprintModel.updateModel()
            newWordName.text=""
            newWordTranslation.text=""
        }
@@ -193,9 +194,8 @@ Rectangle {
        standardButtons: StandardButton.Cancel | StandardButton.Apply
 
        onApply: {
-           database.removeRecord(myModel.getId(list.listView.currentIndex))
+           database.removeRecordVocabulary(myModel.getId(list.listView.currentIndex))
            myModel.updateModel()
-           sprintModel.updateModel()
        }
    }
 }

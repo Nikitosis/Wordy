@@ -17,6 +17,7 @@ public:
         TranslationRole,
         PackRole,                                      //in which pack this word is
         DateRole                                       //last update date
+
     };
 
 

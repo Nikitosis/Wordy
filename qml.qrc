@@ -9,5 +9,7 @@
         <file>Sprint/Sprint.qml</file>
         <file>Sprint/SwipeView.qml</file>
         <file>Sprint/Card.qml</file>
+        <file>Test/Test.qml</file>
+        <file>Test/TestCard.qml</file>
     </qresource>
 </RCC>

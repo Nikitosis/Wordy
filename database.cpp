@@ -19,18 +19,20 @@ void Database::connectToDatabase()
          qDebug()<<"USING ANDROID";
     #endif
 
-    this->restoreDataBase();
-    /*if(!QFile(MYPATH DATABASE_NAME).exists())   //if doesn't exist
+    //this->restoreDataBase();
+    //QFile file(MYPATH DATABASE_NAME);
+    //file.remove();
+    if(!QFile(MYPATH DATABASE_NAME).exists())   //if doesn't exist
         this->restoreDataBase();    //create new db
     else
     {
         QFile(MYPATH DATABASE_NAME).copy("./" DATABASE_NAME);
         QFile::setPermissions("./" DATABASE_NAME,QFile::WriteOwner |     QFile::ReadOwner);
         this->openDataBase();       //open existing
-    }*/
+    }
 }
 
-bool Database::insertIntoTable(const QVariantList &data)
+bool Database::insertIntoTableVocabulary(const QVariantList &data)
 {
     QSqlQuery query;
 
@@ -57,15 +59,15 @@ bool Database::insertIntoTable(const QVariantList &data)
 
 }
 
-bool Database::insertIntoTable(const QString &word, const QString &translation, int pack, const QDate date)
+bool Database::insertIntoTableVocabulary(const QString &word, const QString &translation, int pack, const QDate date)
 {
    QVariantList list;
    list<<word<<translation<<pack<<date;
 
-   return insertIntoTable(list);
+   return insertIntoTableVocabulary(list);
 }
 
-bool Database::removeRecord(const int id)
+bool Database::removeRecordVocabulary(const int id)
 {
     QSqlQuery query;
 
@@ -81,7 +83,7 @@ bool Database::removeRecord(const int id)
     return true;
 }
 
-bool Database::changeRecord(const int id, const QVariantList &data)
+bool Database::changeRecordVocabulary(const int id, const QVariantList &data)
 {
     QSqlQuery query;
 
@@ -104,12 +106,57 @@ bool Database::changeRecord(const int id, const QVariantList &data)
     return true;
 }
 
-bool Database::changeRecord(const int id, const QString &word, const QString &translation, int pack, const QDate date)
+bool Database::changeRecordVocabulary(const int id, const QString &word, const QString &translation, int pack, const QDate date)
 {
     QVariantList list;
     list<<word<<translation<<pack<<date;
 
-    return changeRecord(id,list);
+    return changeRecordVocabulary(id,list);
+}
+
+bool Database::insertIntoTableLearned(const QVariantList &data)
+{
+    QSqlQuery query;
+
+    query.prepare("INSERT INTO " TABLE_LEARNED " ( "
+                                                    LEARNED_VOCABULARY_INDEX   ", "
+                                                    LEARNED_DATE               ") "
+                    "VALUES (:Index, :Date)"
+                  );
+    query.bindValue(":Index",data[0].toInt());
+    query.bindValue(":Date",data[1].toDate());
+
+    if(!query.exec())
+    {
+        qDebug() <<"error inserting into" <<TABLE_LEARNED;
+        qDebug() <<query.lastError().text();
+        return false;
+    }
+
+    return true;
+}
+
+bool Database::insertIntoTableLearned(const int vocabularyIndex,const QDate date)
+{
+    QVariantList list;
+    list<<vocabularyIndex<<date;
+
+    return insertIntoTableLearned(list);
+}
+
+bool Database::clearLearned()
+{
+    QSqlQuery query;
+
+    query.prepare("DELETE FROM " TABLE_LEARNED ";");
+
+    if(!query.exec())
+            {
+                qDebug() <<"error clearing Learned";
+                qDebug() <<query.lastError().text();
+                return false;
+            }
+    return true;
 }
 
 bool Database::openDataBase()
@@ -153,7 +200,16 @@ bool Database::createTable()
                     VOCABULARY_DATE         " DATE "
                     " )"
                   );
-    if(query.exec())
+
+    QSqlQuery query1;
+
+    query1.prepare("CREATE TABLE " TABLE_LEARNED " ("
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    LEARNED_VOCABULARY_INDEX    " INT NOT NULL, "
+                    LEARNED_DATE                " DATE "
+                    " )"
+                  );
+    if(query.exec() && query1.exec())
         return true;
     return false;
 }

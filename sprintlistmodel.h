@@ -23,8 +23,10 @@ public:
 
 public slots:
     void updateModel();
+    void updateWords(QString mainQueryStr);
 protected:
     QVector<int> getWordsPerPack();
+    QString      getSprintQuery();
     QVector<Pack> packs;
     Database *db;
 };
