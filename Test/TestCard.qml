@@ -3,6 +3,9 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Item {
+    property string rightColor:"green"
+    property string falseColor:"orange"
+    property string defaultColor: "grey"
     function initCard()
     {
         testInfo.newTest()
@@ -33,11 +36,50 @@ Item {
 
         mainWordText.text=testInfo.getMainWord()
 
+        nextButton.enabled=false
 
+        firstOption.enabled=true
+        secondOption.enabled=true
+        thirdOption.enabled=true
+        fourthOption.enabled=true
+
+        firstOption.color=defaultColor
+        secondOption.color=defaultColor
+        thirdOption.color=defaultColor
+        fourthOption.color=defaultColor
 
 
         console.log("init card")
     }
+
+    function optionClicked()
+    {
+        if(firstOption.text==testInfo.getMainAnsver())
+        {
+            firstOption.color=rightColor
+        }
+        if(secondOption.text==testInfo.getMainAnsver())
+        {
+            secondOption.color=rightColor
+        }
+        if(thirdOption.text==testInfo.getMainAnsver())
+        {
+            thirdOption.color=rightColor
+        }
+        if(fourthOption.text==testInfo.getMainAnsver())
+        {
+            fourthOption.color=rightColor
+        }
+
+        nextButton.enabled=true
+
+        firstOption.enabled=false
+        secondOption.enabled=false
+        thirdOption.enabled=false
+        fourthOption.enabled=false
+
+    }
+
     Rectangle{
         id:mainWordBox
         anchors.top: parent.top
@@ -58,125 +100,102 @@ Item {
 
         anchors.topMargin: parent.height/4
         anchors.bottomMargin: parent.height/4
-        anchors.leftMargin: parent.width/8
-        anchors.rightMargin: parent.width/8
 
-        CheckBox{
+        Rectangle{
             id:firstOption
-            height: parent.height/3
-            width: parent.width/3
+            property string text:""
+            property bool isRight: false
             anchors.left: parent.left
             anchors.top: parent.top
-            property bool isRight: false
+            width:parent.width/2
+            height: parent.height/2
+            color:defaultColor
 
-            LayoutMirroring.enabled: true                                                         //to have text from left of checkbox
-            LayoutMirroring.childrenInherit: true
+            Text{
+                anchors.centerIn: parent
+                text:firstOption.text
+            }
 
-            style: CheckBoxStyle {
-                   indicator: Rectangle {
-
-                           implicitWidth: Math.min(firstOption.width/3,firstOption.height/3)
-                           implicitHeight: Math.min(firstOption.width/3,firstOption.height/3)
-                           radius: 3
-                           border.width: 1
-                           Rectangle {
-                               visible: control.checked
-                               color: firstOption.isRight ? "green" : "orange"
-                               border.color: "#333"
-                               radius: 1
-                               anchors.margins: 4
-                               anchors.fill: parent
-                           }
-                   }
-               }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    firstOption.color=firstOption.isRight? rightColor : falseColor
+                    optionClicked()
+                }
+            }
 
         }
-        CheckBox{
+
+        Rectangle{
             id:secondOption
-            height: parent.height/3
-            width: parent.width/3
-            anchors.left: parent.left
+            property string text:""
+            property bool isRight: false
+            anchors.right: parent.right
             anchors.top: parent.top
+            width:parent.width/2
+            height: parent.height/2
+            color:defaultColor
 
-            property bool isRight: false
+            Text{
+                anchors.centerIn: parent
+                text:secondOption.text
+            }
 
-
-            style: CheckBoxStyle {
-                   indicator: Rectangle {
-
-                           implicitWidth: Math.min(secondOption.width/3,secondOption.height/3)
-                           implicitHeight: Math.min(secondOption.width/3,secondOption.height/3)
-                           radius: 3
-                           border.width: 1
-                           Rectangle {
-                               visible: control.checked
-                               color: secondOption.isRight? "green" : "orange"
-                               border.color: "#333"
-                               radius: 1
-                               anchors.margins: 4
-                               anchors.fill: parent
-                           }
-                   }
-               }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    secondOption.color=secondOption.isRight? rightColor : falseColor
+                    optionClicked()
+                }
+            }
 
         }
-        CheckBox{
+        Rectangle{
             id:thirdOption
-            height: parent.height/3
-            width: parent.width/3
+            property string text:""
+            property bool isRight: false
             anchors.left: parent.left
             anchors.bottom: parent.bottom
-            property bool isRight: false
+            width:parent.width/2
+            height: parent.height/2
+            color:defaultColor
 
-            LayoutMirroring.enabled: true                                                         //to have text from left of checkbox
-            LayoutMirroring.childrenInherit: true
+            Text{
+                anchors.centerIn: parent
+                text:thirdOption.text
+            }
 
-            style: CheckBoxStyle {
-                   indicator: Rectangle {
-
-                           implicitWidth: Math.min(thirdOption.width/3,thirdOption.height/3)
-                           implicitHeight: Math.min(thirdOption.width/3,thirdOption.height/3)
-                           radius: 3
-                           border.width: 1
-                           Rectangle {
-                               visible: control.checked
-                               color: thirdOption.isRight ? "green" : "orange"
-                               border.color: "#333"
-                               radius: 1
-                               anchors.margins: 4
-                               anchors.fill: parent
-                           }
-                   }
-               }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    thirdOption.color=thirdOption.isRight? rightColor : falseColor
+                    optionClicked()
+                }
+            }
 
         }
-        CheckBox{
+        Rectangle{
             id:fourthOption
-            height: parent.height/3
-            width: parent.width/3
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-
+            property string text:""
             property bool isRight: false
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            width:parent.width/2
+            height: parent.height/2
+            color:defaultColor
 
+            Text{
+                anchors.centerIn: parent
+                text:fourthOption.text
+            }
 
-            style: CheckBoxStyle {
-                   indicator: Rectangle {
-
-                           implicitWidth: Math.min(fourthOption.width/3,fourthOption.height/3)
-                           implicitHeight: Math.min(fourthOption.width/3,fourthOption.height/3)
-                           radius: 3
-                           border.width: 1
-                           Rectangle {
-                               visible: control.checked
-                               color: fourthOption.isRight? "green" : "orange"
-                               border.color: "#333"
-                               radius: 1
-                               anchors.margins: 4
-                               anchors.fill: parent
-                           }
-                   }
-               }
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    fourthOption.color=fourthOption.isRight? rightColor : falseColor
+                    optionClicked()
+                }
+            }
 
         }
 
@@ -184,10 +203,11 @@ Item {
     }
 
     Button{
+        id:nextButton
         anchors.right: parent.right
         anchors.bottom: parent.bottom
+        anchors.top: optionsBox.bottom
         width: parent.width/3
-        height: 50
         onClicked: {
             initCard()
         }

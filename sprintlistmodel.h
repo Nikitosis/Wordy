@@ -13,7 +13,7 @@ struct Pack{
     int packNum;
     int daysToUpdate;
 };
-const int maxWords=5;
+const int maxWords=10;
 
 class SprintListModel: public ListModel
 {

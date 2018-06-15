@@ -2,12 +2,13 @@ import QtQuick 2.0
 
 Rectangle {
     id:sprint
+    color:"white"
     states:[
         State{
             name:"closed"
             PropertyChanges{
                 target:sprint
-                x:width
+                x:-width
             }
         },
         State{
@@ -33,9 +34,6 @@ Rectangle {
     TestCard{
         id:card
         anchors.fill: parent
-
-
-
     }
 
 

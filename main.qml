@@ -27,7 +27,9 @@ Window {
             sprintModel.updateModel()
             sprint.state="opened"
             console.log("Sprint opened aaa")
-
+        }
+        onTestClicked: {
+            test.state="opened"
         }
     }
 
@@ -49,9 +51,12 @@ Window {
 
     Test{
         id:test
-        anchors.fill: parent
+        width: parent.width
+        height: parent.height
+
         z:1
-        color:"white"
+
+        state:"closed"
     }
 
 }
