@@ -3,9 +3,17 @@ import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
 Item {
+    id:main
     property string rightColor:"green"
     property string falseColor:"orange"
     property string defaultColor: "grey"
+    property int    animationDuration: 500
+    function changeCard()
+    {
+        changeCardAnimation.start()
+        //nextButton.enabled=false
+    }
+
     function initCard()
     {
         testInfo.newTest()
@@ -83,9 +91,9 @@ Item {
     Rectangle{
         id:mainWordBox
         anchors.top: parent.top
-        anchors.bottom: optionsBox.top
-        anchors.left: parent.left
-        anchors.right: parent.right
+        height: parent.height/4
+        width: parent.width
+
 
         Text{
             id:mainWordText
@@ -96,10 +104,11 @@ Item {
 
     Item{
         id:optionsBox
-        anchors.fill: parent
 
-        anchors.topMargin: parent.height/4
-        anchors.bottomMargin: parent.height/4
+        anchors.top: mainWordBox.bottom
+
+        height: parent.height/2
+        width:parent.width
 
         Rectangle{
             id:firstOption
@@ -199,7 +208,6 @@ Item {
 
         }
 
-
     }
 
     Button{
@@ -209,7 +217,70 @@ Item {
         anchors.top: optionsBox.bottom
         width: parent.width/3
         onClicked: {
+            changeCard()
+        }
+    }
+
+    Timer{                               //timer to update card in the middle of card changing
+        id:animationTimer
+        interval: animationDuration
+        repeat: false
+        running: false
+        onTriggered: {
             initCard()
+            console.log("inited")
+        }
+    }
+
+    SequentialAnimation{               //card changing animation
+        id:changeCardAnimation
+
+        onStarted: {
+            console.log("started")
+            animationTimer.start()     //count animationDuration, then update card
+        }
+        onStopped: {
+            console.log("stopped")
+        }
+
+        ParallelAnimation
+        {
+            NumberAnimation{
+                target: optionsBox
+                properties: "x"
+                from:0
+                to:main.width
+                duration: animationDuration
+                easing.type:Easing.InBack
+            }
+            NumberAnimation{
+                target: mainWordBox
+                properties: "x"
+                from:0
+                to:main.width
+                duration: animationDuration
+                easing.type: Easing.InBack
+                easing.overshoot: 2.5
+            }
+        }
+        ParallelAnimation{
+            NumberAnimation{
+                target: optionsBox
+                properties: "x"
+                from:-main.width
+                to:0
+                duration: animationDuration
+                easing.type:Easing.OutBack
+            }
+            NumberAnimation{
+                target: mainWordBox
+                properties: "x"
+                from:-main.width
+                to:0
+                duration: animationDuration
+                easing.type: Easing.OutBack
+                easing.overshoot: 2.5
+            }
         }
     }
 }
