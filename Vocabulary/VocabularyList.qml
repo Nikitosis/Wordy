@@ -4,6 +4,7 @@ Item {
     id:box
     property alias listView: list
 
+
     ListView{
         id:list
         anchors.fill: parent
@@ -13,27 +14,71 @@ Item {
 
 
         onCurrentItemChanged:{
-            list.currentItem.state="opened"                                //change state of current item(expand)
+            list.currentItem.state="opened"                                //expand current item
             if(lastItemIndex!=-1)
-                list.contentItem.children[lastItemIndex].state=""          //change previous item's state to previous
+                list.contentItem.children[lastItemIndex].state="closed"          //change previous item's state to closed
             lastItemIndex=list.currentIndex
+
         }
 
         delegate: Component{
             id:mainDelegate  
+
             Item{
+
                 id:currentItem
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: list.height/9
 
-                states:State{
-                    name:"opened"
-                    PropertyChanges{
-                        target:currentItem
-                        height:list.height/5
+                state:"closed"
+
+
+                states:[State{
+                        name:"opened"
+                        PropertyChanges{
+                            target:currentItem
+                            height:list.height/5
+                            }
+                        PropertyChanges {
+                            target: ratingBox
+                            opacity:1
+                        }
+                    },
+                    State{
+                        name:"closed"
+                        PropertyChanges{
+                            target:currentItem
+                            height:list.height/9
+                            }
+                        PropertyChanges {
+                            target: ratingBox
+                            opacity:0
+
+                        }
+                    }
+                ]
+                transitions:Transition{
+                    from:"closed"
+                    to:"opened"
+                    reversible: true
+                    NumberAnimation{
+                        properties: "height,opacity"
+                        duration: 300
                     }
 
+                }
+
+                onStateChanged: {
+                    ratingBox.updateRating(5-pack+1)
+                }
+
+                PackRating{
+                    id:ratingBox
+                    width: parent.width/2
+                    height: parent.height/2.3
+                    anchors.bottom: parent.bottom
+                    anchors.horizontalCenter: parent.horizontalCenter
                 }
 
                 Rectangle{   //words

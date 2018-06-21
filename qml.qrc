@@ -11,5 +11,9 @@
         <file>Sprint/Card.qml</file>
         <file>Test/Test.qml</file>
         <file>Test/TestCard.qml</file>
+        <file>Vocabulary/PackRating.qml</file>
+        <file>img/FireActive.png</file>
+        <file>img/FirePassive.png</file>
+        <file>img/FirePossible.png</file>
     </qresource>
 </RCC>
