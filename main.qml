@@ -30,6 +30,7 @@ Window {
         }
         onTestClicked: {
             test.state="opened"
+            console.log("test opened")
         }
     }
 

@@ -9,12 +9,32 @@ Item {
         anchors.fill: parent
         model:myModel
 
+        property int lastItemIndex:-1
+
+
+        onCurrentItemChanged:{
+            list.currentItem.state="opened"                                //change state of current item(expand)
+            if(lastItemIndex!=-1)
+                list.contentItem.children[lastItemIndex].state=""          //change previous item's state to previous
+            lastItemIndex=list.currentIndex
+        }
+
         delegate: Component{
-            id:mainDelegate
+            id:mainDelegate  
             Item{
+                id:currentItem
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: list.height/9
+
+                states:State{
+                    name:"opened"
+                    PropertyChanges{
+                        target:currentItem
+                        height:list.height/5
+                    }
+
+                }
 
                 Rectangle{   //words
                     color:"transparent"
