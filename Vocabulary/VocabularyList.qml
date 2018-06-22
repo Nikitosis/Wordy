@@ -12,15 +12,6 @@ Item {
 
         property int lastItemIndex:-1
 
-
-        onCurrentItemChanged:{
-            list.currentItem.state="opened"                                //expand current item
-            if(lastItemIndex!=-1)
-                list.contentItem.children[lastItemIndex].state="closed"          //change previous item's state to closed
-            lastItemIndex=list.currentIndex
-
-        }
-
         delegate: Component{
             id:mainDelegate  
 
@@ -31,11 +22,11 @@ Item {
                 anchors.right: parent.right
                 height: list.height/9
 
-                state:"closed"
+                state:"deselected"
 
 
                 states:[State{
-                        name:"opened"
+                        name:"selected"
                         PropertyChanges{
                             target:currentItem
                             height:list.height/5
@@ -46,7 +37,7 @@ Item {
                         }
                     },
                     State{
-                        name:"closed"
+                        name:"deselected"
                         PropertyChanges{
                             target:currentItem
                             height:list.height/9
@@ -59,14 +50,23 @@ Item {
                     }
                 ]
                 transitions:Transition{
-                    from:"closed"
-                    to:"opened"
+                    from:"selected"
+                    to:"deselected"
                     reversible: true
                     NumberAnimation{
                         properties: "height,opacity"
                         duration: 300
                     }
 
+                }
+
+                onFocusChanged: {
+                    if(list.currentIndex == index){
+                            currentItem.state = 'selected';
+                       }
+                       else{
+                             currentItem.state = 'deselected';
+                       }
                 }
 
                 onStateChanged: {
