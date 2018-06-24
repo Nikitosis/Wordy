@@ -21,6 +21,7 @@ Item {
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: list.height/9
+                clip:false
 
                 state:"deselected"
 
@@ -89,8 +90,13 @@ Item {
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.leftMargin: 5
+                        horizontalAlignment: Text.AlignLeft
+                        verticalAlignment: Text.AlignVCenter
+
                         text:word+pack+date
-                        font.pixelSize: Math.min(parent.height/1.5,parent.width/25/1.3)
+                        width:currentItem.width/2.5
+                        wrapMode: Text.Wrap
+                        font.pixelSize: Math.max(15,Math.min(parent.height/3,parent.width/25/1.3))
                     }
 
                     Text{
@@ -98,8 +104,13 @@ Item {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 5
+                        horizontalAlignment: Text.AlignLeft
+                        verticalAlignment: Text.AlignVCenter
+
                         text:translation
-                        font.pixelSize: Math.min(parent.height/1.5,parent.width/25/1.3)
+                        width:currentItem.width/2.5
+                        wrapMode: Text.Wrap
+                        font.pixelSize: Math.max(15,Math.min(parent.height/3,parent.width/25/1.3))
 
                     }
 
