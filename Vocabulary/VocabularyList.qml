@@ -96,7 +96,7 @@ Item {
                         text:word+pack+date
                         width:currentItem.width/2.5
                         wrapMode: Text.Wrap
-                        font.pixelSize: Math.max(15,Math.min(parent.height/3,parent.width/25/1.3))
+                        font.pixelSize: Math.max(12,Math.min(parent.height/3,parent.width/25/1.3))
                     }
 
                     Text{
@@ -104,13 +104,13 @@ Item {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 5
-                        horizontalAlignment: Text.AlignLeft
+                        horizontalAlignment: Text.AlignRight
                         verticalAlignment: Text.AlignVCenter
 
                         text:translation
                         width:currentItem.width/2.5
                         wrapMode: Text.Wrap
-                        font.pixelSize: Math.max(15,Math.min(parent.height/3,parent.width/25/1.3))
+                        font.pixelSize: Math.max(12,Math.min(parent.height/3,parent.width/25/1.3))
 
                     }
 

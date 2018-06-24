@@ -51,8 +51,11 @@ Dialog{
             TextInput{
                 id:newWordName
                 anchors.fill: parent
-                font.pixelSize: Math.min(parent.height/1.6,width/length*2)
-                validator: RegExpValidator { regExp: /[a-zA-Zа-яА-Я- ()/,.]{25}/  }               //validate
+                font.pixelSize: Math.min(parent.height/1.6,width/length*1.9)
+                maximumLength: 30
+
+                verticalAlignment: Text.AlignVCenter
+                //validator: RegExpValidator { regExp: /[a-zA-Zа-яА-Я- ()/,.]{25}/  }               //validate
             }
         }
 
@@ -69,8 +72,12 @@ Dialog{
             TextInput{
                 id:newWordTranslation
                 anchors.fill: parent
-                font.pixelSize: Math.min(parent.height/1.6,width/length*2)
-                validator: RegExpValidator { regExp: /[a-zA-Zа-яА-Я- ()/,.]{25}/  }               //validate
+                font.pixelSize: Math.min(parent.height/1.6,width/length*1.9)
+                maximumLength: 30
+
+                verticalAlignment: Text.AlignVCenter
+
+                //validator: RegExpValidator { regExp: /[a-zA-Zа-яА-Я- ()/,.]{25}/  }               //validate
             }
         }
 
