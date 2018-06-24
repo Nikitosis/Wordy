@@ -102,7 +102,7 @@ bool Database::changeRecordVocabulary(const int id, const QVariantList &data)
         qDebug() <<query.lastError().text();
         return false;
     }
-    qDebug()<<"UPDATED: "<<data[0].toString()<<data[1].toString()<<id;
+    qDebug()<<"UPDATED: "<<data[0].toString()<<data[1].toString()<<id<<" "<<data[2].toInt();
     return true;
 }
 

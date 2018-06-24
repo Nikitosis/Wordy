@@ -11,7 +11,7 @@ Dialog{
 
     standardButtons: StandardButton.Save | StandardButton.Cancel
 
-    property string maxWordLength: "10"
+    property int maxWordLength: 30
     property alias newWordName: newWordName
     property alias newWordTranslation: newWordTranslation
 
@@ -52,7 +52,7 @@ Dialog{
                 id:newWordName
                 anchors.fill: parent
                 font.pixelSize: Math.min(parent.height/1.6,width/length*1.9)
-                maximumLength: 30
+                maximumLength: maxWordLength
 
                 verticalAlignment: Text.AlignVCenter
                 //validator: RegExpValidator { regExp: /[a-zA-Zа-яА-Я- ()/,.]{25}/  }               //validate
@@ -73,7 +73,7 @@ Dialog{
                 id:newWordTranslation
                 anchors.fill: parent
                 font.pixelSize: Math.min(parent.height/1.6,width/length*1.9)
-                maximumLength: 30
+                maximumLength: maxWordLength
 
                 verticalAlignment: Text.AlignVCenter
 
@@ -124,8 +124,6 @@ Dialog{
                 newWordTranslation.focus=false
             }
         }
-
-
 
     }
 

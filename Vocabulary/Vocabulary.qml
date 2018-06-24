@@ -142,6 +142,13 @@ Rectangle {
         anchors.right: parent.right
 
         z:0
+
+        onChangePack: {
+            database.changeRecordVocabulary(id,word,translation,pack,date)
+            console.log("Pack changed id=",id," pack=",pack)
+            myModel.updateModel()
+        }
+
     }
 
 

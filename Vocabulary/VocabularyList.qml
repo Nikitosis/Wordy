@@ -1,8 +1,10 @@
 import QtQuick 2.0
+import QtQuick.Controls 2.0
 
 Item {
     id:box
     property alias listView: list
+    signal changePack(int id,string word,string translation,int pack,date date)
 
 
     ListView{
@@ -15,6 +17,7 @@ Item {
         delegate: Component{
             id:mainDelegate  
 
+
             Item{
 
                 id:currentItem
@@ -22,6 +25,7 @@ Item {
                 anchors.right: parent.right
                 height: list.height/9
                 clip:false
+                //z:0
 
                 state:"deselected"
 
@@ -35,6 +39,7 @@ Item {
                         PropertyChanges {
                             target: ratingBox
                             opacity:1
+                            enabled:true
                         }
                     },
                     State{
@@ -46,7 +51,7 @@ Item {
                         PropertyChanges {
                             target: ratingBox
                             opacity:0
-
+                            enabled:false
                         }
                     }
                 ]
@@ -71,20 +76,25 @@ Item {
                 }
 
                 onStateChanged: {
-                    ratingBox.updateRating(5-pack+1)
-                }
-
-                PackRating{
-                    id:ratingBox
-                    width: parent.width/2
-                    height: parent.height/2.3
-                    anchors.bottom: parent.bottom
-                    anchors.horizontalCenter: parent.horizontalCenter
+                    ratingBox.updateRating(pack)                                    //change actual pack,when open word
                 }
 
                 Rectangle{   //words
                     color:"transparent"
                     anchors.fill: parent
+                    z:1
+
+
+                    PackRating{
+                        id:ratingBox
+                        width: parent.width/2
+                        height: parent.height/2.3
+                        anchors.bottom: parent.bottom
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        onChangePack: box.changePack(myModel.getId(index),word,translation,newRating,date)
+                        z:3
+
+                    }
 
                     Text{
                         anchors.left: parent.left
