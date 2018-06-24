@@ -26,19 +26,16 @@ Item {
 
         highlightRangeMode: ListView.StrictlyEnforceRange   //in order to change currentIndex, when swiping
 
-        onFlickStarted:  {                                  //when we leave our item it changes its state to default
-            rotateCard()
-        }
-        onFlickEnded: {
-            rotateCard()
-        }
-
 
         delegate: SwipeView{
             id:mainDelegate
             width: box.width
             height: box.height
             property alias getCard:card
+
+            onFocusChanged: {                               //when user switch to another card
+                card.state=defaultState
+            }
 
             Item{
                 id:abb
