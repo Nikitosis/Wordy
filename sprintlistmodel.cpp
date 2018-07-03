@@ -17,48 +17,45 @@ void SprintListModel::updateModel()
 
     updateLearned(stringQuery);
 
-    QString getLearnedString="SELECT * FROM " TABLE_VOCABULARY " WHERE ";
-    QSqlQuery getLearned;
+    /*QSqlQuery getLearned;
     getLearned.exec("SELECT * FROM "TABLE_LEARNED);
+    QString getLearnedString="SELECT * FROM " TABLE_VOCABULARY " WHERE ";
     while(getLearned.next())                                                                                  //make query,which selects words in Vocabulary from Learned using id's
     {
         getLearnedString+=" id= "+QString::number(getLearned.value("Vocabulary_Index").toInt())+" OR ";
     }
     getLearnedString+=" id= -1 ORDER BY id";
-    qDebug()<<getLearnedString;
+    qDebug()<<getLearnedString;*/
 
 
-    this->setQuery(getLearnedString);
+    this->setQuery("SELECT "TABLE_VOCABULARY".* "
+                   " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX);
 }
 
 void SprintListModel::updateLearned(QString mainQueryStr)
 {
     QSqlQuery prevWords;
-    prevWords.prepare("SELECT * FROM " TABLE_LEARNED " WHERE Date< :DATE");
+    prevWords.prepare("SELECT " TABLE_VOCABULARY".* "
+                      " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX
+                      " WHERE " TABLE_LEARNED"."LEARNED_DATE " < :DATE");                 //used join to combine two tables(all vocabulary words, which are in learned with late date
     prevWords.bindValue(":DATE",QDate::currentDate().toString("yyyy-MM-dd"));
     prevWords.exec();
-    if(prevWords.next())                                                                            //if we found words,which date is old
+
+    QSqlQuery learnedWords;
+    learnedWords.exec("SELECT * FROM "TABLE_LEARNED);
+    qDebug()<<"----Started Updating Packs ------";
+    while(prevWords.next())                                                                            //if we found words,which date is old
     {
-        qDebug()<<"CHANGING WORDS";
-        do                                                                                          //we update them to next pack level
-        {
-            int index=prevWords.value("Vocabulary_Index").toInt();                                  //get Id
-            QSqlQuery getVocabulary;
-            getVocabulary.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE id= :ID");              //get all the information from Vocabulary on that Id
-            getVocabulary.bindValue(":ID",index);
-            getVocabulary.exec();
-            qDebug()<<getVocabulary.lastError();
+        learnedWords.next();
+        QDate learnedDate=learnedWords.value("date").toDate();
+            db->changeRecordVocabulary(  prevWords.value("id").toInt(),                                                     //update to next pack
+                                         prevWords.value("word").toString(),
+                                         prevWords.value("translation").toString(),
+                                         prevWords.value("pack").toInt()+1,
+                                         learnedDate);
 
-            getVocabulary.next();
-
-            db->changeRecordVocabulary(  index,                                                     //update to next pack
-                                         getVocabulary.value("word").toString(),
-                                         getVocabulary.value("translation").toString(),
-                                         getVocabulary.value("pack").toInt()+1,
-                                         QDate::currentDate());
-        }while(prevWords.next());
-        qDebug()<<"Changed Packs";
     }
+    qDebug()<<"----Ended Updating Packs ------";
 
     db->clearLearned();
     qDebug()<<"Cleared Learned";
@@ -84,9 +81,10 @@ QVector<int> SprintListModel::getWordsPerPack()      //makes vector,which contai
     for(int i=0;i<packs.size();i++)
     {
         QSqlQuery query;
-        query.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE pack= :PACK AND Date<= :DATE");
+        query.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE pack= :PACK AND julianday(:TODAY) - julianday(date) >= :UPDATEDAYS");
         query.bindValue(":PACK",packs[i].packNum);
-        query.bindValue(":DATE",QDate::currentDate().addDays(packs[i].daysToUpdate).toString("yyyy-MM-dd"));
+        query.bindValue(":TODAY",QDate::currentDate().toString("yyyy-MM-dd"));
+        query.bindValue(":UPDATEDAYS",packs[i].daysToUpdate);
         query.exec();
         int amount=0;
         while(query.next())

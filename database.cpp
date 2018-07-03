@@ -19,6 +19,7 @@ void Database::connectToDatabase()
          qDebug()<<"USING ANDROID";
     #endif
 
+
     //this->restoreDataBase();
     //QFile file(MYPATH DATABASE_NAME);
     //file.remove();
@@ -102,7 +103,7 @@ bool Database::changeRecordVocabulary(const int id, const QVariantList &data)
         qDebug() <<query.lastError().text();
         return false;
     }
-    qDebug()<<"UPDATED: "<<data[0].toString()<<data[1].toString()<<id<<" "<<data[2].toInt();
+    qDebug()<<"UPDATED: "<<data[0].toString()<<data[1].toString()<<id<<" "<<data[2].toInt()<<"-"<<data[3].toDate().toString("yyyy-MM-dd");
     return true;
 }
 
@@ -205,8 +206,9 @@ bool Database::createTable()
 
     query1.prepare("CREATE TABLE " TABLE_LEARNED " ("
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    LEARNED_VOCABULARY_INDEX    " INT NOT NULL, "
-                    LEARNED_DATE                " DATE "
+                    LEARNED_VOCABULARY_INDEX    " INT, "
+                    LEARNED_DATE                " DATE, "
+                    "FOREIGN KEY ("LEARNED_VOCABULARY_INDEX") REFERENCES " TABLE_VOCABULARY "(id)"
                     " )"
                   );
     if(query.exec() && query1.exec())

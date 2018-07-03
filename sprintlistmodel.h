@@ -23,7 +23,7 @@ public:
 
 public slots:
     void updateModel();
-    void updateWords(QString mainQueryStr);
+    void updateLearned(QString mainQueryStr);
 protected:
     QVector<int> getWordsPerPack();
     QString      getSprintQuery();

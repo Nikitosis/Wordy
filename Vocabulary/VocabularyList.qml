@@ -92,7 +92,7 @@ Item {
                         height: parent.height/2.3
                         anchors.bottom: parent.bottom
                         anchors.horizontalCenter: parent.horizontalCenter
-                        onChangePack: box.changePack(myModel.getId(index),word,translation,newRating,date)
+                        onChangePack: box.changePack(myModel.getId(index),word,translation,newRating,new Date())
                         z:3
 
                     }
