@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 Item {
     property int rating: -1
-    property int imgSize: Math.min(height,width/5)
+    property int imgSize: Math.min(height*1.2,width/5)
 
 
     signal changePack(int newRating)
@@ -10,29 +10,29 @@ Item {
     function updateImages(curRating)
     {
         if(curRating>=1)
-            firstRate.source= "qrc:/img/FireActive.png"
+            firstRate.source= "qrc:/img/EducActive.png"
         else
-            firstRate.source= "qrc:/img/FirePassive.png"
+            firstRate.source= "qrc:/img/EducPassive.png"
 
         if(curRating>=2)
-            secondRate.source= "qrc:/img/FireActive.png"
+            secondRate.source= "qrc:/img/EducActive.png"
         else
-            secondRate.source= "qrc:/img/FirePassive.png"
+            secondRate.source= "qrc:/img/EducPassive.png"
 
         if(curRating>=3)
-            thirdRate.source= "qrc:/img/FireActive.png"
+            thirdRate.source= "qrc:/img/EducActive.png"
         else
-            thirdRate.source= "qrc:/img/FirePassive.png"
+            thirdRate.source= "qrc:/img/EducPassive.png"
 
         if(curRating>=4)
-            fourthRate.source= "qrc:/img/FireActive.png"
+            fourthRate.source= "qrc:/img/EducActive.png"
         else
-            fourthRate.source= "qrc:/img/FirePassive.png"
+            fourthRate.source= "qrc:/img/EducPassive.png"
 
         if(curRating>=5)
-            fifthRate.source= "qrc:/img/FireActive.png"
+            fifthRate.source= "qrc:/img/EducActive.png"
         else
-            fifthRate.source= "qrc:/img/FirePassive.png"
+            fifthRate.source= "qrc:/img/EducPassive.png"
     }
 
     function updateRating(newRating)
@@ -47,9 +47,10 @@ Item {
 
         Image {
             id: firstRate
-            source: "qrc:/img/FireActive.png"
+            source: "qrc:/img/EducActive.png"
             height: imgSize
             width: imgSize
+            fillMode: Image.PreserveAspectFit
 
             MouseArea{
                 anchors.fill: parent
@@ -62,9 +63,10 @@ Item {
 
         Image {
             id: secondRate
-            source: "qrc:/img/FireActive.png"
+            source: "qrc:/img/EducActive.png"
             height: imgSize
             width: imgSize
+            fillMode: Image.PreserveAspectFit
 
             MouseArea{
                 anchors.fill: parent
@@ -78,7 +80,7 @@ Item {
 
         Image {
             id: thirdRate
-            source: "qrc:/img/FireActive.png"
+            source: "qrc:/img/EducActive.png"
             height: imgSize
             width: imgSize
 
@@ -93,7 +95,7 @@ Item {
 
         Image {
             id: fourthRate
-            source: "qrc:/img/FireActive.png"
+            source: "qrc:/img/EducActive.png"
             height: imgSize
             width: imgSize
 
@@ -108,7 +110,7 @@ Item {
 
         Image {
             id: fifthRate
-            source: "qrc:/img/FireActive.png"
+            source: "qrc:/img/EducActive.png"
             height: imgSize
             width: imgSize
 

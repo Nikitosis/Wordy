@@ -15,5 +15,7 @@
         <file>img/FireActive.png</file>
         <file>img/FirePassive.png</file>
         <file>img/FirePossible.png</file>
+        <file>img/EducActive.png</file>
+        <file>img/EducPassive.png</file>
     </qresource>
 </RCC>
