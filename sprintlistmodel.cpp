@@ -13,26 +13,23 @@ SprintListModel::SprintListModel(Database *db, QObject *parent):ListModel(parent
 
 void SprintListModel::updateModel()
 {
-    QString stringQuery=getSprintQuery();
-
-    updateLearned(stringQuery);
-
-    /*QSqlQuery getLearned;
-    getLearned.exec("SELECT * FROM "TABLE_LEARNED);
-    QString getLearnedString="SELECT * FROM " TABLE_VOCABULARY " WHERE ";
-    while(getLearned.next())                                                                                  //make query,which selects words in Vocabulary from Learned using id's
-    {
-        getLearnedString+=" id= "+QString::number(getLearned.value("Vocabulary_Index").toInt())+" OR ";
-    }
-    getLearnedString+=" id= -1 ORDER BY id";
-    qDebug()<<getLearnedString;*/
-
+    updateLearned();
 
     this->setQuery("SELECT "TABLE_VOCABULARY".* "
                    " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX);
 }
 
-void SprintListModel::updateLearned(QString mainQueryStr)
+void SprintListModel::updateLearned()
+{
+    increaseLearnedPacks();    //if we have already learned some words,we increase their packs
+
+    db->clearLearned();
+    qDebug()<<"Cleared Learned";
+
+    fillLearned();            //fill Learned table with new words to learn
+}
+
+void SprintListModel::increaseLearnedPacks()
 {
     QSqlQuery prevWords;
     prevWords.prepare("SELECT " TABLE_VOCABULARY".* "
@@ -57,9 +54,10 @@ void SprintListModel::updateLearned(QString mainQueryStr)
     }
     qDebug()<<"----Ended Updating Packs ------";
 
-    db->clearLearned();
-    qDebug()<<"Cleared Learned";
+}
 
+void SprintListModel::fillLearned()
+{
     QSqlQuery addWords;
     addWords.exec(getSprintQuery());
 
@@ -70,9 +68,6 @@ void SprintListModel::updateLearned(QString mainQueryStr)
                                    QDate::currentDate());
     }
     qDebug()<<"Added to Learned";
-
-
-
 }
 
 QVector<int> SprintListModel::getWordsPerPack()      //makes vector,which contains, how many words in each pack
