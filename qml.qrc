@@ -21,5 +21,7 @@
         <file>img/ButtonArrowActive.png</file>
         <file>img/ButtonArrowPassive.png</file>
         <file>img/HomeButton.png</file>
+        <file>img/NextTestActive.png</file>
+        <file>img/NextTestPassive.png</file>
     </qresource>
 </RCC>

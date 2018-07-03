@@ -93,9 +93,45 @@ Item {
     }
 
     Rectangle{
-        id:mainWordBox
+        id:banner
+        anchors.left: parent.left
+        anchors.right: parent.right
         anchors.top: parent.top
-        height: parent.height/4
+        height: 70
+        color:"black"
+
+        Rectangle{
+            id:backButton
+
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            anchors.top: parent.top
+            width: parent.width/8
+
+            color:"white"
+
+            Image{
+                anchors.centerIn: parent
+                width: parent.width
+                height: parent.height
+                source: "qrc:/img/HomeButton.png"
+                fillMode: Image.PreserveAspectFit
+            }
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    closeWindow()
+                    console.log("close test")
+                }
+            }
+        }
+    }
+
+    Rectangle{
+        id:mainWordBox
+        anchors.top: banner.bottom
+        height: parent.height/6
         width: parent.width
 
 
@@ -111,7 +147,7 @@ Item {
 
         anchors.top: mainWordBox.bottom
 
-        height: parent.height/1.5
+        height: parent.height/1.8
         width:parent.width
 
         Rectangle{
@@ -243,15 +279,15 @@ Item {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.top: optionsBox.bottom
-        width:parent.width/1.5
+        anchors.left: parent.left
 
         color:enabled ? "#41819b" : "#9cbdcb"
 
         Image{
             anchors.centerIn: parent
             width: parent.width
-            height: parent.height
-            source: nextButton.enabled ? "qrc:/img/ButtonArrowActive.png" : "qrc:/img/ButtonArrowPassive.png"
+            height: parent.height-parent.height/10
+            source: nextButton.enabled ? "qrc:/img/NextTestActive.png" : "qrc:/img/NextTestPassive.png"
             fillMode: Image.PreserveAspectFit
         }
 
@@ -259,34 +295,6 @@ Item {
             anchors.fill: parent
             onClicked: {
                 changeCard()
-            }
-        }
-    }
-
-
-    Rectangle{
-        id:backButton
-
-        anchors.left: parent.left
-        anchors.bottom: parent.bottom
-        anchors.top: optionsBox.bottom
-        width:parent.width-nextButton.width
-
-        color:"white"
-
-        Image{
-            anchors.centerIn: parent
-            width: parent.width
-            height: parent.height
-            source: "qrc:/img/HomeButton.png"
-            fillMode: Image.PreserveAspectFit
-        }
-
-        MouseArea{
-            anchors.fill: parent
-            onClicked: {
-                closeWindow()
-                console.log("close test")
             }
         }
     }
