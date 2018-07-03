@@ -5,9 +5,9 @@ SprintListModel::SprintListModel(Database *db, QObject *parent):ListModel(parent
     this->db=db;
     packs.push_back({1,0});
     packs.push_back({2,1});
-    packs.push_back({3,7});
-    packs.push_back({4,14});
-    packs.push_back({5,30});
+    packs.push_back({3,5});
+    packs.push_back({4,7});
+    packs.push_back({5,16});
 }
 
 
@@ -15,17 +15,7 @@ void SprintListModel::updateModel()
 {
     QString stringQuery=getSprintQuery();
 
-
-    /*QSqlQuery query;
-    query.exec(stringQuery);
-    qDebug()<<query.lastError();
-    int amount=0;
-    while(query.next())
-        amount++;
-
-    qDebug()<<"AMOUNT"<<amount;*/
-
-    updateWords(stringQuery);
+    updateLearned(stringQuery);
 
     QString getLearnedString="SELECT * FROM " TABLE_VOCABULARY " WHERE ";
     QSqlQuery getLearned;
@@ -41,7 +31,7 @@ void SprintListModel::updateModel()
     this->setQuery(getLearnedString);
 }
 
-void SprintListModel::updateWords(QString mainQueryStr)
+void SprintListModel::updateLearned(QString mainQueryStr)
 {
     QSqlQuery prevWords;
     prevWords.prepare("SELECT * FROM " TABLE_LEARNED " WHERE Date< :DATE");
@@ -65,7 +55,7 @@ void SprintListModel::updateWords(QString mainQueryStr)
                                          getVocabulary.value("word").toString(),
                                          getVocabulary.value("translation").toString(),
                                          getVocabulary.value("pack").toInt()+1,
-                                         getVocabulary.value("date").toDate());
+                                         QDate::currentDate());
         }while(prevWords.next());
         qDebug()<<"Changed Packs";
     }

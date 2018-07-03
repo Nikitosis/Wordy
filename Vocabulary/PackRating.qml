@@ -1,12 +1,11 @@
 import QtQuick 2.0
 
 Item {
-    property int rating: rating
+    property int rating: -1
     property int imgSize: Math.min(height,width/5)
 
 
     signal changePack(int newRating)
-    signal hoverRating(int hoverIndex)
 
     function updateImages(curRating)
     {
@@ -42,31 +41,6 @@ Item {
         rating=newRating
     }
 
-    onHoverRating: {
-        updateImages(rating)
-        if((hoverIndex>=2 && rating<2) || (hoverIndex<2 && rating>=2))
-        {
-            secondRate.source="qrc:/img/FirePossible.png"
-        }
-
-        if((hoverIndex>=3 && rating<3) || (hoverIndex<3 && rating>=3))
-        {
-            thirdRate.source="qrc:/img/FirePossible.png"
-        }
-        if((hoverIndex>=4 && rating<4) || (hoverIndex<4 && rating>=4))
-        {
-            fourthRate.source="qrc:/img/FirePossible.png"
-        }
-        if((hoverIndex>=5 && rating<5) || (hoverIndex<5 && rating>=5))
-        {
-            fifthRate.source="qrc:/img/FirePossible.png"
-        }
-        console.log("hoverRating")
-    }
-
-
-
-
     Row{
         anchors.bottom: parent.bottom
         anchors.horizontalCenter: parent.horizontalCenter
@@ -79,8 +53,6 @@ Item {
 
             MouseArea{
                 anchors.fill: parent
-                hoverEnabled: true
-                onEntered: hoverRating(1)
                 onClicked: {
                     changePack(1)
                     updateRating(1)
@@ -96,8 +68,6 @@ Item {
 
             MouseArea{
                 anchors.fill: parent
-                hoverEnabled: true
-                onEntered: hoverRating(2)
                 onClicked: {
                     console.log("kk")
                     changePack(2)
@@ -114,8 +84,6 @@ Item {
 
             MouseArea{
                 anchors.fill: parent
-                hoverEnabled: true
-                onEntered: hoverRating(3)
                 onClicked: {
                     changePack(3)
                     updateRating(3)
@@ -131,8 +99,6 @@ Item {
 
             MouseArea{
                 anchors.fill: parent
-                hoverEnabled: true
-                onEntered: hoverRating(4)
                 onClicked: {
                     changePack(4)
                     updateRating(4)
@@ -148,8 +114,6 @@ Item {
 
             MouseArea{
                 anchors.fill: parent
-                hoverEnabled: true
-                onEntered: hoverRating(5)
                 onClicked: {
                     changePack(5)
                     updateRating(5)

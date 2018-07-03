@@ -76,7 +76,8 @@ Item {
                 }
 
                 onStateChanged: {
-                    ratingBox.updateRating(pack)                                    //change actual pack,when open word
+                    if(ratingBox.rating==-1)
+                        ratingBox.updateRating(pack)                                    //set to actual pack if rating is undefined
                 }
 
                 Rectangle{   //words

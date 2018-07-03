@@ -24,9 +24,9 @@ Window {
         }
 
         onSprintClicked: {
-            sprintModel.updateModel()
             sprint.state="opened"
             console.log("Sprint opened aaa")
+            sprintModel.updateModel()
         }
         onTestClicked: {
             test.state="opened"

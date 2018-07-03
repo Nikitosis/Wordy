@@ -7,6 +7,7 @@ import QtQuick.Controls 2.0
         signal sprintClicked()
         signal testClicked()
         signal helpClicked()
+        z:0
 
 
 

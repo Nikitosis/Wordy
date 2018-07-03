@@ -9,6 +9,7 @@ Flipable{
             Text{
                 anchors.centerIn: parent
                 text:word
+                wrapMode: Text.Wrap
             }
     }
 
@@ -18,6 +19,7 @@ Flipable{
         Text{
             anchors.centerIn: parent
             text:translation
+            wrapMode: Text.Wrap
         }
 }
 
