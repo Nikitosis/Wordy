@@ -1,20 +1,20 @@
 import QtQuick 2.0
 
 Rectangle {
-    id:sprint
+    id:testBox
     color:"white"
     states:[
         State{
             name:"closed"
             PropertyChanges{
-                target:sprint
+                target:testBox
                 x:-width
             }
         },
         State{
             name:"opened"
             PropertyChanges{
-                target:sprint
+                target:testBox
                 x:0
             }
         }
@@ -34,6 +34,8 @@ Rectangle {
     TestCard{
         id:card
         anchors.fill: parent
+
+        onCloseWindow: { testBox.state="closed" }
     }
 
 

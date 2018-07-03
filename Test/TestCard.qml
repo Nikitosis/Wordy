@@ -8,8 +8,12 @@ Item {
     property string falseColor:"orange"
     property string defaultColor: "grey"
     property int    animationDuration: 500
+
+    signal closeWindow()
+
     function changeCard()
     {
+        nextButton.enabled=false
         changeCardAnimation.start()
         //nextButton.enabled=false
     }
@@ -107,7 +111,7 @@ Item {
 
         anchors.top: mainWordBox.bottom
 
-        height: parent.height/2
+        height: parent.height/1.5
         width:parent.width
 
         Rectangle{
@@ -121,7 +125,13 @@ Item {
             color:defaultColor
 
             Text{
-                anchors.centerIn: parent
+                height: parent.height
+                width: parent.width
+
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                wrapMode: Text.Wrap
+
                 text:firstOption.text
             }
 
@@ -146,7 +156,13 @@ Item {
             color:defaultColor
 
             Text{
-                anchors.centerIn: parent
+                height: parent.height
+                width: parent.width
+
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                wrapMode: Text.Wrap
+
                 text:secondOption.text
             }
 
@@ -170,7 +186,13 @@ Item {
             color:defaultColor
 
             Text{
-                anchors.centerIn: parent
+                height: parent.height
+                width: parent.width
+
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                wrapMode: Text.Wrap
+
                 text:thirdOption.text
             }
 
@@ -194,7 +216,13 @@ Item {
             color:defaultColor
 
             Text{
-                anchors.centerIn: parent
+                height: parent.height
+                width: parent.width
+
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+                wrapMode: Text.Wrap
+
                 text:fourthOption.text
             }
 
@@ -210,14 +238,56 @@ Item {
 
     }
 
-    Button{
+    Rectangle{
         id:nextButton
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.top: optionsBox.bottom
-        width: parent.width/3
-        onClicked: {
-            changeCard()
+        width:parent.width/1.5
+
+        color:enabled ? "#41819b" : "#9cbdcb"
+
+        Image{
+            anchors.centerIn: parent
+            width: parent.width
+            height: parent.height
+            source: nextButton.enabled ? "qrc:/img/ButtonArrowActive.png" : "qrc:/img/ButtonArrowPassive.png"
+            fillMode: Image.PreserveAspectFit
+        }
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                changeCard()
+            }
+        }
+    }
+
+
+    Rectangle{
+        id:backButton
+
+        anchors.left: parent.left
+        anchors.bottom: parent.bottom
+        anchors.top: optionsBox.bottom
+        width:parent.width-nextButton.width
+
+        color:"white"
+
+        Image{
+            anchors.centerIn: parent
+            width: parent.width
+            height: parent.height
+            source: "qrc:/img/HomeButton.png"
+            fillMode: Image.PreserveAspectFit
+        }
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                closeWindow()
+                console.log("close test")
+            }
         }
     }
 

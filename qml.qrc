@@ -17,5 +17,9 @@
         <file>img/FirePossible.png</file>
         <file>img/EducActive.png</file>
         <file>img/EducPassive.png</file>
+        <file>Test/SingleOption.qml</file>
+        <file>img/ButtonArrowActive.png</file>
+        <file>img/ButtonArrowPassive.png</file>
+        <file>img/HomeButton.png</file>
     </qresource>
 </RCC>
