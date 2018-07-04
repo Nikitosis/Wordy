@@ -328,6 +328,10 @@ Item {
                 changeCard()
             }
         }
+
+        Behavior on color{
+            ColorAnimation{duration:200}
+        }
     }
 
     Timer{                               //timer to update card in the middle of card changing
