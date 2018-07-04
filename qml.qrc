@@ -17,11 +17,11 @@
         <file>img/FirePossible.png</file>
         <file>img/EducActive.png</file>
         <file>img/EducPassive.png</file>
-        <file>Test/SingleOption.qml</file>
         <file>img/ButtonArrowActive.png</file>
         <file>img/ButtonArrowPassive.png</file>
         <file>img/HomeButton.png</file>
         <file>img/NextTestActive.png</file>
         <file>img/NextTestPassive.png</file>
+        <file>Test/TestPackRating.qml</file>
     </qresource>
 </RCC>

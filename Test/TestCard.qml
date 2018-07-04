@@ -9,6 +9,8 @@ Item {
     property string defaultColor: "grey"
     property int    animationDuration: 500
     property int    startBannerAnimationDuration:500
+    property int    fromPackNum:1
+    property int    toPackNum:5
 
     signal closeWindow()
 
@@ -21,7 +23,8 @@ Item {
 
     function initCard()
     {
-        testInfo.newTest()
+        testInfo.newTest(fromPackNum,toPackNum)
+
         firstOption.text=testInfo.getOption(0)
         secondOption.text=testInfo.getOption(1)
         thirdOption.text=testInfo.getOption(2)
@@ -139,21 +142,70 @@ Item {
         z:2
 
         Text{
-            width:parent.width
-            height: parent.height
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: packChoosing.top
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
 
             text:"Start"
             font.pixelSize: width/5
 
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    fromPackNum=fromPack.rating
+                    toPackNum=toPack.rating
+                    main.state="test"
+                    initCard()
+                }
+            }
         }
 
-        MouseArea{
-            anchors.fill: parent
-            onClicked: {
-                main.state="test"
-                initCard()
+        Rectangle{
+            id:packChoosing
+            anchors.left: parent.left
+            anchors.right:parent.right
+            anchors.bottom: parent.bottom
+            height: parent.height/6
+            color:"grey"
+            Row{
+                anchors.fill: parent
+                TestPackRating{
+                    id:fromPack
+                    anchors.bottom: parent.bottom
+                    anchors.top: parent.top
+                    width: parent.width/3
+                    rating:1
+                }
+
+                Item{
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    width: parent.width/3
+
+                    Text{
+                        anchors.centerIn: parent
+                        width: parent.width
+                        height: parent.height
+
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                        wrapMode: Text.Wrap
+
+                        text:"Only words between"
+                        font.pixelSize: Math.max(15,width/16)
+                    }
+                }
+
+                TestPackRating{
+                    id:toPack
+                    anchors.bottom: parent.bottom
+                    anchors.top: parent.top
+                    width: parent.width/3
+                    rating: 5
+                }
             }
         }
     }

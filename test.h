@@ -34,7 +34,7 @@ public:
     Test();
 
 public slots:
-    void newTest();
+    void newTest(int fromPack,int toPack);
     void resetWords();
     QString getMainWord();
     QString getMainAnsver();

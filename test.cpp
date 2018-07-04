@@ -5,12 +5,18 @@ Test::Test()
 
 }
 
-void Test::newTest()
+void Test::newTest(int fromPack, int toPack)
 {
     options.clear();
 
+    if(fromPack>=toPack)
+        std::swap(fromPack,toPack);
+
     QSqlQuery query;
-    query.exec("SELECT * FROM " TABLE_VOCABULARY );
+    query.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE "VOCABULARY_PACK " >= :FROMPACK AND " VOCABULARY_PACK " <= :TOPACK");
+    query.bindValue(":FROMPACK",fromPack);
+    query.bindValue(":TOPACK",toPack);
+    query.exec();
 
     QVector<Word> words;
     while(query.next())
@@ -23,6 +29,8 @@ void Test::newTest()
                         });
         qDebug()<<"added";
     }
+    qDebug()<<"Test words amount:"<<words.size();
+
     qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()));
     int wordNum= qrand()% words.size();
 
