@@ -7,9 +7,13 @@ Flipable{
             anchors.fill: parent
             color:"lightgreen"
             Text{
-                anchors.centerIn: parent
-                text:word
+                width: parent.width
+                height: parent.height
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
+
+                text:word
             }
     }
 
@@ -17,9 +21,13 @@ Flipable{
         anchors.fill: parent
         color:"grey"
         Text{
-            anchors.centerIn: parent
-            text:translation
+            width: parent.width
+            height: parent.height
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.Wrap
+
+            text:translation
         }
 }
 

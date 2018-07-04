@@ -19,6 +19,7 @@ Window {
 
         onVocabularyClicked: {
             vocabulary.state="opened"
+            vocabulary.list.listView.currentIndex=-1                //open vocabulary without selected item
             console.log("Vocabulary opened")
             myModel.updateModel()
         }
@@ -31,6 +32,7 @@ Window {
         onTestClicked: {
             test.state="opened"
             console.log("test opened")
+            test.getCard.state="start"
         }
     }
 

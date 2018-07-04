@@ -2,6 +2,8 @@ import QtQuick 2.0
 
 Rectangle {
     id:testBox
+
+    property alias getCard: card
     color:"white"
     states:[
         State{
@@ -34,6 +36,8 @@ Rectangle {
     TestCard{
         id:card
         anchors.fill: parent
+
+        state:"start"
 
         onCloseWindow: { testBox.state="closed" }
     }

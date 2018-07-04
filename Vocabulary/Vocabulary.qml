@@ -5,6 +5,7 @@ import QtQuick.Dialogs 1.2
 Rectangle {
     id:vocabulary
     color: "white"
+    property alias list:list
 
     states:[
         State{

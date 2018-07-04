@@ -8,6 +8,7 @@ Item {
     property string falseColor:"orange"
     property string defaultColor: "grey"
     property int    animationDuration: 500
+    property int    startBannerAnimationDuration:500
 
     signal closeWindow()
 
@@ -93,7 +94,7 @@ Item {
     }
 
     Rectangle{
-        id:banner
+        id:menuHeader
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.top: parent.top
@@ -129,8 +130,37 @@ Item {
     }
 
     Rectangle{
+        id:startingBanner
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.top: menuHeader.bottom
+        anchors.bottom: parent.bottom
+
+        z:2
+
+        Text{
+            width:parent.width
+            height: parent.height
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+
+            text:"Start"
+            font.pixelSize: width/5
+
+        }
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                main.state="test"
+                initCard()
+            }
+        }
+    }
+
+    Rectangle{
         id:mainWordBox
-        anchors.top: banner.bottom
+        anchors.top: menuHeader.bottom
         height: parent.height/6
         width: parent.width
 
@@ -147,7 +177,7 @@ Item {
 
         anchors.top: mainWordBox.bottom
 
-        height: parent.height/1.8
+        height: parent.height/1.7
         width:parent.width
 
         Rectangle{
@@ -280,6 +310,7 @@ Item {
         anchors.bottom: parent.bottom
         anchors.top: optionsBox.bottom
         anchors.left: parent.left
+        z:1
 
         color:enabled ? "#41819b" : "#9cbdcb"
 
@@ -360,5 +391,59 @@ Item {
                 easing.overshoot: 2.5
             }
         }
+    }
+
+    states:[State{
+                name:"start"
+                PropertyChanges {
+                    target: optionsBox
+                    opacity:0
+                }
+                PropertyChanges {
+                    target: mainWordBox
+                    opacity:0
+                }
+                PropertyChanges{
+                    target:startingBanner
+                    opacity:1
+                    enabled:true
+                }
+        },
+           State{
+               name:"test"
+               PropertyChanges {
+                   target: optionsBox
+                   opacity:1
+               }
+               PropertyChanges {
+                   target: mainWordBox
+                   opacity:1
+               }
+               PropertyChanges{
+                   target:startingBanner
+                   opacity:0
+                   enabled:false
+               }
+            }
+
+    ]
+
+    transitions: Transition {
+        from: "start"
+        to: "test"
+
+        SequentialAnimation{
+            NumberAnimation{
+                target: startingBanner
+                properties: "opacity"
+                duration: startBannerAnimationDuration
+            }
+            NumberAnimation{
+                targets: [mainWordBox,optionsBox]
+                properties: "opacity"
+                duration: startBannerAnimationDuration
+            }
+        }
+
     }
 }

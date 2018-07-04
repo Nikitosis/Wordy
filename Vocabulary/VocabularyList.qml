@@ -12,6 +12,7 @@ Item {
         anchors.fill: parent
         model:myModel
 
+
         property int lastItemIndex:-1
 
         delegate: Component{
