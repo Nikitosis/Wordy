@@ -4,6 +4,7 @@ QT += qml quick
 QT += sql
 QT += widgets
 CONFIG += c++11
+CONFIG += resources_big
 
 SOURCES += main.cpp \
     database.cpp \

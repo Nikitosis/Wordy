@@ -6,13 +6,15 @@ Rectangle{
     id:box
     property color   backgroundColor
     property string  mainText
-    property string  imgsource
+    property string  imgSource
+    property real    imgOpacity
     property int     selectedHeight:parent.height/9
     property int     deselectedHeight:parent.height/4
     property int     deselectedY
     property int     deselectedZ
     property int     animationDuration:900
     property int     shadowSize
+
 
 
     color:backgroundColor
@@ -25,6 +27,18 @@ Rectangle{
         text:mainText
         color:"white"
         font.bold: true
+        z:1
+    }
+
+    Image{
+        id:backgroundImage
+        anchors.fill: parent
+
+        opacity:imgOpacity
+        source: imgSource
+
+        fillMode: Image.PreserveAspectCrop
+        z:0
     }
 
     /*DropShadow {
@@ -39,19 +53,19 @@ Rectangle{
             source: parent
    }*/
     Rectangle {
-                id: shadow
-                property real offset: shadowSize
+        id: shadow
+        property real offset: shadowSize
 
-                color: "black"
-                width: parent.width
-                height: parent.height
-                z: -1
-                opacity: 0.25
-                radius: parent.radius
-                anchors.left: parent.left
-                anchors.top: parent.top
-                anchors.topMargin: offset
-            }
+        color: "black"
+        width: parent.width
+        height: parent.height
+        z: -1
+        opacity: 0.25
+        radius: parent.radius
+        anchors.left: parent.left
+        anchors.top: parent.top
+        anchors.topMargin: offset
+    }
 
    states:[
        State{

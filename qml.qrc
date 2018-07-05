@@ -26,5 +26,9 @@
         <file>img/AddIcon.png</file>
         <file>img/DeleteIcon.png</file>
         <file>img/EditIcon.png</file>
+        <file>img/VocabularyBackground.png</file>
+        <file>img/HelpBackground.png</file>
+        <file>img/SprintBackground.jpg</file>
+        <file>img/TestBackground.jpg</file>
     </qresource>
 </RCC>

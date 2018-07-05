@@ -50,10 +50,13 @@ import QtGraphicalEffects 1.0
             backgroundColor: "#a6f3a0"
             deselectedY: 0
             shadowSize: parent.height/100
+            imgSource: "qrc:/img/VocabularyBackground.png"
+            imgOpacity: 0.2
             state:"deselected"
 
             z:3
             deselectedZ: 3
+
 
             MouseArea{
                 anchors.fill: parent
@@ -88,6 +91,8 @@ import QtGraphicalEffects 1.0
             backgroundColor:"#e78a8a"
             deselectedY: parent.height/4
             shadowSize: parent.height/100
+            imgSource: "qrc:/img/SprintBackground.jpg"
+            imgOpacity: 0.1
             state:"deselected"
 
             z:2
@@ -128,6 +133,8 @@ import QtGraphicalEffects 1.0
             backgroundColor: "#61d5f2"
             deselectedY: parent.height/4 *2
             shadowSize: parent.height/100
+            imgSource: "qrc:/img/TestBackground.jpg"
+            imgOpacity: 0.15
             state:"deselected"
 
             z:1
@@ -164,6 +171,8 @@ import QtGraphicalEffects 1.0
             backgroundColor: "#d98af9"
             deselectedY: parent.height/4 *3
             shadowSize: parent.height/100
+            imgSource: "qrc:/img/HelpBackground.png"
+            imgOpacity: 0.15
             state:"deselected"
 
             z:0
