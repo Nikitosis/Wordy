@@ -234,8 +234,8 @@ Rectangle {
         id:optionsBox
 
         anchors.top: mainWordBox.bottom
+        anchors.bottom: nextButton.top
 
-        height: parent.height/1.7
         width:parent.width
 
         Rectangle{
@@ -366,8 +366,8 @@ Rectangle {
         id:nextButton
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        anchors.top: optionsBox.bottom
         anchors.left: parent.left
+        height: parent.height/6
         z:1
 
         color:enabled ? "#41819b" : "#9cbdcb"

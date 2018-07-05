@@ -1,6 +1,5 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.0
-import QtQuick.Window 2.3
 import QtGraphicalEffects 1.0
 
 Rectangle{
@@ -27,17 +26,31 @@ Rectangle{
         font.bold: true
     }
 
-    DropShadow {
+    /*DropShadow {
             id:shadow
             anchors.fill: parent
             cached: true
             horizontalOffset: 0
             verticalOffset: 2
-            radius: 10
-            samples: 16
+            radius: 7
+            samples: 7
             color: "#80000000"
             source: parent
-   }
+   }*/
+    Rectangle {
+                id: shadow
+                property real offset: 4
+
+                color: "black"
+                width: parent.width
+                height: parent.height
+                z: -1
+                opacity: 0.25
+                radius: parent.radius
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.topMargin: offset
+            }
 
    states:[
        State{
@@ -49,7 +62,7 @@ Rectangle{
            }
            PropertyChanges{
                target: shadow
-               opacity:1
+               opacity:0.10
            }
        },
        State{
@@ -61,7 +74,7 @@ Rectangle{
            }
            PropertyChanges{
                target: shadow
-               opacity:0.25
+               opacity:0.03
            }
        }
    ]

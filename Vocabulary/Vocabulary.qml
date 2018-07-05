@@ -30,12 +30,12 @@ Rectangle {
         from: "closed"
         to: "opened"
         reversible: true
-        onRunningChanged: {
+        /*onRunningChanged: {
             if(state=="closed")
                 z=0
             else
                 z=10
-        }
+        }*/
 
         NumberAnimation{
             properties: "opacity"
