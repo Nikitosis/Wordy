@@ -12,6 +12,7 @@ Rectangle{
     property int     deselectedY
     property int     deselectedZ
     property int     animationDuration:900
+    property int     shadowSize
 
 
     color:backgroundColor
@@ -39,7 +40,7 @@ Rectangle{
    }*/
     Rectangle {
                 id: shadow
-                property real offset: 4
+                property real offset: shadowSize
 
                 color: "black"
                 width: parent.width

@@ -23,5 +23,8 @@
         <file>img/NextTestActive.png</file>
         <file>img/NextTestPassive.png</file>
         <file>Test/TestPackRating.qml</file>
+        <file>img/AddIcon.png</file>
+        <file>img/DeleteIcon.png</file>
+        <file>img/EditIcon.png</file>
     </qresource>
 </RCC>

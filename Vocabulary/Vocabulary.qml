@@ -143,6 +143,109 @@ Rectangle {
 
     }    //end banner*/
 
+
+    Row{
+        id:optionRow
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+
+        anchors.bottomMargin: Math.min(parent.height/30,parent.width/30)
+        anchors.rightMargin: Math.min(parent.height/30,parent.width/30)
+
+        property int circleSize:Math.min(parent.height/8,parent.width/4)
+
+        spacing: parent.width/12
+        z:1
+
+        Rectangle{
+            id:deleteWordButton
+            height: parent.circleSize
+            width: parent.circleSize
+            radius: parent.circleSize
+            color:"#399c4c"
+
+            opacity: list.listView.currentIndex==-1 ? 0 : 1     //not visible,if haven't selected any word
+
+            Image {
+                anchors.centerIn: parent
+                width: parent.width-parent.width/2.5
+                height: parent.height-parent.height/2.5
+                source: "qrc:/img/DeleteIcon.png"
+
+                fillMode: Image.PreserveAspectFit
+            }
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    dialogDeleteWord.open()
+                }
+            }
+
+            Behavior on opacity{
+                NumberAnimation{duration: 100}
+            }
+        }
+
+        Rectangle{
+            id:updateWordButton
+            height: parent.circleSize
+            width: parent.circleSize
+            radius: parent.circleSize
+            color:"#399c4c"
+
+            opacity: list.listView.currentIndex==-1 ? 0 : 1     //not visible,if haven't selected any word
+
+            Image {
+                anchors.centerIn: parent
+                width: parent.width-parent.width/2.5
+                height: parent.height-parent.height/2.5
+                source: "qrc:/img/EditIcon.png"
+
+                fillMode: Image.PreserveAspectFit
+            }
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    dialogUpdateWord.newWordName.text=myModel.getWord(list.listView.currentIndex)        //assign newWordName current word's name
+                    dialogUpdateWord.newWordTranslation.text=myModel.getTranslation(list.listView.currentIndex) //assign current word's translation
+
+                    dialogUpdateWord.open()
+                }
+            }
+
+            Behavior on opacity{
+                NumberAnimation{duration: 100}
+            }
+        }
+
+        Rectangle{
+            id:addWordButton
+            height: parent.circleSize
+            width: parent.circleSize
+            radius: parent.circleSize
+            color:"#399c4c"
+
+            Image {
+                anchors.centerIn: parent
+                width: parent.width-parent.width/2.5
+                height: parent.height-parent.height/2.5
+                source: "qrc:/img/AddIcon.png"
+
+                fillMode: Image.PreserveAspectFit
+            }
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    dialogNewWord.open()
+                }
+            }
+        }
+
+    }
+
     VocabularyList{
         id:list
         anchors.fill: parent
@@ -184,7 +287,6 @@ Rectangle {
    WordDialog{
        id:dialogUpdateWord
        width: parent.width
-
        onAccepted: {
            console.log("updated", newWordName.text,newWordTranslation.text)
 
