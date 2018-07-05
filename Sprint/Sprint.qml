@@ -3,7 +3,7 @@ import "../Vocabulary"
 
 Rectangle {
     id:sprint
-    color:"white"
+    color:"#fae3e3"
 
     clip:true
 
@@ -12,14 +12,16 @@ Rectangle {
             name:"closed"
             PropertyChanges{
                 target:sprint
-                x:width
+                opacity:0
+                enabled:false
             }
         },
         State{
             name:"opened"
             PropertyChanges{
                 target:sprint
-                x:0
+                opacity:1
+                enabled:true
             }
         }
     ]
@@ -30,12 +32,12 @@ Rectangle {
         reversible: true
 
         NumberAnimation{
-            properties: "x"
-            duration: 500
+            properties: "opacity"
+            duration: 600
         }
     }
 
-    Rectangle{
+    /*Rectangle{
         id:banner
         anchors.left: parent.left
         anchors.right: parent.right
@@ -90,16 +92,16 @@ Rectangle {
             }
         }
 
-    }
+    }*/
 
 
     SwipeView{
         id:list
-        anchors.top:banner.bottom
+        anchors.top:parent.top
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
-        z:0
+        //z:0
 
         onSwapFrom: {
             console.log(fromDirection)

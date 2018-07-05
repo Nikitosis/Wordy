@@ -8,56 +8,78 @@ import "./Test"
 
 
 Window {
+    id:window
     visible: true
     width: 640
     height: 480
     title: qsTr("Hello World")
 
     MainMenu{
+        id:mainMenu
         anchors.fill: parent
-        z:0
+        z:1
 
-        onVocabularyClicked: {
+        onVocabularyOpenClicked: {
             vocabulary.state="opened"
             vocabulary.list.listView.currentIndex=-1                //open vocabulary without selected item
             console.log("Vocabulary opened")
             myModel.updateModel()
         }
 
-        onSprintClicked: {
+        onSprintOpenClicked: {
             sprint.state="opened"
             console.log("Sprint opened aaa")
             sprintModel.updateModel()
         }
-        onTestClicked: {
+        onTestOpenClicked: {
             test.state="opened"
             console.log("test opened")
             test.getCard.state="start"
+        }
+
+        onVocabularyCloseClicked: {
+            vocabulary.state="closed"
+        }
+
+        onSprintCloseClicked: {
+            sprint.state="closed"
+        }
+
+        onTestCloseClicked: {
+            test.state="closed"
         }
     }
 
     Vocabulary{
         id:vocabulary
-        width: parent.width
-        height: parent.height
+        anchors.bottom:parent.bottom
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height:parent.height/9 *8
+
         state:"closed"
-        z:1
+        z:0
     }
 
     Sprint{
         id:sprint
+
+        anchors.bottom: parent.bottom
         width: parent.width
-        height: parent.height
+        height: parent.height/9 *8
+
         state:"closed"
-        z:1
+        z:0
     }
 
     Test{
         id:test
-        width: parent.width
-        height: parent.height
 
-        z:1
+        anchors.bottom: parent.bottom
+        width: parent.width
+        height: parent.height/9 *8
+
+        z:0
 
         state:"closed"
     }

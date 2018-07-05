@@ -4,10 +4,15 @@ import QtGraphicalEffects 1.0
 
     Item{
         id:main
-        signal vocabularyClicked()
-        signal sprintClicked()
-        signal testClicked()
-        signal helpClicked()
+        signal vocabularyOpenClicked()
+        signal sprintOpenClicked()
+        signal testOpenClicked()
+        signal helpOpenClicked()
+
+        signal vocabularyCloseClicked()
+        signal sprintCloseClicked()
+        signal testCloseClicked()
+        signal helpCloseClicked()
 
         function statesToSelected()
         {
@@ -33,9 +38,6 @@ import QtGraphicalEffects 1.0
             help.z=0
         }
 
-        z:0
-
-
         MainMenuButton{
             //visible: false
             id:vocabulary
@@ -57,11 +59,13 @@ import QtGraphicalEffects 1.0
                 onClicked: {
                     if(parent.state=="deselected")
                     {
+                        vocabularyOpenClicked()
                         statesToSelected()
                         parent.z=4
                     }
                     else
                     {
+                        vocabularyCloseClicked()
                         statesToDeselected()
                         resetZ()
                     }
@@ -93,11 +97,13 @@ import QtGraphicalEffects 1.0
                 onClicked: {
                     if(parent.state=="deselected")
                     {
+                        sprintOpenClicked()
                         statesToSelected()
                         parent.z=4
                     }
                     else
                     {
+                        sprintCloseClicked()
                         statesToDeselected()
                         resetZ()
                     }
@@ -129,11 +135,13 @@ import QtGraphicalEffects 1.0
                 onClicked: {
                     if(parent.state=="deselected")
                     {
+                        testOpenClicked()
                         statesToSelected()
                         parent.z=4
                     }
                     else
                     {
+                        testCloseClicked()
                         statesToDeselected()
                         resetZ()
                     }
@@ -162,11 +170,13 @@ import QtGraphicalEffects 1.0
                 onClicked: {
                     if(parent.state=="deselected")
                     {
+                        helpOpenClicked()
                         statesToSelected()
                         parent.z=4
                     }
                     else
                     {
+                        helpCloseClicked()
                         statesToDeselected()
                         resetZ()
                     }

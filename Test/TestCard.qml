@@ -2,8 +2,10 @@ import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
 
-Item {
+Rectangle {
     id:main
+    color:"#dbeff4"
+
     property string rightColor:"green"
     property string falseColor:"orange"
     property string defaultColor: "grey"
@@ -96,7 +98,7 @@ Item {
 
     }
 
-    Rectangle{
+    /*Rectangle{
         id:menuHeader
         anchors.left: parent.left
         anchors.right: parent.right
@@ -130,14 +132,16 @@ Item {
                 }
             }
         }
-    }
+    }*/
 
     Rectangle{
         id:startingBanner
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.top: menuHeader.bottom
+        anchors.top: parent.top
         anchors.bottom: parent.bottom
+
+        color:"transparent"
 
         z:2
 
@@ -212,9 +216,11 @@ Item {
 
     Rectangle{
         id:mainWordBox
-        anchors.top: menuHeader.bottom
+        anchors.top: parent.top
         height: parent.height/6
         width: parent.width
+
+        color:"transparent"
 
 
         Text{
@@ -464,6 +470,10 @@ Item {
                     opacity:1
                     enabled:true
                 }
+                PropertyChanges {
+                    target: nextButton
+                    opacity:0
+                }
         },
            State{
                name:"test"
@@ -479,6 +489,10 @@ Item {
                    target:startingBanner
                    opacity:0
                    enabled:false
+               }
+               PropertyChanges {
+                   target: nextButton
+                   opacity:1
                }
             }
 

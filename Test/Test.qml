@@ -10,14 +10,16 @@ Rectangle {
             name:"closed"
             PropertyChanges{
                 target:testBox
-                x:-width
+                opacity:0
+                enabled:false
             }
         },
         State{
             name:"opened"
             PropertyChanges{
                 target:testBox
-                x:0
+                opacity:1
+                enabled:true
             }
         }
     ]
@@ -28,8 +30,8 @@ Rectangle {
         reversible: true
 
         NumberAnimation{
-            properties: "x"
-            duration: 500
+            properties: "opacity"
+            duration: 600
         }
     }
 

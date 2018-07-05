@@ -4,7 +4,7 @@ import QtQuick.Dialogs 1.2
 
 Rectangle {
     id:vocabulary
-    color: "white"
+    color: "#e8f6e7"
     property alias list:list
 
     states:[
@@ -12,30 +12,38 @@ Rectangle {
             name:"closed"
             PropertyChanges{
                 target:vocabulary
-                x:-width
+                opacity:0
+                enabled:false
             }
         },
         State{
             name:"opened"
             PropertyChanges{
                 target:vocabulary
-                x:0
+                opacity:1
+                enabled:true
             }
         }
     ]
 
-    transitions: Transition{
-        from:"closed"
-        to:"opened"
+    transitions: Transition {
+        from: "closed"
+        to: "opened"
         reversible: true
+        onRunningChanged: {
+            if(state=="closed")
+                z=0
+            else
+                z=10
+        }
 
         NumberAnimation{
-            properties: "x"
-            duration: 500
+            properties: "opacity"
+            duration: 600
         }
     }
 
-    Rectangle{
+    /*Rectangle{
         id:banner
         anchors.top: parent.top
         anchors.left: parent.left
@@ -133,16 +141,16 @@ Rectangle {
             }
         }
 
-    }    //end banner
+    }    //end banner*/
 
     VocabularyList{
         id:list
-        anchors.top: banner.bottom
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
+        anchors.fill: parent
 
-        z:0
+
+        clip:true
+
+        //z:0
 
         onChangePack: {
             database.changeRecordVocabulary(id,word,translation,pack,date)
