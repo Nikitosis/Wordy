@@ -6,9 +6,9 @@ Rectangle {
     id:main
     color:"#dbeff4"
 
-    property string rightColor:"green"
-    property string falseColor:"orange"
-    property string defaultColor: "grey"
+    property string rightColor:"#689a6b"
+    property string wrongColor:"#9a7568"
+    property string defaultColor: "#5e757d"
     property int    animationDuration: 500
     property int    startBannerAnimationDuration:500
     property int    fromPackNum:1
@@ -225,8 +225,15 @@ Rectangle {
 
         Text{
             id:mainWordText
-            anchors.centerIn: parent
-            fontSizeMode: Text.Fit
+            height: parent.height
+            width: parent.width
+
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            font.pixelSize: Math.min(parent.width/15,parent.height/3)
+            wrapMode: Text.Wrap
+            font.bold: true
+
         }
     }
 
@@ -255,6 +262,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 wrapMode: Text.Wrap
+                font.pixelSize: Math.min(parent.width/18,parent.height/4)
 
                 text:firstOption.text
             }
@@ -262,7 +270,7 @@ Rectangle {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    firstOption.color=firstOption.isRight? rightColor : falseColor
+                    firstOption.color=firstOption.isRight? rightColor : wrongColor
                     optionClicked()
                 }
             }
@@ -286,6 +294,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 wrapMode: Text.Wrap
+                font.pixelSize: Math.min(parent.width/18,parent.height/4)
 
                 text:secondOption.text
             }
@@ -293,7 +302,7 @@ Rectangle {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    secondOption.color=secondOption.isRight? rightColor : falseColor
+                    secondOption.color=secondOption.isRight? rightColor : wrongColor
                     optionClicked()
                 }
             }
@@ -316,6 +325,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 wrapMode: Text.Wrap
+                font.pixelSize: Math.min(parent.width/18,parent.height/4)
 
                 text:thirdOption.text
             }
@@ -323,7 +333,7 @@ Rectangle {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    thirdOption.color=thirdOption.isRight? rightColor : falseColor
+                    thirdOption.color=thirdOption.isRight? rightColor : wrongColor
                     optionClicked()
                 }
             }
@@ -346,6 +356,7 @@ Rectangle {
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 wrapMode: Text.Wrap
+                font.pixelSize: Math.min(parent.width/18,parent.height/4)
 
                 text:fourthOption.text
             }
@@ -353,7 +364,7 @@ Rectangle {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    fourthOption.color=fourthOption.isRight? rightColor : falseColor
+                    fourthOption.color=fourthOption.isRight? rightColor : wrongColor
                     optionClicked()
                 }
             }

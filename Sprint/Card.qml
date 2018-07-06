@@ -13,6 +13,8 @@ Flipable{
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.Wrap
 
+                font.pixelSize: Math.min(parent.width/15,parent.height/3)
+
                 text:word
             }
     }
@@ -26,6 +28,8 @@ Flipable{
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
             wrapMode: Text.Wrap
+
+            font.pixelSize: Math.min(parent.width/15,parent.height/3)
 
             text:translation
         }

@@ -23,7 +23,7 @@ Rectangle{
     {
         id:textLabel
         anchors.centerIn: parent
-        font.pixelSize: 25
+        font.pixelSize: Math.min(parent.width/20,parent.height/3)
         text:mainText
         color:"white"
         font.bold: true
@@ -64,7 +64,7 @@ Rectangle{
         radius: parent.radius
         anchors.left: parent.left
         anchors.top: parent.top
-        anchors.topMargin: offset
+        anchors.topMargin: offset-0.5
     }
 
    states:[
