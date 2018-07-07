@@ -4,6 +4,7 @@ import "./MainMenu"
 import "./Vocabulary"
 import "./Sprint"
 import "./Test"
+import "./Settings"
 
 
 
@@ -37,6 +38,11 @@ Window {
             test.getCard.state="start"
         }
 
+        onSettingsOpenClicked: {
+            settings.state="opened"
+            console.log("settings open")
+        }
+
         onVocabularyCloseClicked: {
             vocabulary.state="closed"
         }
@@ -47,6 +53,10 @@ Window {
 
         onTestCloseClicked: {
             test.state="closed"
+        }
+
+        onSettingsCloseClicked: {
+            settings.state="closed"
         }
     }
 
@@ -74,6 +84,18 @@ Window {
 
     Test{
         id:test
+
+        anchors.bottom: parent.bottom
+        width: parent.width
+        height: parent.height/9 *8
+
+        z:0
+
+        state:"closed"
+    }
+
+    Settings{
+        id:settings
 
         anchors.bottom: parent.bottom
         width: parent.width

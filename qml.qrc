@@ -30,5 +30,6 @@
         <file>img/HelpBackground.png</file>
         <file>img/SprintBackground.jpg</file>
         <file>img/TestBackground.jpg</file>
+        <file>Settings/Settings.qml</file>
     </qresource>
 </RCC>

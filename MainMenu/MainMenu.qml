@@ -7,19 +7,19 @@ import QtGraphicalEffects 1.0
         signal vocabularyOpenClicked()
         signal sprintOpenClicked()
         signal testOpenClicked()
-        signal helpOpenClicked()
+        signal settingsOpenClicked()
 
         signal vocabularyCloseClicked()
         signal sprintCloseClicked()
         signal testCloseClicked()
-        signal helpCloseClicked()
+        signal settingsCloseClicked()
 
         function statesToSelected()
         {
             vocabulary.state="selected"
             sprint.state="selected"
             test.state="selected"
-            help.state="selected"
+            settings.state="selected"
         }
 
         function statesToDeselected()
@@ -27,7 +27,7 @@ import QtGraphicalEffects 1.0
             vocabulary.state="deselected"
             sprint.state="deselected"
             test.state="deselected"
-            help.state="deselected"
+            settings.state="deselected"
         }
 
         function resetZ()
@@ -35,7 +35,7 @@ import QtGraphicalEffects 1.0
             vocabulary.z=3
             sprint.z=2
             test.z=1
-            help.z=0
+            settings.z=0
         }
 
         MainMenuButton{
@@ -161,13 +161,13 @@ import QtGraphicalEffects 1.0
         }
 
         MainMenuButton{
-            id:help
+            id:settings
             width: parent.width
             height: parent.height/4
             x:0
             y:parent.height/4 *3
 
-            mainText:"Help"
+            mainText:"Settings"
             backgroundColor: "#d98af9"
             deselectedY: parent.height/4 *3
             shadowSize: parent.height/100
@@ -183,13 +183,13 @@ import QtGraphicalEffects 1.0
                 onClicked: {
                     if(parent.state=="deselected")
                     {
-                        helpOpenClicked()
+                        settingsOpenClicked()
                         statesToSelected()
                         parent.z=4
                     }
                     else
                     {
-                        helpCloseClicked()
+                        settingsCloseClicked()
                         statesToDeselected()
                         resetZ()
                     }
