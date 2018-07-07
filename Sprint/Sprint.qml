@@ -108,4 +108,39 @@ Rectangle {
         }
     }
 
+    Item{
+        id:rotateButton
+
+        property int rotatonAngle:0
+
+        anchors.right: parent.right
+        anchors.top: parent.top
+
+        height: Math.min(parent.height/6,parent.width/3.5)
+        width: Math.min(parent.height/6,parent.width/3.5)
+
+        anchors.topMargin:  Math.min(sprint.height/25,sprint.width/25)
+        anchors.rightMargin: Math.min(sprint.height/25,sprint.width/25)
+
+        Image{
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:/img/RotationButton.png"
+        }
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                parent.rotatonAngle+=360                        //due to clockwise rotation
+                parent.rotation=parent.rotatonAngle
+
+                list.rotateCard()
+            }
+        }
+
+        Behavior on rotation{
+            NumberAnimation{duration:400}
+        }
+    }
+
 }

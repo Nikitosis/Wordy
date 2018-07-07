@@ -10,6 +10,16 @@ Item {
     property alias  listView: list
     function rotateCard()
     {
+        if(defaultState=="default")
+        {
+            defaultState="rotated"
+            changedState="default"
+        }
+        else
+        {
+            defaultState="default"
+            changedState="rotated"
+        }
         list.currentItem.getCard.state=defaultState
         console.log(list.currentIndex)
     }

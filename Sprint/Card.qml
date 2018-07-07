@@ -3,6 +3,7 @@ import QtQuick 2.0
 Flipable{
     id:card
 
+
     front:Rectangle{
             anchors.fill: parent
             color:"lightgreen"
@@ -45,19 +46,20 @@ Flipable{
         angle:0
     }
 
+
     states:[
             State{
                 name:"rotated"
                 PropertyChanges{
                     target:rotate
-                    angle:180
+                    angle:0
                 }
         },
             State{
                 name:"default"
                 PropertyChanges{
                     target:rotate
-                    angle:0
+                    angle:180
             }
         }
 

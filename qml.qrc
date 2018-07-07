@@ -31,5 +31,6 @@
         <file>img/SprintBackground.jpg</file>
         <file>img/TestBackground.jpg</file>
         <file>Settings/Settings.qml</file>
+        <file>img/RotationButton.png</file>
     </qresource>
 </RCC>
