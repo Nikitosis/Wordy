@@ -45,6 +45,8 @@ Window {
 
         onVocabularyCloseClicked: {
             vocabulary.state="closed"
+            vocabulary.dialogNewWord.state="closed"
+            vocabulary.dialogUpdateWord.state="closed"
         }
 
         onSprintCloseClicked: {

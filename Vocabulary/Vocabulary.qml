@@ -6,6 +6,8 @@ Rectangle {
     id:vocabulary
     color: "#e8f6e7"
     property alias list:list
+    property alias dialogNewWord:dialogNewWord
+    property alias dialogUpdateWord:dialogUpdateWord
 
     Row{
         id:optionRow
@@ -15,7 +17,7 @@ Rectangle {
         anchors.bottomMargin: Math.min(parent.height/30,parent.width/30)
         anchors.rightMargin: Math.min(parent.height/30,parent.width/30)
 
-        property int circleSize:Math.min(parent.height/8,parent.width/4)
+        property int   circleSize:Math.min(parent.height/8,parent.width/4)
 
         spacing: parent.width/12
         z:1
@@ -74,7 +76,7 @@ Rectangle {
                     dialogUpdateWord.newWordName.text=myModel.getWord(list.listView.currentIndex)        //assign newWordName current word's name
                     dialogUpdateWord.newWordTranslation.text=myModel.getTranslation(list.listView.currentIndex) //assign current word's translation
 
-                    dialogUpdateWord.open()
+                    dialogUpdateWord.state="opened"
                 }
             }
 
@@ -102,7 +104,7 @@ Rectangle {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    dialogNewWord.open()
+                    dialogNewWord.state="opened"
                 }
             }
         }
@@ -130,7 +132,10 @@ Rectangle {
    WordDialog{
        id:dialogNewWord
        width: parent.width
+       height: parent.height
+       z:5
 
+       state:"closed"
        onAccepted: {
            console.log("apply")
            var date=new Date()
@@ -150,6 +155,10 @@ Rectangle {
    WordDialog{
        id:dialogUpdateWord
        width: parent.width
+       height: parent.height
+       z:5
+
+       state:"closed"
        onAccepted: {
            console.log("updated", newWordName.text,newWordTranslation.text)
 
