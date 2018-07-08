@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Dialogs 1.2
 
 Rectangle {
     id:main
@@ -98,42 +99,6 @@ Rectangle {
 
     }
 
-    /*Rectangle{
-        id:menuHeader
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.top: parent.top
-        height: 70
-        color:"black"
-
-        Rectangle{
-            id:backButton
-
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            anchors.top: parent.top
-            width: parent.width/8
-
-            color:"white"
-
-            Image{
-                anchors.centerIn: parent
-                width: parent.width
-                height: parent.height
-                source: "qrc:/img/HomeButton.png"
-                fillMode: Image.PreserveAspectFit
-            }
-
-            MouseArea{
-                anchors.fill: parent
-                onClicked: {
-                    closeWindow()
-                    console.log("close test")
-                }
-            }
-        }
-    }*/
-
     Rectangle{
         id:startingBanner
         anchors.left: parent.left
@@ -161,8 +126,16 @@ Rectangle {
                 onClicked: {
                     fromPackNum=fromPack.rating
                     toPackNum=toPack.rating
-                    main.state="test"
-                    initCard()
+
+                    if(testInfo.canBuildTest(fromPackNum,toPackNum))
+                    {
+                        main.state="test"
+                        initCard()
+                    }
+                    else
+                    {
+                        warningDialog.open()
+                    }
                 }
             }
         }
@@ -396,6 +369,13 @@ Rectangle {
             onClicked: {
                 changeCard()
             }
+        }
+
+        MessageDialog{
+            id:warningDialog
+            title: "Warning"
+            text:"You can't run test,because there are less then 4 words in the vocabulary,which correspond to the selected pack range."
+
         }
 
         Behavior on color{

@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
     //sprintModel->updateModel();
 
 
-    Test test=new Test(&app);
+    Test *test=new Test(&app);
 
 
     QQmlApplicationEngine engine;
@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("myModel",model);
     context->setContextProperty("database",&db);
     context->setContextProperty("sprintModel",sprintModel);
-    context->setContextProperty("testInfo",&test);
+    context->setContextProperty("testInfo",test);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

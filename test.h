@@ -39,6 +39,7 @@ public slots:
     QString getMainWord();
     QString getMainAnsver();
     QString getOption(int num);
+    bool canBuildTest(int fromPack,int toPack);
 
 private:
     QString mainWord;
