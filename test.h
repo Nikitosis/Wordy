@@ -31,7 +31,7 @@ public:
         QDate   date;
     };
 
-    Test();
+    Test(QObject *parent=0);
 
 public slots:
     void newTest(int fromPack,int toPack);

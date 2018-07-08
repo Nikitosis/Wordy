@@ -20,18 +20,23 @@ class SprintListModel: public ListModel
     Q_OBJECT
 public:
     SprintListModel(Database *db,QObject *parent=0);
+    ~SprintListModel();
 
 public slots:
     void updateModel();
     void updateLearned();
+    void setWordsInPack(int newWordsInPack);
+    int  getWordsInPack();
 
 private:
+    void writeSettings();
+    void readSettings();
     void increaseLearnedPacks();
     void fillLearned();
 protected:
-    QVector<int> getWordsPerPack();
     QString      getSprintQuery();
     QVector<Pack> packs;
+    int wordsInPack;
     Database *db;
 };
 

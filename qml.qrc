@@ -32,5 +32,7 @@
         <file>img/TestBackground.jpg</file>
         <file>Settings/Settings.qml</file>
         <file>img/RotationButton.png</file>
+        <file>img/IncreasePropertyValue.jpg</file>
+        <file>img/ReducePropertyValue.jpg</file>
     </qresource>
 </RCC>

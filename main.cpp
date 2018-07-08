@@ -14,12 +14,13 @@ int main(int argc, char *argv[])
     Database db;
     db.connectToDatabase();  //connect to DB
 
-    ListModel *model=new ListModel();  //create listModel(without the pointer won't work)
-    SprintListModel *sprintModel=new SprintListModel(&db);
+    ListModel *model=new ListModel(&app);  //create listModel(without the pointer won't work)
+    SprintListModel *sprintModel=new SprintListModel(&db,&app);
     //sprintModel->updateModel();
 
 
-    Test test;
+    Test test=new Test(&app);
+
 
     QQmlApplicationEngine engine;
 

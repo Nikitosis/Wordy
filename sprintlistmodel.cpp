@@ -8,6 +8,13 @@ SprintListModel::SprintListModel(Database *db, QObject *parent):ListModel(parent
     packs.push_back({3,5});
     packs.push_back({4,7});
     packs.push_back({5,16});
+
+    readSettings();
+}
+
+SprintListModel::~SprintListModel()
+{
+    writeSettings();
 }
 
 
@@ -29,6 +36,40 @@ void SprintListModel::updateLearned()
     fillLearned();            //fill Learned table with new words to learn
 }
 
+void SprintListModel::setWordsInPack(int newWordsInPack)
+{
+    wordsInPack=newWordsInPack;
+}
+
+int SprintListModel::getWordsInPack()
+{
+    return wordsInPack;
+}
+
+void SprintListModel::readSettings()
+{
+    qDebug()<<"read Settings";
+    QSettings settings("PupovCorp","Wordy");
+    settings.beginGroup("SprintModel");
+
+    setWordsInPack(settings.value("wordsInPack",5).toInt());
+
+    settings.endGroup();
+
+}
+
+void SprintListModel::writeSettings()
+{
+     qDebug()<<"write Settings";
+    QSettings settings("PupovCorp","Wordy");
+    settings.beginGroup("SprintModel");
+
+    settings.setValue("wordsInPack",getWordsInPack());
+
+    settings.endGroup();
+
+}
+
 void SprintListModel::increaseLearnedPacks()
 {
     QSqlQuery prevWords;
@@ -45,7 +86,7 @@ void SprintListModel::increaseLearnedPacks()
     {
         learnedWords.next();
         QDate learnedDate=learnedWords.value("date").toDate();
-            db->changeRecordVocabulary(  prevWords.value("id").toInt(),                                                     //update to next pack
+            db->changeRecordVocabulary(  prevWords.value("id").toInt(),                                //update to next pack
                                          prevWords.value("word").toString(),
                                          prevWords.value("translation").toString(),
                                          prevWords.value("pack").toInt()+1,
@@ -70,61 +111,28 @@ void SprintListModel::fillLearned()
     qDebug()<<"Added to Learned";
 }
 
-QVector<int> SprintListModel::getWordsPerPack()      //makes vector,which contains, how many words in each pack
-{
-    QVector<int> wordsPerPack;
-    for(int i=0;i<packs.size();i++)
-    {
-        QSqlQuery query;
-        query.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE pack= :PACK AND julianday(:TODAY) - julianday(date) >= :UPDATEDAYS");
-        query.bindValue(":PACK",packs[i].packNum);
-        query.bindValue(":TODAY",QDate::currentDate().toString("yyyy-MM-dd"));
-        query.bindValue(":UPDATEDAYS",packs[i].daysToUpdate);
-        query.exec();
-        int amount=0;
-        while(query.next())
-            amount++;
-        wordsPerPack.push_back(amount);
-    }
-    int wordsInPack=maxWords/packs.size();
-    QVector<int> resWordsPerPack(wordsPerPack.size());
-    int wordsAmount=maxWords;
-
-    for(int i=0;i<resWordsPerPack.size();i++)                              //try to give each pack equal amount of words
-    {
-        resWordsPerPack[i]=qMin(wordsInPack,wordsPerPack[i]);
-        wordsAmount-=resWordsPerPack[i];
-    }
-
-    for(int i=0;i<resWordsPerPack.size();i++)                              //if we have remaining words,we add them to other packs
-    {
-        int plusAmount=qMin(wordsAmount,wordsPerPack[i]-resWordsPerPack[i]);
-        resWordsPerPack[i]+=plusAmount;
-        wordsAmount-=plusAmount;
-    }
-    qDebug()<<"---------";
-    for(int i=0;i<resWordsPerPack.size();i++)
-        qDebug()<<resWordsPerPack[i];
-
-    return resWordsPerPack;
-}
-
 QString SprintListModel::getSprintQuery()      //get query that selects new words to learn
 {
-    QString stringQuery;
-    QVector<int> wordsPerPack=getWordsPerPack();
+    QString stringQuery="SELECT * "
+                       "FROM (      SELECT * "
+                       "            FROM " TABLE_VOCABULARY
+                                  " WHERE (pack= "+QString::number(packs[0].packNum)+
+                                  " AND  julianday( " +"'"+QDate::currentDate().toString("yyyy-MM-dd")+"') -julianday(date)>= "+QString::number(packs[0].daysToUpdate)+")"
+                                  " ORDER BY id DESC  "
+                                  " LIMIT " +QString::number(getWordsInPack())+
+                                  ") "
+                                  " UNION ";      //for first pack
 
-    for(int i=0;i<wordsPerPack.size();i++)
+    for(int i=1;i<packs.size();i++)        //for other packs
     {
         stringQuery+="SELECT * "
                      "FROM (      SELECT * "
                      "            FROM " TABLE_VOCABULARY
                                 " WHERE (pack= "+QString::number(packs[i].packNum)+
                                 " AND  julianday( " +"'"+QDate::currentDate().toString("yyyy-MM-dd")+"') -julianday(date)>= "+QString::number(packs[i].daysToUpdate)+")"
-                                " ORDER BY date DESC, id  "
-                                " LIMIT "+QString::number(wordsPerPack[i])+
+                                " ORDER BY id DESC  "
                                 ") ";
-        if(i<wordsPerPack.size()-1)
+        if(i<packs.size()-1)
             stringQuery+=" UNION ";
     }
     qDebug()<<stringQuery;
