@@ -116,8 +116,8 @@ Rectangle {
         anchors.right: parent.right
         anchors.top: parent.top
 
-        height: Math.min(parent.height/6,parent.width/3.5)
-        width: Math.min(parent.height/6,parent.width/3.5)
+        height: Math.min(parent.height/8,parent.width/4)
+        width: Math.min(parent.height/8,parent.width/4)
 
         anchors.topMargin:  Math.min(sprint.height/25,sprint.width/25)
         anchors.rightMargin: Math.min(sprint.height/25,sprint.width/25)
