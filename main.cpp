@@ -6,6 +6,7 @@
 #include <listmodel.h>
 #include <sprintlistmodel.h>
 #include <test.h>
+#include <tutorials.h>
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
 
 
     Test *test=new Test(&app);
+    Tutorials *tutorials=new Tutorials(&app);
 
 
     QQmlApplicationEngine engine;
@@ -29,6 +31,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("database",&db);
     context->setContextProperty("sprintModel",sprintModel);
     context->setContextProperty("testInfo",test);
+    context->setContextProperty("tutorials",tutorials);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

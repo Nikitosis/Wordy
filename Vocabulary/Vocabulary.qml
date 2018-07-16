@@ -9,6 +9,15 @@ Rectangle {
     property alias dialogNewWord:dialogNewWord
     property alias dialogUpdateWord:dialogUpdateWord
 
+    VocabularyTutorial{
+        id:tutorial
+        height: parent.height
+        width: parent.width
+
+        z:10
+        visible: tutorials.isVocabularyTutorial()
+    }
+
     Row{
         id:optionRow
         anchors.right: parent.right

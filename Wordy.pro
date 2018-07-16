@@ -10,7 +10,8 @@ SOURCES += main.cpp \
     database.cpp \
     listmodel.cpp \
     sprintlistmodel.cpp \
-    test.cpp
+    test.cpp \
+    tutorials.cpp
 
 RESOURCES += qml.qrc
 
@@ -54,7 +55,8 @@ HEADERS += \
     database.h \
     listmodel.h \
     sprintlistmodel.h \
-    test.h
+    test.h \
+    tutorials.h
 
 DISTFILES += \
     android/AndroidManifest.xml \

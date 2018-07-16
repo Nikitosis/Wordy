@@ -34,5 +34,6 @@
         <file>img/RotationButton.png</file>
         <file>img/IncreasePropertyValue.jpg</file>
         <file>img/ReducePropertyValue.jpg</file>
+        <file>Vocabulary/VocabularyTutorial.qml</file>
     </qresource>
 </RCC>
