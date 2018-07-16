@@ -21,6 +21,7 @@ Rectangle{
             PropertyChanges{
                 target: dialogWord
                 x:0
+                enabled:true
             }
         },
         State{
@@ -28,6 +29,7 @@ Rectangle{
             PropertyChanges{
                 target: dialogWord
                 x:-width
+                enabled:false
             }
         }
     ]
@@ -67,7 +69,7 @@ Rectangle{
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                text:"Original"
+                text:"Word"
                 color:"white"
                 font.bold: true
             }
@@ -84,6 +86,9 @@ Rectangle{
                     anchors.fill: parent
                     font.pixelSize: Math.min(parent.height/1.6,width/length*1.9)
                     maximumLength: maxWordLength
+                    onTextChanged: {
+                        console.log("text changed")
+                    }
 
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
@@ -105,7 +110,7 @@ Rectangle{
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                text:"Translation"
+                text:"Definition"
                 color:"white"
                 font.bold: true
             }
@@ -177,6 +182,5 @@ Rectangle{
             newWordTranslation.focus=false
         }
     }
-
 
 }

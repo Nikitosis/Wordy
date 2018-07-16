@@ -75,7 +75,7 @@ Rectangle {
                 onClicked: {
                     dialogUpdateWord.newWordName.text=myModel.getWord(list.listView.currentIndex)        //assign newWordName current word's name
                     dialogUpdateWord.newWordTranslation.text=myModel.getTranslation(list.listView.currentIndex) //assign current word's translation
-
+                    console.log(list.listView.currentIndex)
                     dialogUpdateWord.state="opened"
                 }
             }
@@ -105,6 +105,8 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     dialogNewWord.state="opened"
+                    dialogUpdateWord.newWordName.text=""
+                    dialogUpdateWord.newWordTranslation.text=""
                 }
             }
         }
@@ -169,8 +171,8 @@ Rectangle {
                                  myModel.getDate(list.listView.currentIndex));
 
            myModel.updateModel()
-           newWordName.text=""
-           newWordTranslation.text=""
+           //newWordName.text=""
+           //newWordTranslation.text=""
        }
    }
 
