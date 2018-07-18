@@ -8,6 +8,7 @@ Rectangle {
     property alias list:list
     property alias dialogNewWord:dialogNewWord
     property alias dialogUpdateWord:dialogUpdateWord
+    property alias tutorial:tutorial
 
     VocabularyTutorial{
         id:tutorial
@@ -15,7 +16,6 @@ Rectangle {
         width: parent.width
 
         z:10
-        visible: tutorials.isVocabularyTutorial()
     }
 
     Row{
@@ -114,8 +114,8 @@ Rectangle {
                 anchors.fill: parent
                 onClicked: {
                     dialogNewWord.state="opened"
-                    dialogUpdateWord.newWordName.text=""
-                    dialogUpdateWord.newWordTranslation.text=""
+                    dialogNewWord.newWordName.text=""
+                    dialogNewWord.newWordTranslation.text=""
                 }
             }
         }
@@ -158,8 +158,6 @@ Rectangle {
                                     1,
                                     date);
            myModel.updateModel()
-           newWordName.text=""
-           newWordTranslation.text=""
        }
    }
 
@@ -180,8 +178,6 @@ Rectangle {
                                  myModel.getDate(list.listView.currentIndex));
 
            myModel.updateModel()
-           //newWordName.text=""
-           //newWordTranslation.text=""
        }
    }
 
@@ -190,7 +186,7 @@ Rectangle {
    MessageDialog{
        id:dialogDeleteWord
        title:"Удаление слова"
-       text:"Подтвердите удаление слова\n"+myModel.getWord(list.listView.currentIndex)
+       text:"Подтвердите удаление слова\n"+myModel.getId(list.listView.currentIndex)
 
        standardButtons: StandardButton.Cancel | StandardButton.Apply
 

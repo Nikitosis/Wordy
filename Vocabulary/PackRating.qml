@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 Item {
     property int rating: -1
-    property int imgSize: Math.min(height*1.2,width/5)
+    property int imgSize: Math.min(height*1.1,width/6)
 
 
     signal changePack(int newRating)
@@ -33,6 +33,11 @@ Item {
             fifthRate.source= "qrc:/img/EducActive.png"
         else
             fifthRate.source= "qrc:/img/EducPassive.png"
+
+        if(curRating>=6)
+            sixthRate.source= "qrc:/img/EducActive.png"
+        else
+            sixthRate.source= "qrc:/img/EducPassive.png"
     }
 
     function updateRating(newRating)
@@ -119,6 +124,21 @@ Item {
                 onClicked: {
                     changePack(5)
                     updateRating(5)
+                }
+            }
+        }
+
+        Image {
+            id: sixthRate
+            source: "qrc:/img/EducActive.png"
+            height: imgSize
+            width: imgSize
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    changePack(6)
+                    updateRating(6)
                 }
             }
         }

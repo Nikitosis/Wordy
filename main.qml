@@ -23,6 +23,12 @@ Window {
         onVocabularyOpenClicked: {
             vocabulary.state="opened"
             vocabulary.list.listView.currentIndex=-1                //open vocabulary without selected item
+            if(tutorials.isVocabularyTutorial())
+            {
+                vocabulary.tutorial.opacity=1
+                vocabulary.tutorial.pageNum=0
+                vocabulary.tutorial.enabled=true
+            }
             console.log("Vocabulary opened")
             myModel.updateModel()
         }
@@ -47,6 +53,7 @@ Window {
             vocabulary.state="closed"
             vocabulary.dialogNewWord.state="closed"
             vocabulary.dialogUpdateWord.state="closed"
+            vocabulary.tutorial.opacity=0
         }
 
         onSprintCloseClicked: {
