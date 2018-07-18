@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import QtQuick.Dialogs 1.2
 import "../Vocabulary"
 
 Rectangle {
@@ -37,62 +38,7 @@ Rectangle {
         }
     }
 
-    /*Rectangle{
-        id:banner
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: 70
-        color:"black"
 
-        z:1
-
-        Rectangle{
-            id:rotateButton
-            anchors.right: parent.right
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            width:parent.height
-            color:"blue"
-
-
-            MouseArea{
-                id:rotateButtonArea
-                anchors.fill:parent
-                onClicked: {
-                    if(list.defaultState=="default")
-                    {
-                        list.defaultState="rotated"
-                        list.changedState="default"
-                    }
-                    else
-                    {
-                        list.defaultState="default"
-                        list.changedState="rotated"
-                    }
-                    list.rotateCard()
-                }
-            }
-
-        }
-
-        Rectangle{
-            id:homeButton
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.bottom: parent.bottom
-            width: parent.height
-            color:"white"
-
-            MouseArea{
-                anchors.fill: parent
-                onClicked: {
-                    sprint.state="closed"
-                    list.listView.currentIndex=0
-                }
-            }
-        }
-
-    }*/
 
 
     SwipeView{
@@ -141,6 +87,17 @@ Rectangle {
         Behavior on rotation{
             NumberAnimation{duration:400}
         }
+    }
+
+    MessageDialog{
+        id:warningDialog
+        title: "No words"
+        text:"There are no words for you to repeat today. Add more words in vocabulary."
+
+    }
+    onStateChanged: {
+        if(state=="opened" && !sprintModel.isAnyWords())
+            warningDialog.open()
     }
 
 }

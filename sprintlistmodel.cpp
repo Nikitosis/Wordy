@@ -46,6 +46,17 @@ int SprintListModel::getWordsInPack()
     return wordsInPack;
 }
 
+bool SprintListModel::isAnyWords()
+{
+    QSqlQuery words;
+    words.exec(getSprintQuery());
+
+    if(words.next())
+        return true;
+
+    return false;
+}
+
 void SprintListModel::readSettings()
 {
     qDebug()<<"read Settings";

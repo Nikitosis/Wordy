@@ -27,6 +27,7 @@ public slots:
     void updateLearned();
     void setWordsInPack(int newWordsInPack);
     int  getWordsInPack();
+    bool isAnyWords();
 
 private:
     void writeSettings();

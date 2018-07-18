@@ -371,16 +371,16 @@ Rectangle {
             }
         }
 
-        MessageDialog{
-            id:warningDialog
-            title: "Warning"
-            text:"You can't run test,because there are less then 4 words in the vocabulary,which correspond to the selected pack range."
-
-        }
-
         Behavior on color{
             ColorAnimation{duration:200}
         }
+    }
+
+    MessageDialog{
+        id:warningDialog
+        title: "Warning"
+        text:"You can't run test,because there are less then 4 words in the vocabulary,which correspond to the selected pack range."
+
     }
 
     Timer{                               //timer to update card in the middle of card changing
