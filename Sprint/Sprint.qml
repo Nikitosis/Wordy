@@ -8,6 +8,28 @@ Rectangle {
 
     clip:true
 
+    function open()
+    {
+        sprint.state="opened"
+        console.log("Sprint opened aaa")
+        sprintModel.updateModel()
+
+        if(!sprintModel.isAnyWords())
+        {
+            warningText.visible=true
+        }
+        else
+        {
+            warningText.visible=false
+        }
+    }
+
+    function close()
+    {
+        sprint.state="closed"
+        warningText.visible=false
+    }
+
     states:[
         State{
             name:"closed"
@@ -39,6 +61,13 @@ Rectangle {
     }
 
 
+    SprintTutorial{
+        id:tutorial
+        height: parent.height
+        width: parent.width
+
+        z:10
+    }
 
 
     SwipeView{
@@ -89,15 +118,15 @@ Rectangle {
         }
     }
 
-    MessageDialog{
-        id:warningDialog
-        title: "No words"
-        text:"There are no words for you to repeat today. Add more words in vocabulary."
+    Text{
+        id:warningText
+        anchors.fill: parent
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
+        wrapMode: Text.Wrap
 
-    }
-    onStateChanged: {
-        if(state=="opened" && !sprintModel.isAnyWords())
-            warningDialog.open()
+        font.pixelSize: Math.min(parent.width/30,parent.height/15)
+        text:"There are no words for you to repeat today. Add more words in vocabulary."
     }
 
 }

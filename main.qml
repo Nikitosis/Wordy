@@ -22,51 +22,34 @@ Window {
         z:1
 
         onVocabularyOpenClicked: {
-            vocabulary.state="opened"
-            vocabulary.list.listView.currentIndex=-1                //open vocabulary without selected item
-            if(tutorials.isVocabularyTutorial())
-            {
-                vocabulary.tutorial.opacity=1
-                vocabulary.tutorial.pageNum=0
-                vocabulary.tutorial.enabled=true
-            }
-            console.log("Vocabulary opened")
-            myModel.updateModel()
+            vocabulary.open()
         }
 
         onSprintOpenClicked: {
-            sprint.state="opened"
-            console.log("Sprint opened aaa")
-            sprintModel.updateModel()
+            sprint.open()
         }
         onTestOpenClicked: {
-            test.state="opened"
-            console.log("test opened")
-            test.getCard.state="start"
+            test.open()
         }
 
         onSettingsOpenClicked: {
-            settings.state="opened"
-            console.log("settings open")
+            settings.open()
         }
 
         onVocabularyCloseClicked: {
-            vocabulary.state="closed"
-            vocabulary.dialogNewWord.state="closed"
-            vocabulary.dialogUpdateWord.state="closed"
-            vocabulary.tutorial.opacity=0
+            vocabulary.close()
         }
 
         onSprintCloseClicked: {
-            sprint.state="closed"
+            sprint.close()
         }
 
         onTestCloseClicked: {
-            test.state="closed"
+            test.close()
         }
 
         onSettingsCloseClicked: {
-            settings.state="closed"
+            settings.close()
         }
     }
 

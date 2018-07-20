@@ -3,8 +3,21 @@ import QtQuick 2.0
 Rectangle {
     id:testBox
 
-    property alias getCard: card
     color:"white"
+
+    property alias getCard: card
+    function open()
+    {
+        testBox.state="opened"
+        console.log("test opened")
+        card.state="start"
+    }
+
+    function close()
+    {
+        testBox.state="closed"
+    }
+
     states:[
         State{
             name:"closed"

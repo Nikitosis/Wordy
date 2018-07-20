@@ -2,7 +2,7 @@ import QtQuick 2.0
 
 Item {
     property int rating: 1
-    property int imgSize: Math.min(height*1.2,width/5)
+    property int imgSize: Math.min(height*1.2,width/6)
 
     Row{
         anchors.horizontalCenter: parent.horizontalCenter
@@ -76,6 +76,20 @@ Item {
                 anchors.fill: parent
                 onClicked: {
                     rating=5
+                }
+            }
+        }
+
+        Image {
+            id: sixthRate
+            source: rating>=6 ? "qrc:/img/EducActive.png" : "qrc:/img/EducPassive.png"
+            height: imgSize
+            width: imgSize
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    rating=6
                 }
             }
         }

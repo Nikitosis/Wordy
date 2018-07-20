@@ -10,6 +10,17 @@ Rectangle {
 
     property int        wordsInPack:sprintModel.getWordsInPack()
 
+    function open()
+    {
+        mainBox.state="opened"
+        console.log("settings open")
+    }
+
+    function close()
+    {
+        mainBox.state="closed"
+    }
+
     Flickable
     {
         anchors.fill: parent

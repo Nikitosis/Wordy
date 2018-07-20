@@ -1,5 +1,4 @@
 import QtQuick 2.0
-import QtMultimedia 5.8
 
 Item {
     id:mainBox
@@ -551,6 +550,6 @@ So that, you repeat each word 5 times in different periods of time. This way you
     }
 
     Behavior on opacity{
-        NumberAnimation{duration: 500}
+        NumberAnimation{duration: 300}
     }
 }
