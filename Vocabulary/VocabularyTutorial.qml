@@ -522,6 +522,7 @@ So that, you repeat each word 5 times in different periods of time. This way you
                 onClicked: {
                     mainBox.opacity=0
                     mainBox.enabled=false
+                    tutorials.passVocabularyTutorial()
                 }
             }
         }

@@ -76,6 +76,24 @@ Window {
 
             settings.close()
         }
+
+        focus: true
+        Keys.onReleased: {
+            if (event.key == Qt.Key_Back) {
+                console.log("Back button captured!")
+                if(vocabulary.state=="opened" || sprint.state=="opened" || test.state=="opened" || settings.state=="opened")
+                {
+                    event.accepted = true
+
+                    mainMenu.statesToDeselected()
+                    mainMenu.resetZ()
+                    vocabulary.close()
+                    sprint.close()
+                    test.close()
+                    settings.close()
+                }
+            }
+        }
     }
 
     Vocabulary{

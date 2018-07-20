@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QSettings>
+#include <QDebug>
 
 class Tutorials : public QObject
 {

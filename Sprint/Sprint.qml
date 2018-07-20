@@ -22,6 +22,18 @@ Rectangle {
         {
             warningText.visible=false
         }
+
+        if(tutorials.isSprintTutorial())
+        {
+            tutorial.opacity=1
+            tutorial.pageNum=0
+            tutorial.enabled=true
+        }
+        else
+        {
+            tutorial.opacity=0
+            tutorial.enabled=false
+        }
     }
 
     function close()

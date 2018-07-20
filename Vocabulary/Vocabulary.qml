@@ -16,10 +16,16 @@ Rectangle {
         vocabulary.list.listView.currentIndex=-1                //open vocabulary without selected item
         if(tutorials.isVocabularyTutorial())
         {
-            vocabulary.tutorial.opacity=1
-            vocabulary.tutorial.pageNum=0
-            vocabulary.tutorial.enabled=true
+            tutorial.opacity=1
+            tutorial.pageNum=0
+            tutorial.enabled=true
         }
+        else
+        {
+            tutorial.opacity=0
+            tutorial.enabled=false
+        }
+
         console.log("Vocabulary opened")
         myModel.updateModel()
     }

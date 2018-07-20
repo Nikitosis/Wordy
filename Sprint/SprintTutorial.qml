@@ -134,6 +134,7 @@ Slide left or right to change the word."
                 onClicked: {
                     mainBox.opacity=0
                     mainBox.enabled=false
+                    tutorials.passSprintTutorial()
                 }
             }
         }
