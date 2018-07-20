@@ -162,6 +162,6 @@ Slide left or right to change the word."
     }
 
     Behavior on opacity{
-        NumberAnimation{duration: 300}
+        NumberAnimation{duration: 150}
     }
 }

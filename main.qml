@@ -21,34 +21,59 @@ Window {
         anchors.fill: parent
         z:1
 
+
         onVocabularyOpenClicked: {
+            mainMenu.statesToSelected()
+            mainMenu.vocabulary.z=4
+
             vocabulary.open()
         }
 
         onSprintOpenClicked: {
+            mainMenu.statesToSelected()
+            mainMenu.sprint.z=4
+
             sprint.open()
         }
         onTestOpenClicked: {
+            mainMenu.statesToSelected()
+            mainMenu.test.z=4
+
             test.open()
         }
 
         onSettingsOpenClicked: {
+            mainMenu.statesToSelected()
+            mainMenu.settings.z=4
+
             settings.open()
         }
 
         onVocabularyCloseClicked: {
+            mainMenu.statesToDeselected()
+            mainMenu.resetZ()
+
             vocabulary.close()
         }
 
         onSprintCloseClicked: {
+            mainMenu.statesToDeselected()
+            mainMenu.resetZ()
+
             sprint.close()
         }
 
         onTestCloseClicked: {
+            mainMenu.statesToDeselected()
+            mainMenu.resetZ()
+
             test.close()
         }
 
         onSettingsCloseClicked: {
+            mainMenu.statesToDeselected()
+            mainMenu.resetZ()
+
             settings.close()
         }
     }
