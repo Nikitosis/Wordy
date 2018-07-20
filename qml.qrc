@@ -36,5 +36,7 @@
         <file>img/ReducePropertyValue.jpg</file>
         <file>Vocabulary/VocabularyTutorial.qml</file>
         <file>Sprint/SprintTutorial.qml</file>
+        <file>img/SprintArrowHorizontal.png</file>
+        <file>img/SprintArrowVertical.png</file>
     </qresource>
 </RCC>

@@ -81,6 +81,41 @@ Rectangle {
         z:10
     }
 
+    Item{
+        id:arrowHint
+        anchors.fill: parent
+        property int imgLength: Math.min(width/2,height/2)
+        property int imgWidth:Math.min(height/15,width/15)
+        property int imgMargin:Math.min(width/15,height/15)
+        opacity: 0.15
+        Image{
+            id:verticalArrow
+
+            anchors.verticalCenter: parent.verticalCenter
+            //anchors.bottom: parent.bottom
+            anchors.left: parent.left
+            anchors.leftMargin: parent.imgMargin
+            height: parent.imgLength
+            width: parent.imgWidth
+
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:/img/SprintArrowVertical.png"
+        }
+
+        Image{
+            id:horizontalArrow
+
+            anchors.horizontalCenter: parent.horizontalCenter
+            //anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: parent.imgMargin
+            height: parent.imgWidth
+            width: parent.imgLength
+
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:/img/SprintArrowHorizontal.png"
+        }
+    }
 
     SwipeView{
         id:list

@@ -14,7 +14,7 @@ Window {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Hello World")
+    title: qsTr("WordyWorld")
 
     MainMenu{
         id:mainMenu
@@ -78,7 +78,7 @@ Window {
         }
 
         focus: true
-        Keys.onReleased: {
+        Keys.onReleased: {                                    //handle back button on mobiles
             if (event.key == Qt.Key_Back) {
                 console.log("Back button captured!")
                 if(vocabulary.state=="opened" || sprint.state=="opened" || test.state=="opened" || settings.state=="opened")

@@ -88,7 +88,7 @@ bool Database::changeRecordVocabulary(const int id, const QVariantList &data)
 {
     QSqlQuery query;
 
-    query.prepare("UPDATE "TABLE_VOCABULARY " SET Word= :WORD , Translation= :TRANSLATION , Pack= :PACK, Date= :DATE WHERE id= :ID ;");
+    query.prepare("UPDATE " TABLE_VOCABULARY " SET Word= :WORD , Translation= :TRANSLATION , Pack= :PACK, Date= :DATE WHERE id= :ID ;");
 
 
     query.bindValue(":WORD",data[0].toString());

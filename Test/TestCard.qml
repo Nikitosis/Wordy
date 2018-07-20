@@ -181,7 +181,7 @@ Rectangle {
                     anchors.bottom: parent.bottom
                     anchors.top: parent.top
                     width: parent.width/3
-                    rating: 5
+                    rating: 6
                 }
             }
         }
