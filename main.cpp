@@ -2,7 +2,6 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QFileSystemModel>
-#include <QFileDialog>
 
 #include <database.h>
 #include <listmodel.h>
@@ -25,8 +24,12 @@ int main(int argc, char *argv[])
     Test *test=new Test(&app);
     Tutorials *tutorials=new Tutorials(&app);
 
-    QFileSystemModel *fileSystemModel=new QFileSystemModel;
-    fileSystemModel->setRootPath(QDir::homePath());
+    //QFileSystemModel *fileSystemModel=new QFileSystemModel;
+    //fileSystemModel->setRootPath(QDir::homePath());
+
+    //fileSystemModel->setro
+
+    qDebug()<<"E:\\NIKITA\\";
 
 
 
@@ -41,7 +44,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("sprintModel",sprintModel);
     context->setContextProperty("testInfo",test);
     context->setContextProperty("tutorials",tutorials);
-    context->setContextProperty("fileSystemModel",fileSystemModel);
+    //context->setContextProperty("fileSystemModel",fileSystemModel);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

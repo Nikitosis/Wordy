@@ -12,13 +12,8 @@
         <file>Test/Test.qml</file>
         <file>Test/TestCard.qml</file>
         <file>Vocabulary/PackRating.qml</file>
-        <file>img/FireActive.png</file>
-        <file>img/FirePassive.png</file>
-        <file>img/FirePossible.png</file>
         <file>img/EducActive.png</file>
         <file>img/EducPassive.png</file>
-        <file>img/ButtonArrowActive.png</file>
-        <file>img/ButtonArrowPassive.png</file>
         <file>img/HomeButton.png</file>
         <file>img/NextTestActive.png</file>
         <file>img/NextTestPassive.png</file>
@@ -38,5 +33,8 @@
         <file>Sprint/SprintTutorial.qml</file>
         <file>img/SprintArrowHorizontal.png</file>
         <file>img/SprintArrowVertical.png</file>
+        <file>Settings/FileBrowser.qml</file>
+        <file>img/DatabaseIcon.png</file>
+        <file>img/FolderIcon.png</file>
     </qresource>
 </RCC>

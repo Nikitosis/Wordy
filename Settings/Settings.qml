@@ -1,5 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
+import QtQuick.Dialogs 1.2
+import Qt.labs.platform 1.0
 
 Rectangle {
     id:mainBox
@@ -116,7 +118,104 @@ Rectangle {
 
             }
 
+            Rectangle{
+                id:section2Header
+                width: mainBox.width
+                height: sectionHeigh
+                color:sectionHeaderColor
+                Text{
+                    anchors.centerIn: parent
+                    width: parent.width
+                    height: parent.height
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: Math.min(parent.width/17,parent.height/4)
+                    text:"Data settings"
+                }
+            }
+
+            Rectangle{
+                id:section2Property1
+
+                width: mainBox.width
+                height: sectionHeigh
+                color:sectionPropertyColor
+
+                Rectangle{
+                    id:exportDatabase
+                    anchors.left: parent.left
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    width: parent.width/2
+
+                    color:"blue"
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {
+                            exportDialog.visible=true
+                            exportDialog.show()
+                        }
+                    }
+                }
+
+                Rectangle{
+                    id:importDatabase
+                    anchors.right: parent.right
+                    anchors.top: parent.top
+                    anchors.bottom: parent.bottom
+                    width: parent.width/2
+                    color:"green"
+                    MouseArea{
+                        anchors.fill: parent
+
+                    }
+                }
+
+            }
         }
+    }
+
+    /*Rectangle{
+        id:exportDialog
+        visible: false
+        color:"white"
+        anchors.fill: parent
+        ListView{
+            id:list
+            anchors.fill: parent
+
+
+
+           model:fileSystemModel
+
+            delegate: Rectangle{
+                height: 50
+                width: exportDialog.width
+                Text{
+                    anchors.centerIn: parent
+                    text:fileName
+                }
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked: {
+                        list.i
+
+
+                        console.log(index)
+                    }
+                }
+            }
+        }
+    }*/
+    FileBrowser{
+        id:exportDialog
+        visible:false
+        anchors.fill: parent
+        z:10
+        folderPath:"file:///E:/"
+        //folder:StandardPaths.writableLocation(StandardPaths.HomeLocation)
+        //folder:"file:///storage/extSdCard"
+
     }
 
     states:[
