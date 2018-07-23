@@ -36,5 +36,6 @@
         <file>Settings/FileBrowser.qml</file>
         <file>img/DatabaseIcon.png</file>
         <file>img/FolderIcon.png</file>
+        <file>img/BackButton.png</file>
     </qresource>
 </RCC>

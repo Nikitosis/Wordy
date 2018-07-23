@@ -4,8 +4,9 @@ import Qt.labs.folderlistmodel 2.1
 
 Rectangle {
     id: fileBrowser
-    //color: "transparent"
+    color: "transparent"
    // z: 4
+
 
     property string folderPath
     property bool shown: loader.sourceComponent
@@ -14,15 +15,16 @@ Rectangle {
     property int scaledMargin:5
     property int fontSize:16
     property int animationDuration:250
+    property string selectedFile:""
 
-    signal fileSelected(string file)
+    signal acceptClicked(string file)
 
     function selectFile(file) {
         if (file !== "") {
-            //folderPath = loader.item.folders.folder
-            fileBrowser.fileSelected(file)
+            //fileBrowser.itemSelected(file)
+            selectedFile=file
+            console.log(selectedFile)
         }
-        //loader.sourceComponent = undefined
     }
 
     function show() {
@@ -30,7 +32,36 @@ Rectangle {
         loader.item.parent = fileBrowser
         loader.item.anchors.fill = fileBrowser
         loader.item.foldersFolder = fileBrowser.folderPath
+        //fileBrowser.state="opened"
     }
+
+    function close()
+    {
+        loader.sourceComponent=undefined
+        //fileBrowser.state="closed"
+    }
+
+    /*states:[
+        State {
+            name: "opened"
+            PropertyChanges {
+                target: fileBrowser
+                x:0
+            }
+        },
+        State {
+            name: "closed"
+            PropertyChanges {
+                target: fileBrowser
+                x:-fileBrowser.width
+            }
+        }
+    ]
+
+    transitions: Transition{
+        NumberAnimation{ properties: "x"; duration: 1000 }
+    }*/
+
 
     Loader {
         id: loader
@@ -49,50 +80,67 @@ Rectangle {
 
             Rectangle {
                 id: titleBar
-                width: parent.width;
+                width: root.width;
                 height: itemHeight
 
                 color: "transparent"
+                Row{
+                    width: parent.width
+                    height: parent.height
+                    Rectangle {
+                        id: upButton
+                        width: titleBar.height
+                        height: titleBar.height
+                        color: "transparent"
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.margins: scaledMargin
 
-                Rectangle {
-                    id: upButton
-                    width: titleBar.height
-                    height: titleBar.height
-                    color: "transparent"
-                    anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.margins: scaledMargin
+                        Image { anchors.fill: parent; anchors.margins: scaledMargin; source: "qrc:/img/BackButton.png" }
 
-                    Image { anchors.fill: parent; anchors.margins: scaledMargin; source: "qrc:/img/HomeButton.png" }
+                        MouseArea { id: upRegion; anchors.fill: parent; onClicked: up() }
 
-                    MouseArea { id: upRegion; anchors.fill: parent; onClicked: up() }
-
-                    /*states: [
+                        /*states: [
                         State {
                             name: "pressed"
                             when: upRegion.pressed
                             PropertyChanges { target: upButton; color: palette.highlight }
                         }
                     ]*/
+                    }
+
+                    Text {
+                        id:textPath
+                        height: parent.height
+                        width: parent.width-parent.height*3
+
+                        text: folders.folder
+                        color: textColor
+                        elide: Text.ElideLeft; horizontalAlignment: Text.AlignLeft; verticalAlignment: Text.AlignVCenter
+                        font.pixelSize:0
+                    }
+
+                    Rectangle{
+                        id:okButton
+                        width: parent.height*2
+                        height: parent.height
+                        color:"green"
+
+                        MouseArea{
+                            anchors.fill: parent
+                            onClicked: {
+                                fileBrowser.acceptClicked("file:///"+selectedFile)
+                                //fileBrowser.close()
+                            }
+                        }
+                    }
                 }
 
-                Text {
-                    anchors.left: upButton.right
-                    anchors.right: parent.right
-                    height: parent.height
-                    anchors.leftMargin: 10
-                    anchors.rightMargin: 4
 
-                    text: folders.folder
-                    color: textColor
-                    elide: Text.ElideLeft; horizontalAlignment: Text.AlignLeft; verticalAlignment: Text.AlignVCenter
-                    font.pixelSize:0
-                }
             }
 
             Rectangle {                  //white line under titleBar
                 color: "#353535"
-                width: parent.width
+                width: root.width
                 height: 1
                 anchors.top: titleBar.bottom
             }
@@ -105,7 +153,11 @@ Rectangle {
 
                     width: root.width
                     height: itemHeight
-                    color: "transparent"
+                    color: {
+                        //console.log(filePath+" "+filePath==selectedFile)
+                        return filePath==selectedFile ? "grey" :"transparent"
+
+                    }
 
 
                     function launch() {                             //when we click on file,folder
@@ -113,10 +165,15 @@ Rectangle {
                         if (filePath.length > 2 && filePath[1] === ':') // Windows drive logic, see QUrl::fromLocalFile()
                             path += '/';
                         path += filePath;
+
                         if (folders.isFolder(index))
+                        {
                             down(path);
-                        else
-                            fileBrowser.selectFile(path)
+                        }
+                    }
+                    function select()
+                    {
+                        fileBrowser.selectFile(filePath)
                     }
 
                     Row{
@@ -157,19 +214,28 @@ Rectangle {
                     MouseArea {
                         id: mouseRegion
                         anchors.fill: parent
-                        onClicked: {
+                        onDoubleClicked: {
                             launch()
                             console.log("clicked")
                         }
+                        onClicked: {
+                            select()
+                        }
                     }
 
-                    states: [
+                    /*states: [
                         State {
                             name: "pressed"
                             when: mouseRegion.pressed
                             PropertyChanges { target: wrapper; color: "grey" }
+                        },
+                        State{
+                            name:"selected"
+                            when: filePath== selectedFile
+                            PropertyChanges { target: wrapper; color: "blue" }
                         }
-                    ]
+
+                    ]*/
                 }
             }
 

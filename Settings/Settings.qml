@@ -152,7 +152,7 @@ Rectangle {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            exportDialog.visible=true
+                            dialogBackground.state="opened"
                             exportDialog.show()
                         }
                     }
@@ -207,14 +207,70 @@ Rectangle {
             }
         }
     }*/
+
+    Rectangle{
+        id:dialogBackground
+        anchors.fill: parent
+        color:"black"
+        opacity: 0
+        enabled: false
+        z:9
+
+        signal dialogClicked()
+
+        state:"closed"
+
+        states:[
+            State {
+                name: "opened"
+                PropertyChanges {
+                    target: dialogBackground
+                    opacity:0.3
+                    enabled:true
+                }
+            },
+            State{
+                name:"closed"
+                PropertyChanges {
+                    target: dialogBackground
+                    opacity:0
+                    enabled:false
+                }
+            }
+
+        ]
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                parent.state="closed"
+                parent.dialogClicked()
+            }
+        }
+    }
+
     FileBrowser{
         id:exportDialog
-        visible:false
-        anchors.fill: parent
+        visible:true
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
+        width: parent.width/4*3
+        clip:true
+
         z:10
         folderPath:"file:///E:/"
+
+        Connections{
+            target: dialogBackground
+
+            onDialogClicked:exportDialog.close()
+        }
+
         //folder:StandardPaths.writableLocation(StandardPaths.HomeLocation)
         //folder:"file:///storage/extSdCard"
+
+        //dialogBackground.onDialogClicked: { close() }
 
     }
 
