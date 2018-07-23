@@ -13,6 +13,7 @@ Rectangle {
     property int itemWidth:parent.width
     property int scaledMargin:5
     property int fontSize:16
+    property int animationDuration:250
 
     signal fileSelected(string file)
 
@@ -28,7 +29,7 @@ Rectangle {
         loader.sourceComponent = fileBrowserComponent
         loader.item.parent = fileBrowser
         loader.item.anchors.fill = fileBrowser
-        loader.item.folders1Folder = fileBrowser.folderPath
+        loader.item.foldersFolder = fileBrowser.folderPath
     }
 
     Loader {
@@ -42,9 +43,7 @@ Rectangle {
             id: root
             color: "white"
 
-            property variant currentFolder: folders1
-            property variant currentView: view1
-            property alias folders1Folder: folders1.folder
+            property alias foldersFolder: folders.folder
             property color textColor: "black"
 
 
@@ -68,13 +67,13 @@ Rectangle {
 
                     MouseArea { id: upRegion; anchors.fill: parent; onClicked: up() }
 
-                    states: [
+                    /*states: [
                         State {
                             name: "pressed"
                             when: upRegion.pressed
                             PropertyChanges { target: upButton; color: palette.highlight }
                         }
-                    ]
+                    ]*/
                 }
 
                 Text {
@@ -84,7 +83,7 @@ Rectangle {
                     anchors.leftMargin: 10
                     anchors.rightMargin: 4
 
-                    text: currentFolder.folder
+                    text: folders.folder
                     color: textColor
                     elide: Text.ElideLeft; horizontalAlignment: Text.AlignLeft; verticalAlignment: Text.AlignVCenter
                     font.pixelSize:0
@@ -96,24 +95,6 @@ Rectangle {
                 width: parent.width
                 height: 1
                 anchors.top: titleBar.bottom
-            }
-
-            FolderListModel {
-                id: folders1
-                folder: folderPath
-                nameFilters: ["*.db"]
-                sortField: "Type"
-            }
-
-            FolderListModel {
-                id: folders2
-                folder: folderPath
-                nameFilters: ["*.db"]
-                sortField: "Type"
-            }
-
-            SystemPalette {
-                id: palette
             }
 
             Component {
@@ -132,20 +113,11 @@ Rectangle {
                         if (filePath.length > 2 && filePath[1] === ':') // Windows drive logic, see QUrl::fromLocalFile()
                             path += '/';
                         path += filePath;
-                        if (currentFolder.isFolder(index))
+                        if (folders.isFolder(index))
                             down(path);
                         else
                             fileBrowser.selectFile(path)
                     }
-
-                    function updateImage()
-                    {
-                        if(currentFolder.isFolder(index))
-                            itemImage.source= "qrc:/img/FolderIcon.png"
-                        else
-                            itemImage.source= "qrc:/img/DatabaseIcon.png"
-                    }
-
 
                     Row{
                         width: root.width
@@ -156,7 +128,7 @@ Rectangle {
                             Image {
                                 id:itemImage
                                 source: {
-                                    if(view1.tellIsFolder(index))
+                                    if(folders.isFolder(index))
                                         return "qrc:/img/FolderIcon.png"
                                     else
                                         return "qrc:/img/DatabaseIcon.png"
@@ -186,7 +158,7 @@ Rectangle {
                         id: mouseRegion
                         anchors.fill: parent
                         onClicked: {
-                            if (currentFolder == currentView.model) launch()
+                            launch()
                             console.log("clicked")
                         }
                     }
@@ -201,14 +173,15 @@ Rectangle {
                 }
             }
 
-            ListView {
-                id: view1
+            FolderListModel {
+                id: folders
+                folder: folderPath
+                nameFilters: ["*.db"]
+                sortField: "Type"
+            }
 
-                property bool canUpdateImage:true
-                function tellIsFolder(index)
-                {
-                    return folders1.isFolder(index)
-                }
+            ListView {
+                id: view
 
                 anchors.top: titleBar.bottom
                 anchors.bottom: parent.bottom
@@ -216,7 +189,7 @@ Rectangle {
                 width: parent.width
                 clip:true
 
-                model: folders1
+                model: folders
                 delegate: folderDelegate
 
                 focus: true
@@ -224,97 +197,70 @@ Rectangle {
                 states: [
                     State {
                         name: "current"
-                        PropertyChanges { target: view1; x: 0 }
+                        PropertyChanges { target: view; x: 0 }
                     },
                     State {
                         name: "exitLeft"
-                        PropertyChanges { target: view1; x: -root.width }
+                        PropertyChanges { target: view; x: -root.width }
                     },
                     State {
                         name: "exitRight"
-                        PropertyChanges { target: view1; x: root.width }
+                        PropertyChanges { target: view; x: root.width }
                     }
                 ]
                 transitions: [
                     Transition {
-                        NumberAnimation { properties: "x"; duration: 450 }
+                        to:"current"
+                        NumberAnimation { properties: "x"; duration: animationDuration ; easing.type: Easing.OutQuart}
+                    },
+                    Transition {
+                        from:"current"
+                        NumberAnimation { properties: "x"; duration: animationDuration ; easing.type: Easing.InQuart}
                     }
+
                 ]
             }
 
-            ListView {
-                id: view2
-
-                property bool canUpdateImage:true
-                function tellIsFolder(index)
-                {
-                    return folders2.isFolder(index)
+            Timer{
+                id:animationTimer
+                interval: animationDuration
+                running: false
+                repeat: false
+                property string path
+                property int    startingX
+                onTriggered: {
+                    viewAppear(path,startingX)
                 }
+            }
 
-                anchors.top: titleBar.bottom
-                anchors.bottom: parent.bottom
+            function viewAppear(path,startingX)
+            {
+                view.x = -root.width;
 
-                width: parent.width
-                clip:true
-
-                model: folders2
-                delegate: folderDelegate
-
-                state:"exitRight"
-                states: [
-                    State {
-                        name: "current"
-                        PropertyChanges { target: view2; x: 0 }
-                    },
-                    State {
-                        name: "exitLeft"
-                        PropertyChanges { target: view2; x: -root.width }
-                    },
-                    State {
-                        name: "exitRight"
-                        PropertyChanges { target: view2; x: root.width }
-                    }
-                ]
-                transitions: [
-                    Transition {
-                        NumberAnimation { properties: "x"; duration: 450 }
-                    }
-                ]
+                folders.folder = path;
+                view.state = "current";
             }
 
             function down(path) {
-                if (currentFolder == folders1) {
-                    currentView = view2
-                    currentFolder = folders2;
-                    view1.state = "exitLeft";
-                } else {
-                    currentView = view1
-                    currentFolder = folders1;
-                    view2.state = "exitLeft";
-                }
-                currentView.x = root.width;
-                currentView.focus = true;
-                currentFolder.folder = path;
-                currentView.state = "current";
+                view.state="exitLeft"
+
+                animationTimer.path=path
+                animationTimer.startingX=root.width
+
+                animationTimer.start()
             }
 
             function up() {
-                var path = currentFolder.parentFolder;
+                var path = folders.parentFolder;
                 if (path.toString().length == 0 || path.toString() == 'file:')
                     return;
-                if (currentFolder == folders1) {
-                    currentView = view2
-                    currentFolder = folders2;
-                    view1.state = "exitRight";
-                } else {
-                    currentView = view1
-                    currentFolder = folders1;
-                    view2.state = "exitRight";
-                }
-                currentView.x = -root.width;
-                currentView.focus = true;
-                currentFolder.folder = path;
-                currentView.state = "current";
+
+                view.state="exitRight"
+
+                animationTimer.path=path
+                animationTimer.startingX=-root.width
+
+                animationTimer.start()
             }
         }
     }
