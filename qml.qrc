@@ -38,5 +38,6 @@
         <file>img/FolderIcon.png</file>
         <file>img/BackButton.png</file>
         <file>img/UpFolderIcon.png</file>
+        <file>Settings/SaveDialog.qml</file>
     </qresource>
 </RCC>

@@ -23,6 +23,9 @@ void Database::connectToDatabase()
     //this->restoreDataBase();
     //QFile file(MYPATH DATABASE_NAME);
     //file.remove();
+    if(!QDir(MYPATH).exists())
+        QDir().mkdir(MYPATH);
+
     if(!QFile(MYPATH DATABASE_NAME).exists())   //if doesn't exist
         this->restoreDataBase();    //create new db
     else
@@ -160,12 +163,18 @@ bool Database::clearLearned()
     return true;
 }
 
-void Database::exportDatabase(const QString path, const QString fileName)
+bool Database::exportDatabase(const QString path, const QString fileName)
 {
     if(QFile::exists(path+"/"+fileName))
         QFile::remove(path+"/"+fileName);
+    qDebug()<<"From "<<MYPATH DATABASE_NAME<<" To "<<path+"/"+fileName;
 
-    QFile::copy(MYPATH DATABASE_NAME,path+"/"+fileName);
+    return QFile::copy(MYPATH DATABASE_NAME,path+"/"+fileName);
+    //qDebug()<<QFile::copy(DATABASE_NAME,"/release");
+
+    //qDebug()<<
+
+
 }
 
 bool Database::isFileExist(const QString path, const QString fileName)
@@ -177,7 +186,9 @@ bool Database::openDataBase()
 {
     db=QSqlDatabase::addDatabase("QSQLITE");
     db.setHostName(DATABASE_HOSTNAME);
-    db.setDatabaseName("./" DATABASE_NAME);
+    db.setDatabaseName(MYPATH DATABASE_NAME);
+
+    qDebug()<<MYPATH DATABASE_NAME;
 
     if(db.open())
         return true;

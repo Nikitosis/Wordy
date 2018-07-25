@@ -273,7 +273,8 @@ Rectangle {
         //folderPath:"file:///E:/"
 
         onFileChosen: {
-           fileNameDialog.open()
+
+           saveDialog.openAndInit(selectedFolder)
         }
 
         onCloseClick: {
@@ -292,45 +293,74 @@ Rectangle {
 
     }
 
-    MessageDialog{
-        id:fileNameDialog
-        title:"Exporting database"
-        text:"aaasadasdasd"
-        height: parent.height/2
-        width: parent.width/2
+    SaveDialog{
+        id:saveDialog
+        dialogWidth:parent.width/4*3
+        dialogHeight: parent.height/4*3
 
-        standardButtons: StandardButton.Cancel | StandardButton.Apply
-
-        /*Column{
-            id:fileNameDialogColumn
-            anchors.fill: parent
-            Text{
-                width: parent.width
-                text:"abcsddsadasd"
-                height: parent.height/3
-            }
-            TextField{
-                width: parent.width
-                height: parent.height/3
-                font.pixelSize: 16
-            }
-
-
+        function openAndInit(newpath)
+        {
+            path=newpath
+            saveDialog.open()
         }
-        /*Button{
-            anchors.left: parent.left
-            anchors.bottom: parent.bottom
-            text:"Apply"
-            onClicked: fileNameDialog.Apply
+        function exportDatabase()
+        {
+            var correctFilePath=path
+            if(correctFilePath[9]===":")
+                correctFilePath=path.slice(8)
+            else
+                correctFilePath=path.slice(7)
+
+            console.log("exportDb")
+
+           if(database.exportDatabase(correctFilePath,fileName+".db"))
+           {
+               messageDialog.text="Succesfully copied"
+           }
+           else
+           {
+              messageDialog.text="Error copying database"
+           }
+           messageDialog.open()
         }
-        Button{
-            anchors.right: parent.right
-            text:"Apply"
-            onClicked: fileNameDialog.Apply
-        }*/
+
         onApply: {
+            var correctFilePath=path
+            if(correctFilePath[9]===":")              //if using windows file system
+                correctFilePath=path.slice(8)
+            else
+                correctFilePath=path.slice(7)
 
+            console.log(correctFilePath)
+
+            if(database.isFileExist(correctFilePath,fileName+".db"))
+            {
+                acceptReplaceDialog.open()
+            }
+            else
+            {
+                saveDialog.exportDatabase()
+            }
         }
+
+        Connections{
+            target: acceptReplaceDialog
+
+            onApply: saveDialog.exportDatabase()
+        }
+    }
+
+    MessageDialog {
+        id: acceptReplaceDialog
+        title: "Warning"
+        text:"Database with this name already exists. Do you want to replace it?"
+        standardButtons: StandardButton.Apply | StandardButton.Cancel
+
+    }
+
+    MessageDialog{
+        id:messageDialog
+        title:"Information"
     }
 
 

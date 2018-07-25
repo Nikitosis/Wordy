@@ -25,9 +25,9 @@
 
 
 #ifdef myandroid                             //change paths according to our machine
-    #define MYPATH "assets:/db/"
+    #define MYPATH QDir::currentPath()+"/db/"
 #else
-    #define MYPATH QDir::currentPath()+"/db"
+    #define MYPATH QDir::currentPath()+"/db/"
 #endif
 
 //first row is autoincrement
@@ -55,9 +55,9 @@ public slots:
     bool insertIntoTableLearned(const int vocabularyIndex,const QDate date);
     bool clearLearned();
 
-    void exportDatabase(const QString path,const QString fileName);
+    bool exportDatabase(const QString path, QString fileName);
 
-    bool isFileExist(const QString path,const QString fileName);
+    bool isFileExist(const QString path,QString fileName);
 
 private:
     QSqlDatabase db;

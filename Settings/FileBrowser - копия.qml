@@ -16,16 +16,24 @@ Rectangle {
     property int scaledMargin:5
     property int fontSize:16
     property int animationDuration:250
-    property string selectedFolder:folders.folder
+    property string selectedFile:""
 
     signal fileChosen(string file)
     signal closeClick()
+
+    function selectFile(file) {
+        if (file !== "") {
+            //fileBrowser.itemSelected(file)
+            selectedFile=file
+            console.log(selectedFile)
+        }
+    }
 
     function show() {
         //loader.sourceComponent = fileBrowserComponent
         //loader.item.parent = fileBrowser
         //loader.item.anchors.fill = fileBrowser
-        folders.folder = fileBrowser.folderPath
+        root.foldersFolder = fileBrowser.folderPath
         fileBrowser.state="opened"
     }
 
@@ -62,6 +70,7 @@ Rectangle {
         color: "white"
         anchors.fill: parent
 
+        property alias foldersFolder: folders.folder
         property color textColor: "black"
 
 
@@ -132,18 +141,22 @@ Rectangle {
                     Rectangle{
                         id:okButton
 
+                        property color disabledColor:"#80b57a"
+                        property color enabledColor:"green"
+
                         anchors.right: parent.right
                         anchors.top: parent.top
 
                         width:Math.min(parent.height*2,parent.width/3)
                         height: parent.height
-                        color:"green"
+                        color:selectedFile!="" ? enabledColor : disabledColor
 
+                       // enabled: selectedFile!="" ? true : false
 
                         MouseArea{
                             anchors.fill: parent
                             onClicked: {
-                                fileBrowser.fileChosen("file:///"+selectedFolder)
+                                fileBrowser.fileChosen("file:///"+selectedFile)
                                 //fileBrowser.close()
                             }
                         }
@@ -188,7 +201,7 @@ Rectangle {
 
                 width: root.width
                 height: itemHeight
-                color: view.currentIndex==index ? "grey" :"transparent"
+                color: filePath==selectedFile ? "grey" :"transparent"
 
                 function launch() {                             //when we click on file,folder
                     var path = "file://";
@@ -201,6 +214,13 @@ Rectangle {
                         root.downDir(path);
                         console.log("updir")
                     }
+
+                    selectedFile=""
+                }
+
+                function select()
+                {
+                    fileBrowser.selectFile(filePath)
                 }
 
                 Row{
@@ -246,10 +266,23 @@ Rectangle {
                     }
 
                     onClicked: {
-                        view.currentIndex=index
-                        console.log("index")
+                        select()
                     }
                 }
+
+                /*states: [
+                        State {
+                            name: "pressed"
+                            when: mouseRegion.pressed
+                            PropertyChanges { target: wrapper; color: "grey" }
+                        },
+                        State{
+                            name:"selected"
+                            when: filePath== selectedFile
+                            PropertyChanges { target: wrapper; color: "blue" }
+                        }
+
+                    ]*/
             }
         }
 
@@ -327,8 +360,6 @@ Rectangle {
             animationTimer.path=path
             animationTimer.startingX=root.width
 
-            view.currentIndex=-1
-
             animationTimer.start()
         }
 
@@ -339,8 +370,6 @@ Rectangle {
 
 
             view.state="exitRight"
-
-            view.currentIndex=-1
 
             animationTimer.path=path
             animationTimer.startingX=-root.width
