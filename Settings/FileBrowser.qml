@@ -5,11 +5,12 @@ import Qt.labs.folderlistmodel 2.1
 Rectangle {
     id: fileBrowser
     color: "transparent"
-   // z: 4
+    // z: 4
+
 
 
     property string folderPath
-    property bool shown: loader.sourceComponent
+    //property bool shown: loader.sourceComponent
     property int itemHeight:parent.height/9
     property int itemWidth:parent.width
     property int scaledMargin:5
@@ -17,7 +18,8 @@ Rectangle {
     property int animationDuration:250
     property string selectedFile:""
 
-    signal acceptClicked(string file)
+    signal fileChosen(string file)
+    signal closeClick()
 
     function selectFile(file) {
         if (file !== "") {
@@ -28,20 +30,21 @@ Rectangle {
     }
 
     function show() {
-        loader.sourceComponent = fileBrowserComponent
-        loader.item.parent = fileBrowser
-        loader.item.anchors.fill = fileBrowser
-        loader.item.foldersFolder = fileBrowser.folderPath
-        //fileBrowser.state="opened"
+        //loader.sourceComponent = fileBrowserComponent
+        //loader.item.parent = fileBrowser
+        //loader.item.anchors.fill = fileBrowser
+        root.foldersFolder = fileBrowser.folderPath
+        fileBrowser.state="opened"
     }
 
     function close()
     {
-        loader.sourceComponent=undefined
-        //fileBrowser.state="closed"
+        //loader.sourceComponent=undefined
+        fileBrowser.state="closed"
+        console.log("close")
     }
 
-    /*states:[
+    states:[
         State {
             name: "opened"
             PropertyChanges {
@@ -59,45 +62,48 @@ Rectangle {
     ]
 
     transitions: Transition{
-        NumberAnimation{ properties: "x"; duration: 1000 }
-    }*/
-
-
-    Loader {
-        id: loader
+        NumberAnimation{ properties: "x"; duration: 400; easing.type:Easing.OutCubic  }
     }
 
-    Component {
-        id: fileBrowserComponent
+    Rectangle {
+        id: root
+        color: "white"
+        anchors.fill: parent
+
+        property alias foldersFolder: folders.folder
+        property color textColor: "black"
+
 
         Rectangle {
-            id: root
-            color: "white"
+            id: titleBar
+            width: root.width;
+            height: itemHeight+itemHeight/2
 
-            property alias foldersFolder: folders.folder
-            property color textColor: "black"
-
-
-            Rectangle {
-                id: titleBar
-                width: root.width;
-                height: itemHeight
-
-                color: "transparent"
-                Row{
+            color: "transparent"
+            Column{
+                anchors.left: parent.left
+                anchors.top: parent.top
+                width: parent.width
+                height: parent.height
+                Item{
+                    id:navigationButtons
                     width: parent.width
-                    height: parent.height
+                    height: itemHeight
+
                     Rectangle {
-                        id: upButton
-                        width: titleBar.height
-                        height: titleBar.height
-                        color: "transparent"
+                        id: closeButton
+                        width: Math.min(parent.height,parent.width/3)
+                        height: parent.height
+
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.margins: scaledMargin
+                        anchors.left: parent.left
+
+                        color: "transparent"
 
                         Image { anchors.fill: parent; anchors.margins: scaledMargin; source: "qrc:/img/BackButton.png" }
 
-                        MouseArea { id: upRegion; anchors.fill: parent; onClicked: up() }
+                        MouseArea {anchors.fill: parent; onClicked: closeClick() }
 
                         /*states: [
                         State {
@@ -108,122 +114,157 @@ Rectangle {
                     ]*/
                     }
 
-                    Text {
-                        id:textPath
+                    Rectangle {
+                        id: upButton
+                        width: Math.min(parent.height,parent.width/3)
                         height: parent.height
-                        width: parent.width-parent.height*3
 
-                        text: folders.folder
-                        color: textColor
-                        elide: Text.ElideLeft; horizontalAlignment: Text.AlignLeft; verticalAlignment: Text.AlignVCenter
-                        font.pixelSize:0
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.margins: scaledMargin
+                        anchors.left: closeButton.right
+
+                        color: "transparent"
+
+                        Image { anchors.fill: parent; anchors.margins: scaledMargin; source: "qrc:/img/UpFolderIcon.png" }
+
+                        MouseArea { anchors.fill: parent; onClicked: root.upDir() }
+
+                        /*states: [
+                        State {
+                            name: "pressed"
+                            when: upRegion.pressed
+                            PropertyChanges { target: upButton; color: palette.highlight }
+                        }
+                    ]*/
                     }
 
                     Rectangle{
                         id:okButton
-                        width: parent.height*2
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+
+                        width:Math.min(parent.height*2,parent.width/3)
                         height: parent.height
                         color:"green"
 
                         MouseArea{
                             anchors.fill: parent
                             onClicked: {
-                                fileBrowser.acceptClicked("file:///"+selectedFile)
+                                fileBrowser.fileChosen("file:///"+selectedFile)
                                 //fileBrowser.close()
                             }
                         }
                     }
                 }
+                Rectangle {                  //white line under navigationButtons
+                    color: "#353535"
+                    width: root.width
+                    height: 1
+                }
 
+                Text {
+                    id:textPath
+                    height: itemHeight/2
+                    width: parent.width
+                    anchors.left: parent.left
 
+                    text: folders.folder
+                    color: root.textColor
+                    elide: Text.ElideLeft; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
+                    font.pixelSize:0
+                }
             }
 
-            Rectangle {                  //white line under titleBar
-                color: "#353535"
+
+        }
+
+        Rectangle {                  //white line under titleBar
+            color: "#353535"
+            width: root.width
+            height: 1
+            anchors.top: titleBar.bottom
+        }
+
+
+
+        Component {
+            id: folderDelegate
+
+            Rectangle {
+                id: wrapper
+
                 width: root.width
-                height: 1
-                anchors.top: titleBar.bottom
-            }
+                height: itemHeight
+                color: filePath==selectedFile ? "grey" :"transparent"
 
-            Component {
-                id: folderDelegate
+                function launch() {                             //when we click on file,folder
+                    var path = "file://";
+                    if (filePath.length > 2 && filePath[1] === ':') // Windows drive logic, see QUrl::fromLocalFile()
+                        path += '/';
+                    path += filePath;
 
-                Rectangle {
-                    id: wrapper
+                    if (folders.isFolder(index))
+                    {
+                        root.downDir(path);
+                        console.log("updir")
+                    }
 
+                    selectedFile=""
+                }
+
+                function select()
+                {
+                    fileBrowser.selectFile(filePath)
+                }
+
+                Row{
                     width: root.width
                     height: itemHeight
-                    color: {
-                        //console.log(filePath+" "+filePath==selectedFile)
-                        return filePath==selectedFile ? "grey" :"transparent"
-
-                    }
-
-
-                    function launch() {                             //when we click on file,folder
-                        var path = "file://";
-                        if (filePath.length > 2 && filePath[1] === ':') // Windows drive logic, see QUrl::fromLocalFile()
-                            path += '/';
-                        path += filePath;
-
-                        if (folders.isFolder(index))
-                        {
-                            down(path);
-                        }
-                    }
-                    function select()
-                    {
-                        fileBrowser.selectFile(filePath)
-                    }
-
-                    Row{
-                        width: root.width
+                    Item {                                              //image before folder
+                        width: itemHeight
                         height: itemHeight
-                        Item {                                              //image before folder
-                            width: itemHeight
-                            height: itemHeight
-                            Image {
-                                id:itemImage
-                                source: {
-                                    if(folders.isFolder(index))
-                                        return "qrc:/img/FolderIcon.png"
-                                    else
-                                        return "qrc:/img/DatabaseIcon.png"
-                                }
-                                fillMode: Image.PreserveAspectFit
-                                anchors.fill: parent
-                                anchors.margins: scaledMargin
+                        Image {
+                            id:itemImage
+                            source: {
+                                if(folders.isFolder(index))
+                                    return "qrc:/img/FolderIcon.png"
+                                else
+                                    return "qrc:/img/DatabaseIcon.png"
                             }
-                        }
-
-                        Text {                                              //file or folder name
-                            id: nameText
-                            width: parent.width-itemHeight
-                            height: parent.height
-                            verticalAlignment: Text.AlignVCenter
-                            //anchors.leftMargin: itemHeight + scaledMargin
-
-                            text: fileName
-                            font.pixelSize: 0
-                            color:textColor
-
-                            elide: Text.ElideRight
+                            fillMode: Image.PreserveAspectFit
+                            anchors.fill: parent
+                            anchors.margins: scaledMargin
                         }
                     }
 
-                    MouseArea {
-                        id: mouseRegion
-                        anchors.fill: parent
-                        onDoubleClicked: {
-                            launch()
-                            console.log("clicked")
-                        }
-                        onClicked: {
-                            select()
-                        }
+                    Text {                                              //file or folder name
+                        id: nameText
+                        width: parent.width-itemHeight
+                        height: parent.height
+                        verticalAlignment: Text.AlignVCenter
+                        //anchors.leftMargin: itemHeight + scaledMargin
+
+                        text: fileName
+                        font.pixelSize: 0
+                        color:root.textColor
+
+                        elide: Text.ElideRight
+                    }
+                }
+
+                MouseArea {
+                    id: mouseRegion
+                    anchors.fill: parent
+                    onDoubleClicked: {
+                        launch()
                     }
 
-                    /*states: [
+                    onClicked: {
+                        select()
+                    }
+                }
+
+                /*states: [
                         State {
                             name: "pressed"
                             when: mouseRegion.pressed
@@ -236,98 +277,99 @@ Rectangle {
                         }
 
                     ]*/
+            }
+        }
+
+        FolderListModel {
+            id: folders
+            folder: folderPath
+            nameFilters: ["*.db"]
+            sortField: "Type"
+        }
+
+        ListView {
+            id: view
+
+            anchors.top: titleBar.bottom
+            anchors.bottom: parent.bottom
+
+            width: parent.width
+            clip:true
+
+            model: folders
+            delegate: folderDelegate
+
+            focus: true
+            state: "current"
+            states: [
+                State {
+                    name: "current"
+                    PropertyChanges { target: view; x: 0 }
+                },
+                State {
+                    name: "exitLeft"
+                    PropertyChanges { target: view; x: -root.width }
+                },
+                State {
+                    name: "exitRight"
+                    PropertyChanges { target: view; x: root.width }
                 }
-            }
-
-            FolderListModel {
-                id: folders
-                folder: folderPath
-                nameFilters: ["*.db"]
-                sortField: "Type"
-            }
-
-            ListView {
-                id: view
-
-                anchors.top: titleBar.bottom
-                anchors.bottom: parent.bottom
-
-                width: parent.width
-                clip:true
-
-                model: folders
-                delegate: folderDelegate
-
-                focus: true
-                state: "current"
-                states: [
-                    State {
-                        name: "current"
-                        PropertyChanges { target: view; x: 0 }
-                    },
-                    State {
-                        name: "exitLeft"
-                        PropertyChanges { target: view; x: -root.width }
-                    },
-                    State {
-                        name: "exitRight"
-                        PropertyChanges { target: view; x: root.width }
-                    }
-                ]
-                transitions: [
-                    Transition {
-                        to:"current"
-                        NumberAnimation { properties: "x"; duration: animationDuration ; easing.type: Easing.OutQuart}
-                    },
-                    Transition {
-                        from:"current"
-                        NumberAnimation { properties: "x"; duration: animationDuration ; easing.type: Easing.InQuart}
-                    }
-
-                ]
-            }
-
-            Timer{
-                id:animationTimer
-                interval: animationDuration
-                running: false
-                repeat: false
-                property string path
-                property int    startingX
-                onTriggered: {
-                    viewAppear(path,startingX)
+            ]
+            transitions: [
+                Transition {
+                    to:"current"
+                    NumberAnimation { properties: "x"; duration: animationDuration ; easing.type: Easing.OutQuart}
+                },
+                Transition {
+                    from:"current"
+                    NumberAnimation { properties: "x"; duration: animationDuration ; easing.type: Easing.InQuart}
                 }
+
+            ]
+        }
+
+        Timer{
+            id:animationTimer
+            interval: animationDuration
+            running: false
+            repeat: false
+            property string path
+            property int    startingX
+            onTriggered: {
+                root.viewAppear(path,startingX)
             }
+        }
 
-            function viewAppear(path,startingX)
-            {
-                view.x = -root.width;
+        function viewAppear(path,startingX)
+        {
+            view.x = -root.width;
 
-                folders.folder = path;
-                view.state = "current";
-            }
+            folders.folder = path;
+            view.state = "current";
+        }
 
-            function down(path) {
-                view.state="exitLeft"
+        function downDir(path) {
+            view.state="exitLeft"
 
-                animationTimer.path=path
-                animationTimer.startingX=root.width
+            animationTimer.path=path
+            animationTimer.startingX=root.width
 
-                animationTimer.start()
-            }
+            animationTimer.start()
+        }
 
-            function up() {
-                var path = folders.parentFolder;
-                if (path.toString().length == 0 || path.toString() == 'file:')
-                    return;
+        function upDir() {
+            var path = folders.parentFolder;
+            if (path.toString().length == 0 || path.toString() == 'file:')
+                return;
 
-                view.state="exitRight"
 
-                animationTimer.path=path
-                animationTimer.startingX=-root.width
+            view.state="exitRight"
 
-                animationTimer.start()
-            }
+            animationTimer.path=path
+            animationTimer.startingX=-root.width
+
+            animationTimer.start()
+
         }
     }
 }

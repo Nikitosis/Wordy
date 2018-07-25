@@ -55,6 +55,10 @@ public slots:
     bool insertIntoTableLearned(const int vocabularyIndex,const QDate date);
     bool clearLearned();
 
+    void exportDatabase(const QString path,const QString fileName);
+
+    bool isFileExist(const QString path,const QString fileName);
+
 private:
     QSqlDatabase db;
 

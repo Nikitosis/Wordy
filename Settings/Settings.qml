@@ -1,7 +1,7 @@
 import QtQuick 2.0
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.1
 import QtQuick.Dialogs 1.2
-import Qt.labs.platform 1.0
+import Qt.labs.platform 1.0 as Platform
 
 Rectangle {
     id:mainBox
@@ -216,9 +216,15 @@ Rectangle {
         enabled: false
         z:9
 
-        signal dialogClicked()
+        signal backgroundClicked()
 
         state:"closed"
+
+        Connections{
+            target:exportDialog
+
+            onCloseClick: dialogBackground.state="closed"
+        }
 
         states:[
             State {
@@ -239,12 +245,15 @@ Rectangle {
             }
 
         ]
+        transitions: Transition{
+            NumberAnimation{properties: "opacity"; duration:400}
+        }
 
         MouseArea{
             anchors.fill: parent
             onClicked: {
                 parent.state="closed"
-                parent.dialogClicked()
+                parent.backgroundClicked()
             }
         }
     }
@@ -254,25 +263,76 @@ Rectangle {
         visible:true
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        anchors.left: parent.left
+        //anchors.left: parent.left
         width: parent.width/4*3
         clip:true
 
         z:10
-        folderPath:"file:///E:/"
+
+        state:"closed"
+        //folderPath:"file:///E:/"
+
+        onFileChosen: {
+           fileNameDialog.open()
+        }
+
+        onCloseClick: {
+            state:"closed"
+            close()
+        }
 
         Connections{
             target: dialogBackground
 
-            onDialogClicked:exportDialog.close()
+            onBackgroundClicked:exportDialog.closeClick()
         }
 
-        //folder:StandardPaths.writableLocation(StandardPaths.HomeLocation)
-        //folder:"file:///storage/extSdCard"
-
-        //dialogBackground.onDialogClicked: { close() }
+        folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.HomeLocation)
+        //folderPath:"file:///storage/extSdCard"
 
     }
+
+    MessageDialog{
+        id:fileNameDialog
+        title:"Exporting database"
+        text:"aaasadasdasd"
+        height: parent.height/2
+        width: parent.width/2
+
+        standardButtons: StandardButton.Cancel | StandardButton.Apply
+
+        /*Column{
+            id:fileNameDialogColumn
+            anchors.fill: parent
+            Text{
+                width: parent.width
+                text:"abcsddsadasd"
+                height: parent.height/3
+            }
+            TextField{
+                width: parent.width
+                height: parent.height/3
+                font.pixelSize: 16
+            }
+
+
+        }
+        /*Button{
+            anchors.left: parent.left
+            anchors.bottom: parent.bottom
+            text:"Apply"
+            onClicked: fileNameDialog.Apply
+        }
+        Button{
+            anchors.right: parent.right
+            text:"Apply"
+            onClicked: fileNameDialog.Apply
+        }*/
+        onApply: {
+
+        }
+    }
+
 
     states:[
         State{

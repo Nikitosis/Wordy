@@ -217,6 +217,7 @@ Rectangle {
 
        standardButtons: StandardButton.Cancel | StandardButton.Apply
 
+
        onApply: {
            database.removeRecordVocabulary(myModel.getId(list.listView.currentIndex))
            myModel.updateModel()

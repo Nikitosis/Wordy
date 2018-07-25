@@ -160,6 +160,19 @@ bool Database::clearLearned()
     return true;
 }
 
+void Database::exportDatabase(const QString path, const QString fileName)
+{
+    if(QFile::exists(path+"/"+fileName))
+        QFile::remove(path+"/"+fileName);
+
+    QFile::copy(MYPATH DATABASE_NAME,path+"/"+fileName);
+}
+
+bool Database::isFileExist(const QString path, const QString fileName)
+{
+    return QFile::exists(path+"/"+fileName);
+}
+
 bool Database::openDataBase()
 {
     db=QSqlDatabase::addDatabase("QSQLITE");
