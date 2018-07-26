@@ -40,7 +40,7 @@ public:
     explicit Database(QObject *parent = nullptr);
     ~Database();
 
-    void connectToDatabase();
+    bool connectToDatabase();
 
 signals:
 
@@ -56,6 +56,7 @@ public slots:
     bool clearLearned();
 
     bool exportDatabase(const QString path, QString fileName);
+    bool importDatabase(const QString path);
 
     bool isFileExist(const QString path,QString fileName);
 

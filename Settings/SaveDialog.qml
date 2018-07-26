@@ -8,8 +8,9 @@ Dialog {
     property int dialogWidth
     property string path
     property string fileName
-    //height: dialogHeight
-    //width: dialogWidth
+
+    height: dialogHeight
+    width: dialogWidth
 
     standardButtons: StandardButton.Apply | StandardButton.Cancel
 

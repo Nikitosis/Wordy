@@ -16,10 +16,23 @@ Rectangle {
     property int scaledMargin:5
     property int fontSize:16
     property int animationDuration:250
-    property string selectedFolder:folders.folder
+    property string selectedFile
 
     signal fileChosen(string file)
     signal closeClick()
+
+    function selectFile(path)
+    {
+        if(path!=="")
+            selectedFile=path
+        console.log("selected:",selectedFile)
+    }
+
+    function diselectFile()
+    {
+        selectedFile=""
+        console.log("diselectFile")
+    }
 
     function show() {
         //loader.sourceComponent = fileBrowserComponent
@@ -55,6 +68,10 @@ Rectangle {
 
     transitions: Transition{
         NumberAnimation{ properties: "x"; duration: 400; easing.type:Easing.OutCubic  }
+    }
+
+    MouseArea{                     //to not let background catch clicks
+        anchors.fill: parent
     }
 
     Rectangle {
@@ -137,13 +154,15 @@ Rectangle {
 
                         width:Math.min(parent.height*2,parent.width/3)
                         height: parent.height
-                        color:"green"
+                        color:selectedFile!=="" ? "green" : "#97d287"
+
+                        enabled: selectedFile!=="" ? true : false
 
 
                         MouseArea{
                             anchors.fill: parent
                             onClicked: {
-                                fileBrowser.fileChosen("file:///"+selectedFolder)
+                                fileBrowser.fileChosen(selectedFile)
                                 //fileBrowser.close()
                             }
                         }
@@ -203,6 +222,19 @@ Rectangle {
                     }
                 }
 
+                function select()
+                {
+                    var path = "file://";
+                    if (filePath.length > 2 && filePath[1] === ':') // Windows drive logic, see QUrl::fromLocalFile()
+                        path += '/';
+                    path += filePath;
+
+                    if(!folders.isFolder(index))                   //if we selected db
+                        selectFile(path)
+                    else
+                        diselectFile()
+                }
+
                 Row{
                     width: root.width
                     height: itemHeight
@@ -247,6 +279,7 @@ Rectangle {
 
                     onClicked: {
                         view.currentIndex=index
+                        wrapper.select()
                         console.log("index")
                     }
                 }

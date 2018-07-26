@@ -33,11 +33,12 @@
         <file>Sprint/SprintTutorial.qml</file>
         <file>img/SprintArrowHorizontal.png</file>
         <file>img/SprintArrowVertical.png</file>
-        <file>Settings/FileBrowser.qml</file>
         <file>img/DatabaseIcon.png</file>
         <file>img/FolderIcon.png</file>
         <file>img/BackButton.png</file>
         <file>img/UpFolderIcon.png</file>
         <file>Settings/SaveDialog.qml</file>
+        <file>Settings/ExportBrowser.qml</file>
+        <file>Settings/ImportBrowser.qml</file>
     </qresource>
 </RCC>

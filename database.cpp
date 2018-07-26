@@ -10,7 +10,7 @@ Database::~Database()
     closeDataBase();
 }
 
-void Database::connectToDatabase()
+bool Database::connectToDatabase()
 {
 
     #ifndef myandroid
@@ -27,12 +27,12 @@ void Database::connectToDatabase()
         QDir().mkdir(MYPATH);
 
     if(!QFile(MYPATH DATABASE_NAME).exists())   //if doesn't exist
-        this->restoreDataBase();    //create new db
+        return this->restoreDataBase();    //create new db
     else
     {
         QFile(MYPATH DATABASE_NAME).copy("./" DATABASE_NAME);
         QFile::setPermissions("./" DATABASE_NAME,QFile::WriteOwner |     QFile::ReadOwner);
-        this->openDataBase();       //open existing
+        return this->openDataBase();       //open existing
     }
 }
 
@@ -161,6 +161,25 @@ bool Database::clearLearned()
                 return false;
             }
     return true;
+}
+
+bool Database::importDatabase(const QString path)
+{
+    if(!QFile::exists(path))
+        return false;
+
+    closeDataBase();
+
+    QFile::remove(MYPATH DATABASE_NAME);
+
+    qDebug()<<"Copy from"<<path<<"To"<<MYPATH;
+
+
+    QFile::copy(path,MYPATH +DATABASE_NAME);
+
+
+    return connectToDatabase();
+
 }
 
 bool Database::exportDatabase(const QString path, const QString fileName)

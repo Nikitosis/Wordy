@@ -153,7 +153,7 @@ Rectangle {
                         anchors.fill: parent
                         onClicked: {
                             dialogBackground.state="opened"
-                            exportDialog.show()
+                            exportBrowser.show()
                         }
                     }
                 }
@@ -167,46 +167,16 @@ Rectangle {
                     color:"green"
                     MouseArea{
                         anchors.fill: parent
-
+                        onClicked: {
+                            dialogBackground.state="opened"
+                            importBrowser.show()
+                        }
                     }
                 }
 
             }
         }
     }
-
-    /*Rectangle{
-        id:exportDialog
-        visible: false
-        color:"white"
-        anchors.fill: parent
-        ListView{
-            id:list
-            anchors.fill: parent
-
-
-
-           model:fileSystemModel
-
-            delegate: Rectangle{
-                height: 50
-                width: exportDialog.width
-                Text{
-                    anchors.centerIn: parent
-                    text:fileName
-                }
-                MouseArea{
-                    anchors.fill: parent
-                    onClicked: {
-                        list.i
-
-
-                        console.log(index)
-                    }
-                }
-            }
-        }
-    }*/
 
     Rectangle{
         id:dialogBackground
@@ -221,7 +191,13 @@ Rectangle {
         state:"closed"
 
         Connections{
-            target:exportDialog
+            target:exportBrowser
+
+            onCloseClick: dialogBackground.state="closed"
+        }
+
+        Connections{
+            target: importBrowser
 
             onCloseClick: dialogBackground.state="closed"
         }
@@ -257,9 +233,77 @@ Rectangle {
             }
         }
     }
+    ImportBrowser{
+        id:importBrowser
+        visible:true
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        //anchors.left: parent.left
+        width: parent.width/4*3
+        clip:true
 
-    FileBrowser{
-        id:exportDialog
+        z:10
+
+        state:"closed"
+
+        onFileChosen: {
+           console.log(selectedFile)
+           acceptImport.open()
+        }
+
+        onCloseClick: {
+            state:"closed"
+            close()
+        }
+
+        Connections{
+            target: dialogBackground
+
+            onBackgroundClicked:importBrowser.closeClick()
+        }
+
+        folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.HomeLocation)
+    }
+
+    Item{                          //imports database
+        id:importer
+
+        property string selectedFile: importBrowser.selectedFile
+
+        Connections{
+            target:acceptImport
+
+            onApply: {
+
+                var correctFilePath=importer.selectedFile
+                if(correctFilePath[9]===":")              //getting rid of file:///
+                    correctFilePath=importer.selectedFile.slice(8)
+                else
+                    correctFilePath=importer.selectedFile.slice(7)
+
+                if(database.importDatabase(correctFilePath))
+                {
+                    messageDialog.text="succesfully loaded"
+                }
+                else
+                {
+                    messageDialog.text="error loading database"
+                }
+
+                messageDialog.open()
+            }
+        }
+    }
+
+    MessageDialog {
+        id: acceptImport
+        title: "Warning"
+        text:"Do you want to load chosen database? You will lose current one."
+        standardButtons: StandardButton.Apply | StandardButton.Cancel
+    }
+
+    ExportBrowser{
+        id:exportBrowser
         visible:true
         anchors.top: parent.top
         anchors.bottom: parent.bottom
@@ -272,9 +316,9 @@ Rectangle {
         state:"closed"
         //folderPath:"file:///E:/"
 
-        onFileChosen: {
-
-           saveDialog.openAndInit(selectedFolder)
+        onFolderChosen: {
+           console.log("fileChosen",folderPath)
+           saveDialog.openAndInit(folderPath)
         }
 
         onCloseClick: {
@@ -285,31 +329,49 @@ Rectangle {
         Connections{
             target: dialogBackground
 
-            onBackgroundClicked:exportDialog.closeClick()
+            onBackgroundClicked:exportBrowser.closeClick()
         }
 
         folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.HomeLocation)
-        //folderPath:"file:///storage/extSdCard"
-
     }
 
-    SaveDialog{
-        id:saveDialog
-        dialogWidth:parent.width/4*3
-        dialogHeight: parent.height/4*3
+    Item{                    //exports Database
+        id:exporter
 
-        function openAndInit(newpath)
+        property string fileName
+        property string folderPath
+        function tryExportDatabase(newFolderPath,newFileName)
         {
-            path=newpath
-            saveDialog.open()
+            folderPath=newFolderPath
+            fileName=newFileName
+
+            var correctFilePath=folderPath
+
+            if(correctFilePath[9]===":")              //if using windows file system
+                correctFilePath=correctFilePath.slice(8)
+            else
+                correctFilePath=correctFilePath.slice(7)
+
+            console.log(correctFilePath)
+
+            if(database.isFileExist(correctFilePath,fileName+".db"))
+            {
+                acceptReplaceDialog.open()
+            }
+            else
+            {
+                exporter.exportDatabase()
+            }
         }
+
         function exportDatabase()
         {
-            var correctFilePath=path
-            if(correctFilePath[9]===":")
-                correctFilePath=path.slice(8)
+            var correctFilePath=folderPath
+
+            if(correctFilePath[9]===":")              //if using windows file system
+                correctFilePath=correctFilePath.slice(8)
             else
-                correctFilePath=path.slice(7)
+                correctFilePath=correctFilePath.slice(7)
 
             console.log("exportDb")
 
@@ -324,29 +386,31 @@ Rectangle {
            messageDialog.open()
         }
 
-        onApply: {
-            var correctFilePath=path
-            if(correctFilePath[9]===":")              //if using windows file system
-                correctFilePath=path.slice(8)
-            else
-                correctFilePath=path.slice(7)
-
-            console.log(correctFilePath)
-
-            if(database.isFileExist(correctFilePath,fileName+".db"))
-            {
-                acceptReplaceDialog.open()
-            }
-            else
-            {
-                saveDialog.exportDatabase()
-            }
-        }
-
         Connections{
             target: acceptReplaceDialog
 
-            onApply: saveDialog.exportDatabase()
+            onApply: exporter.exportDatabase()
+        }
+
+        Connections{
+            target:saveDialog
+
+            onApply: {
+                exporter.tryExportDatabase(saveDialog.path,saveDialog.fileName)
+            }
+        }
+
+    }
+
+    SaveDialog{
+        id:saveDialog
+        dialogWidth:parent.width/4*3
+        dialogHeight: parent.height/4*3
+
+        function openAndInit(newpath)
+        {
+            path=newpath
+            saveDialog.open()
         }
     }
 
@@ -355,8 +419,8 @@ Rectangle {
         title: "Warning"
         text:"Database with this name already exists. Do you want to replace it?"
         standardButtons: StandardButton.Apply | StandardButton.Cancel
-
     }
+
 
     MessageDialog{
         id:messageDialog
