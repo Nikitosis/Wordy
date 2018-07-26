@@ -7,10 +7,11 @@ Dialog {
     property int dialogHeight
     property int dialogWidth
     property string path
-    property string fileName
+    property alias fileName:fileNameField.text
 
-    height: dialogHeight
-    width: dialogWidth
+    //height: dialogHeight
+   // width: dialogWidth
+
 
     standardButtons: StandardButton.Apply | StandardButton.Cancel
 
@@ -18,6 +19,16 @@ Dialog {
         width: dialogWidth
         height: dialogHeight
         color: "#f7f7f7"
+
+        MouseArea{
+            id:keyboardHider
+            anchors.fill:parent
+
+            onClicked: {
+                Qt.inputMethod.hide()
+                fileNameField.focus=false
+            }
+        }
 
         Rectangle {
             anchors.left: parent.left
@@ -29,7 +40,7 @@ Dialog {
             Text {
                 id: textLabel
                 anchors.fill: parent
-                text: "Do you want to copy WordyWorld's database to "+path+"\nEnter the name of the copy"
+                text: "Do you want to copy WordyWorld's database to "+path+"\n\nEnter the name of the copy"
                 color: "#34aadc"
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
@@ -43,6 +54,12 @@ Dialog {
             anchors.left: parent.left
             anchors.right: parent.right
             anchors.bottom: dividerHorizontal.top
+            height: Math.max(16,parent.height/8)
+
+            anchors.bottomMargin: parent.height/10
+
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
         }
 
         Rectangle {
@@ -121,7 +138,6 @@ Dialog {
                 }
 
                 onClicked: {
-                    fileName=fileNameField.text
                     saveDialog.click(StandardButton.Apply)
                     saveDialog.close()
                 }

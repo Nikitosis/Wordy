@@ -40,5 +40,7 @@
         <file>Settings/SaveDialog.qml</file>
         <file>Settings/ExportBrowser.qml</file>
         <file>Settings/ImportBrowser.qml</file>
+        <file>img/ExportIcon.png</file>
+        <file>img/ImportIcon.png</file>
     </qresource>
 </RCC>

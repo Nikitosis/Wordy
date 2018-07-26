@@ -40,13 +40,15 @@ Rectangle {
         //loader.item.anchors.fill = fileBrowser
         folders.folder = fileBrowser.folderPath
         fileBrowser.state="opened"
+
+        console.log("show ImportBrowser")
     }
 
     function close()
     {
         //loader.sourceComponent=undefined
         fileBrowser.state="closed"
-        console.log("close")
+        console.log("close ImportBrowser")
     }
 
     states:[
@@ -107,11 +109,15 @@ Rectangle {
                         anchors.margins: scaledMargin
                         anchors.left: parent.left
 
-                        color: "transparent"
+                        color:closeButtonMouseArea.pressed ? "#dcdcdc" : "transparent"
 
                         Image { anchors.fill: parent; anchors.margins: scaledMargin; source: "qrc:/img/BackButton.png" }
 
-                        MouseArea {anchors.fill: parent; onClicked: closeClick() }
+                        MouseArea {
+                            id:closeButtonMouseArea
+                            anchors.fill: parent
+                            onClicked: closeClick()
+                        }
 
                         /*states: [
                         State {
@@ -131,11 +137,15 @@ Rectangle {
                         anchors.margins: scaledMargin
                         anchors.left: closeButton.right
 
-                        color: "transparent"
+                         color:upButtonMouseArea.pressed ? "#dcdcdc" : "transparent"
 
                         Image { anchors.fill: parent; anchors.margins: scaledMargin; source: "qrc:/img/UpFolderIcon.png" }
 
-                        MouseArea { anchors.fill: parent; onClicked: root.upDir() }
+                        MouseArea {
+                            id:upButtonMouseArea
+                            anchors.fill: parent
+                            onClicked: root.upDir()
+                        }
 
                         /*states: [
                         State {
@@ -158,6 +168,14 @@ Rectangle {
 
                         enabled: selectedFile!=="" ? true : false
 
+                        Text{
+                            anchors.fill: parent
+
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+
+                            text:"Choose"
+                        }
 
                         MouseArea{
                             anchors.fill: parent
@@ -280,7 +298,6 @@ Rectangle {
                     onClicked: {
                         view.currentIndex=index
                         wrapper.select()
-                        console.log("index")
                     }
                 }
             }
@@ -360,6 +377,7 @@ Rectangle {
             animationTimer.path=path
             animationTimer.startingX=root.width
 
+            diselectFile()
             view.currentIndex=-1
 
             animationTimer.start()
@@ -372,6 +390,8 @@ Rectangle {
 
 
             view.state="exitRight"
+
+            diselectFile()
 
             view.currentIndex=-1
 

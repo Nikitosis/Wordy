@@ -20,6 +20,8 @@ Rectangle {
 
     function close()
     {
+        exportBrowser.closeClick()
+        importBrowser.closeClick()
         mainBox.state="closed"
     }
 
@@ -146,10 +148,44 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    width: parent.width/2
+                    width: parent.width/2.05
 
-                    color:"blue"
+                    color:exportDatabaseMouseArea.pressed ? "#557378" : "#548790"
+
+                    Row{
+                        anchors.fill: parent
+
+
+                        Rectangle{
+                            height: parent.height
+                            width: parent.width/5
+                            color:"transparent"
+                        }
+
+                        Image{
+                            height: parent.height
+
+                            width: parent.width/5
+
+                            fillMode: Image.PreserveAspectFit
+                            source: "qrc:/img/ExportIcon.png"
+                        }
+
+                        Text{
+                            height: parent.height
+                            width: parent.width/5*3
+
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+
+                            text:"Import database"
+                            font.pixelSize: Math.min(parent.width/18,parent.height/5)
+                            color:"white"
+                        }
+                    }
+
                     MouseArea{
+                        id:exportDatabaseMouseArea
                         anchors.fill: parent
                         onClicked: {
                             dialogBackground.state="opened"
@@ -163,9 +199,33 @@ Rectangle {
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    width: parent.width/2
-                    color:"green"
+                    width: parent.width/2.05
+                    color:importDatabaseMouseArea.pressed ? "#557378" : "#548790"
+                    Row{
+                        anchors.fill: parent
+                        Text{
+                            height: parent.height
+                            width: parent.width/5*3
+
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+
+                            text:"Import database"
+                            font.pixelSize: Math.min(parent.width/18,parent.height/5)
+                            color:"white"
+                        }
+                        Image{
+                            height: parent.height
+                            width: parent.width/5
+                            anchors.rightMargin: parent.width/5
+
+                            fillMode: Image.PreserveAspectFit
+                            source: "qrc:/img/ImportIcon.png"
+                        }
+                    }
+
                     MouseArea{
+                        id:importDatabaseMouseArea
                         anchors.fill: parent
                         onClicked: {
                             dialogBackground.state="opened"
@@ -410,6 +470,7 @@ Rectangle {
         function openAndInit(newpath)
         {
             path=newpath
+            fileName=""
             saveDialog.open()
         }
     }

@@ -26,13 +26,15 @@ Rectangle {
         //loader.item.anchors.fill = fileBrowser
         folders.folder = fileBrowser.folderPath
         fileBrowser.state="opened"
+
+        console.log("show ExportBrowse")
     }
 
     function close()
     {
         //loader.sourceComponent=undefined
         fileBrowser.state="closed"
-        console.log("close")
+        console.log("close ExportBrowser")
     }
 
     states:[
@@ -93,11 +95,15 @@ Rectangle {
                         anchors.margins: scaledMargin
                         anchors.left: parent.left
 
-                        color: "transparent"
+                        color: closeButtonMouseArea.pressed ? "#dcdcdc" : "transparent"
 
                         Image { anchors.fill: parent; anchors.margins: scaledMargin; source: "qrc:/img/BackButton.png" }
 
-                        MouseArea {anchors.fill: parent; onClicked: closeClick() }
+                        MouseArea {
+                            id:closeButtonMouseArea
+                            anchors.fill: parent
+                            onClicked: closeClick()
+                        }
 
                         /*states: [
                         State {
@@ -117,11 +123,15 @@ Rectangle {
                         anchors.margins: scaledMargin
                         anchors.left: closeButton.right
 
-                        color: "transparent"
+                        color:upButtonMouseArea.pressed ? "#dcdcdc" : "transparent"
 
                         Image { anchors.fill: parent; anchors.margins: scaledMargin; source: "qrc:/img/UpFolderIcon.png" }
 
-                        MouseArea { anchors.fill: parent; onClicked: root.upDir() }
+                        MouseArea {
+                            id:upButtonMouseArea
+                            anchors.fill: parent
+                            onClicked: root.upDir()
+                        }
 
                         /*states: [
                         State {
@@ -141,6 +151,15 @@ Rectangle {
                         width:Math.min(parent.height*2,parent.width/3)
                         height: parent.height
                         color:"green"
+
+                        Text{
+                            anchors.fill: parent
+
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+
+                            text:"Choose"
+                        }
 
 
                         MouseArea{
@@ -249,7 +268,6 @@ Rectangle {
 
                     onClicked: {
                         view.currentIndex=index
-                        console.log("index")
                     }
                 }
             }
