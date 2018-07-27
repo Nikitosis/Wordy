@@ -38,7 +38,12 @@ Rectangle {
         //loader.sourceComponent = fileBrowserComponent
         //loader.item.parent = fileBrowser
         //loader.item.anchors.fill = fileBrowser
-        folders.folder = fileBrowser.folderPath
+        //folders.folder = fileBrowser.folderPath
+        if(myDrives.getDrives().length>0)   //if we have drives
+            root.curModel=driveListModel
+        else
+            root.curModel=foldersModel
+
         fileBrowser.state="opened"
 
         console.log("show ImportBrowser")
@@ -82,6 +87,8 @@ Rectangle {
         anchors.fill: parent
 
         property color textColor: "black"
+        readonly property string rootFolder:"file:///"
+        property var curModel:driveListModel
 
 
         Rectangle {
@@ -164,7 +171,7 @@ Rectangle {
 
                         width:Math.min(parent.height*2,parent.width/3)
                         height: parent.height
-                        color:selectedFile!=="" ? "green" : "#97d287"
+                        color:enabled ? "#329dcf" : "#8faebd"
 
                         enabled: selectedFile!=="" ? true : false
 
@@ -199,7 +206,7 @@ Rectangle {
                     width: parent.width
                     anchors.left: parent.left
 
-                    text: folders.folder
+                    text: foldersModel.folder
                     color: root.textColor
                     elide: Text.ElideLeft; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
                     font.pixelSize:0
@@ -234,10 +241,9 @@ Rectangle {
                         path += '/';
                     path += filePath;
 
-                    if (folders.isFolder(index))
+                    if (foldersModel.isFolder(index) || root.curModel==driveListModel)
                     {
                         root.downDir(path);
-                        console.log("updir")
                     }
                 }
 
@@ -248,7 +254,7 @@ Rectangle {
                         path += '/';
                     path += filePath;
 
-                    if(!folders.isFolder(index))                   //if we selected db
+                    if(!foldersModel.isFolder(index))                   //if we selected db
                         selectFile(path)
                     else
                         diselectFile()
@@ -263,7 +269,11 @@ Rectangle {
                         Image {
                             id:itemImage
                             source: {
-                                if(folders.isFolder(index))
+
+                                if(root.curModel==driveListModel)
+                                    return "qrc:/img/FolderIcon.png"
+
+                                if(foldersModel.isFolder(index))
                                     return "qrc:/img/FolderIcon.png"
                                 else
                                     return "qrc:/img/DatabaseIcon.png"
@@ -305,10 +315,44 @@ Rectangle {
         }
 
         FolderListModel {
-            id: folders
+            id: foldersModel
             folder: folderPath
             nameFilters: ["*.db"]
             sortField: "Type"
+        }
+
+        //FolderListModel has one issue: it can't show folders. So to fix this, I implemented ListModel special for drives
+        //view's model is root.curModel. So I can assign root.curModel to driveListModel or foldersModel if I want
+        //so if user wants to go from the drive, root.curModel=driveListModel, hence drives are shown
+        //if user goes into drive, root.curModel=foldersModel,hence folders are shown
+        ListModel{
+            id:driveListModel
+
+
+            Component.onCompleted: initialize()
+
+            function initialize() {
+
+                var count = myDrives.getDrives().length;
+
+                var drive;
+                for (var i = 0; i < count; i++) {
+                    drive = myDrives.getDrives()[i].slice(0, -1);  // Remove trailing "/".
+                    append({
+                               fileName: drive,
+                               fileModified: new Date(0),
+                               fileSize: 0,
+                               filePath: drive + "/",
+                               fileIsDir: true,
+                               fileNameSort: drive.toLowerCase()
+                           });
+                    console.log("Drive added:",drive)
+                }
+            }
+
+            function getItem(index, field) {
+                return get(index)[field];
+            }
         }
 
         ListView {
@@ -320,11 +364,13 @@ Rectangle {
             width: parent.width
             clip:true
 
-            model: folders
+            model: root.curModel
             delegate: folderDelegate
 
             focus: true
             state: "current"
+
+
             states: [
                 State {
                     name: "current"
@@ -368,11 +414,23 @@ Rectangle {
         {
             view.x = -root.width;
 
-            folders.folder = path;
+            console.log("PATH:",path)
+
+            if((path===root.rootFolder || path==="") && myDrives.getDrives().length>0)    //if we pressed upButton in the root of the drive,we go to drives
+                root.curModel=driveListModel
+            else
+                root.curModel=foldersModel
+
+            if(root.curModel==foldersModel)
+                foldersModel.folder = path;
+
             view.state = "current";
         }
 
         function downDir(path) {
+
+            console.log("changed")
+
             view.state="exitLeft"
 
             animationTimer.path=path
@@ -385,10 +443,15 @@ Rectangle {
         }
 
         function upDir() {
-            var path = folders.parentFolder;
-            if (path.toString().length == 0 || path.toString() == 'file:')
+
+            if(root.curModel==driveListModel )
                 return;
 
+            if((foldersModel.parentFolder=="" || foldersModel.parentFolder==root.rootFolder) && myDrives.getDrives().length==0)
+                return;
+
+
+            var path=foldersModel.parentFolder
 
             view.state="exitRight"
 

@@ -11,7 +11,8 @@ SOURCES += main.cpp \
     listmodel.cpp \
     sprintlistmodel.cpp \
     test.cpp \
-    tutorials.cpp
+    tutorials.cpp \
+    drives.cpp
 
 RESOURCES += qml.qrc
 
@@ -56,7 +57,8 @@ HEADERS += \
     listmodel.h \
     sprintlistmodel.h \
     test.h \
-    tutorials.h
+    tutorials.h \
+    drives.h
 
 DISTFILES += \
     android/AndroidManifest.xml \

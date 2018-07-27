@@ -8,6 +8,7 @@
 #include <sprintlistmodel.h>
 #include <test.h>
 #include <tutorials.h>
+#include <drives.h>
 
 int main(int argc, char *argv[])
 {
@@ -24,6 +25,8 @@ int main(int argc, char *argv[])
     Test *test=new Test(&app);
     Tutorials *tutorials=new Tutorials(&app);
 
+    Drives *drives=new Drives();
+
 
     QQmlApplicationEngine engine;
 
@@ -33,6 +36,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("sprintModel",sprintModel);
     context->setContextProperty("testInfo",test);
     context->setContextProperty("tutorials",tutorials);
+    context->setContextProperty("myDrives",drives);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
