@@ -148,7 +148,7 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    width: parent.width/2.05
+                    width: parent.width/2.02
 
                     color:exportDatabaseMouseArea.pressed ? "#557378" : "#548790"
 
@@ -156,11 +156,11 @@ Rectangle {
                         anchors.fill: parent
 
 
-                        Rectangle{
+                        /*Rectangle{
                             height: parent.height
                             width: parent.width/5
                             color:"transparent"
-                        }
+                        }*/
 
                         Image{
                             height: parent.height
@@ -173,12 +173,12 @@ Rectangle {
 
                         Text{
                             height: parent.height
-                            width: parent.width/5*3
+                            width: parent.width/5*4
 
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
 
-                            text:"Import database"
+                            text:"Export database"
                             font.pixelSize: Math.min(parent.width/18,parent.height/5)
                             color:"white"
                         }
@@ -199,13 +199,13 @@ Rectangle {
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    width: parent.width/2.05
+                    width: parent.width/2.02
                     color:importDatabaseMouseArea.pressed ? "#557378" : "#548790"
                     Row{
                         anchors.fill: parent
                         Text{
                             height: parent.height
-                            width: parent.width/5*3
+                            width: parent.width/5*4
 
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
@@ -217,7 +217,7 @@ Rectangle {
                         Image{
                             height: parent.height
                             width: parent.width/5
-                            anchors.rightMargin: parent.width/5
+                            //anchors.rightMargin: parent.width/5
 
                             fillMode: Image.PreserveAspectFit
                             source: "qrc:/img/ImportIcon.png"
@@ -234,6 +234,56 @@ Rectangle {
                     }
                 }
 
+            }
+
+            Rectangle{
+                id:section3Header
+                width: mainBox.width
+                height: sectionHeigh
+                color:sectionHeaderColor
+                Text{
+                    anchors.centerIn: parent
+                    width: parent.width
+                    height: parent.height
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: Math.min(parent.width/17,parent.height/4)
+                    text:"Help settings"
+                }
+            }
+
+            Rectangle{
+                id:section3Property1
+                width: mainBox.width
+                height: sectionHeigh
+                color:sectionHeaderColor
+                Rectangle{
+                    id:resetTutorials
+                    anchors.fill: parent
+
+                    color:resetTutorialsMouseArea.pressed ? "#557378" : "#548790"
+
+                    Text{
+                        anchors.fill: parent
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+
+                        text:"Turn on tutorials"
+                        color:"white"
+                        font.pixelSize: Math.min(parent.width/18,parent.height/5)
+                    }
+
+                    MouseArea{
+                        id:resetTutorialsMouseArea
+                        anchors.fill: parent
+
+                        onClicked: {
+                            tutorials.resetTutorials()
+                            messageDialog.text="Tutorials are turned on"
+                            messageDialog.open()
+                        }
+                    }
+                }
             }
         }
     }

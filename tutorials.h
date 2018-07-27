@@ -19,6 +19,8 @@ public slots:
 
     void passVocabularyTutorial();
     void passSprintTutorial();
+
+    void resetTutorials();
 };
 
 #endif // TUTORIALS_H

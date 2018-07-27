@@ -174,7 +174,8 @@ Rectangle {
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
 
-                            text:"Choose"
+                            text:"Choose file"
+                            wrapMode: Text.Wrap
                         }
 
                         MouseArea{

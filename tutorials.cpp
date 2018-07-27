@@ -48,3 +48,14 @@ void Tutorials::passSprintTutorial()
 
     settings.endGroup();
 }
+
+void Tutorials::resetTutorials()
+{
+    QSettings settings("PupovCorp","Wordy");
+    settings.beginGroup("Tutorials");
+
+    settings.setValue("isSprintTutorial",1);
+    settings.setValue("isVocabularyTutorial",1);
+
+    settings.endGroup();
+}
