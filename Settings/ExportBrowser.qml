@@ -24,7 +24,7 @@ Rectangle {
         //loader.sourceComponent = fileBrowserComponent
         //loader.item.parent = fileBrowser
         //loader.item.anchors.fill = fileBrowser
-        folders.folder = fileBrowser.folderPath
+        foldersModel.folder = fileBrowser.folderPath
         fileBrowser.state="opened"
 
         console.log("show ExportBrowse")
@@ -166,7 +166,7 @@ Rectangle {
                         MouseArea{
                             anchors.fill: parent
                             onClicked: {
-                                fileBrowser.folderChosen(folders.folder)
+                                fileBrowser.folderChosen(foldersModel.folder)
                             }
                         }
                     }
@@ -183,7 +183,7 @@ Rectangle {
                     width: parent.width
                     anchors.left: parent.left
 
-                    text: folders.folder
+                    text: foldersModel.folder
                     color: root.textColor
                     elide: Text.ElideLeft; horizontalAlignment: Text.AlignHCenter; verticalAlignment: Text.AlignVCenter
                     font.pixelSize:0
@@ -218,7 +218,7 @@ Rectangle {
                         path += '/';
                     path += filePath;
 
-                    if (folders.isFolder(index))
+                    if (foldersModel.isFolder(index))
                     {
                         root.downDir(path);
                         console.log("updir")
@@ -234,7 +234,7 @@ Rectangle {
                         Image {
                             id:itemImage
                             source: {
-                                if(folders.isFolder(index))
+                                if(foldersModel.isFolder(index))
                                     return "qrc:/img/FolderIcon.png"
                                 else
                                     return "qrc:/img/DatabaseIcon.png"
@@ -275,7 +275,7 @@ Rectangle {
         }
 
         FolderListModel {
-            id: folders
+            id: foldersModel
             folder: folderPath
             nameFilters: ["*.db"]
             sortField: "Type"
@@ -290,7 +290,7 @@ Rectangle {
             width: parent.width
             clip:true
 
-            model: folders
+            model: foldersModel
             delegate: folderDelegate
 
             focus: true
@@ -338,7 +338,7 @@ Rectangle {
         {
             view.x = -root.width;
 
-            folders.folder = path;
+            foldersModel.folder = path;
             view.state = "current";
         }
 
@@ -354,10 +354,12 @@ Rectangle {
         }
 
         function upDir() {
-            var path = folders.parentFolder;
+
+            var path = foldersModel.parentFolder;
             if (path.toString().length == 0 || path.toString() == 'file:')
                 return;
 
+            console.log("PrevDir:",foldersModel.folder,"CurDir:",path)
 
             view.state="exitRight"
 

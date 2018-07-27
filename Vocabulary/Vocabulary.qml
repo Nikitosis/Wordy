@@ -156,6 +156,8 @@ Rectangle {
 
         clip:true
 
+        footerHeight: optionRow.height+optionRow.anchors.bottomMargin           //to give space for optionRow(to not block the last element)
+
         //z:0
 
         onChangePack: {

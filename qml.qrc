@@ -42,5 +42,8 @@
         <file>Settings/ImportBrowser.qml</file>
         <file>img/ExportIcon.png</file>
         <file>img/ImportIcon.png</file>
+        <file>img/ExportDatabaseBackground.png</file>
+        <file>img/ImportDatabaseBackground.png</file>
+        <file>img/SettingButtonBackground.png</file>
     </qresource>
 </RCC>

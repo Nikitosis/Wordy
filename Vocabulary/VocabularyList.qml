@@ -4,6 +4,7 @@ import QtQuick.Controls 2.0
 Item {
     id:box
     property alias listView: list
+    property int footerHeight
     signal changePack(int id,string word,string translation,int pack,date date)
 
 
@@ -14,6 +15,12 @@ Item {
 
 
         property int lastItemIndex:-1
+
+        footer:Rectangle{
+            height: footerHeight
+            width: list.width
+            color:"transparent"
+        }
 
         delegate: Component{
             id:mainDelegate  

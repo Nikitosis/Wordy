@@ -88,7 +88,8 @@ Rectangle {
                         MouseArea{
                             anchors.fill: parent
                             onClicked: {
-                                wordsInPack--
+                                if(wordsInPack>1)
+                                    wordsInPack--
                             }
                         }
                     }
@@ -148,22 +149,22 @@ Rectangle {
                     anchors.left: parent.left
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    width: parent.width/2.02
+                    width: parent.width/2
 
-                    color:exportDatabaseMouseArea.pressed ? "#557378" : "#548790"
+                    //color:exportDatabaseMouseArea.pressed ? "#557378" : "#548790"
+
+                    Image{                                                             //background
+                        anchors.fill: parent
+                        source: "qrc:/img/ExportDatabaseBackground.png"
+                    }
 
                     Row{
                         anchors.fill: parent
 
-
-                        /*Rectangle{
-                            height: parent.height
-                            width: parent.width/5
-                            color:"transparent"
-                        }*/
-
                         Image{
-                            height: parent.height
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
+                            anchors.bottomMargin: height/10
 
                             width: parent.width/5
 
@@ -199,8 +200,13 @@ Rectangle {
                     anchors.right: parent.right
                     anchors.top: parent.top
                     anchors.bottom: parent.bottom
-                    width: parent.width/2.02
-                    color:importDatabaseMouseArea.pressed ? "#557378" : "#548790"
+                    width: parent.width/2
+                    //color:importDatabaseMouseArea.pressed ? "#557378" : "#548790"
+                    Image{                                                             //background
+                        anchors.fill: parent
+                        source: "qrc:/img/ImportDatabaseBackground.png"
+                    }
+
                     Row{
                         anchors.fill: parent
                         Text{
@@ -215,9 +221,11 @@ Rectangle {
                             color:"white"
                         }
                         Image{
-                            height: parent.height
+                            anchors.top: parent.top
+                            anchors.bottom: parent.bottom
                             width: parent.width/5
                             //anchors.rightMargin: parent.width/5
+                            anchors.bottomMargin: height/10
 
                             fillMode: Image.PreserveAspectFit
                             source: "qrc:/img/ImportIcon.png"
@@ -261,7 +269,12 @@ Rectangle {
                     id:resetTutorials
                     anchors.fill: parent
 
-                    color:resetTutorialsMouseArea.pressed ? "#557378" : "#548790"
+                    //color:resetTutorialsMouseArea.pressed ? "#557378" : "#548790"
+
+                    Image{                                                             //background
+                        anchors.fill: parent
+                        source: "qrc:/img/SettingButtonBackground.png"
+                    }
 
                     Text{
                         anchors.fill: parent
@@ -372,7 +385,8 @@ Rectangle {
             onBackgroundClicked:importBrowser.closeClick()
         }
 
-        folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.HomeLocation)
+        //folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.HomeLocation)
+        folderPath: "file:///mnt/sdcard/"
     }
 
     Item{                          //imports database
@@ -442,7 +456,8 @@ Rectangle {
             onBackgroundClicked:exportBrowser.closeClick()
         }
 
-        folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.HomeLocation)
+        //folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.DesktopLocation)
+        folderPath: "file:///mnt/sdcard/"
     }
 
     Item{                    //exports Database

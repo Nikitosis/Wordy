@@ -40,7 +40,7 @@ Dialog {
             Text {
                 id: textLabel
                 anchors.fill: parent
-                text: "Do you want to copy WordyWorld's database to "+path+"\n\nEnter the name of the copy"
+                text: "You want to copy WordyWorld's database to "+path+"\n\nEnter the name of the copy"
                 color: "#34aadc"
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
