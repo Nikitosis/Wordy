@@ -2,6 +2,8 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QFileSystemModel>
+#include <QTranslator>
+#include <QLocale>
 
 #include <database.h>
 #include <listmodel.h>
@@ -12,6 +14,14 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+
+    QTranslator translator;
+    translator.load(":/Translation/Wordy_"+QLocale::system().name()+".qm");
+
+    app.installTranslator(&translator);
+    qDebug()<<QLocale::system().name();
+    qDebug()<<":/Translation/Wordy_"+QLocale::system().name()+".qm";
+    qDebug()<<QFile::exists(":/Translation/Wordy_"+QLocale::system().name()+".qm");
 
     Database db;
     db.connectToDatabase();  //connect to DB
@@ -37,6 +47,8 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
         return -1;
+
+
 
     return app.exec();
 

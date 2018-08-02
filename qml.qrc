@@ -45,5 +45,7 @@
         <file>img/ExportDatabaseBackground.png</file>
         <file>img/ImportDatabaseBackground.png</file>
         <file>img/SettingButtonBackground.png</file>
+        <file>Translation/Wordy_ru_RU.qm</file>
+        <file>Translation/Wordy_ua_UA.qm</file>
     </qresource>
 </RCC>

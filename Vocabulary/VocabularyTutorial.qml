@@ -38,8 +38,7 @@ Item {
 
                 font.pixelSize: 15
 
-                text:"This is your vocabulary. Here you can add new words, change and delete them.\n
-Each word belongs to pack.\n"
+                text:qsTr("This is your vocabulary. Here you can add new words, change and delete them. \n\n Each word belongs to pack.\n")
             }
             Row{
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -101,7 +100,7 @@ Each word belongs to pack.\n"
 
                 font.pixelSize: 15
 
-                text:"Words,which belong to first pack are new. You haven't repeated them in sprint yet."
+                text:qsTr("Words,which belong to first pack are new. You haven't repeated them in sprint yet.")
             }
         }
     }
@@ -178,7 +177,7 @@ Each word belongs to pack.\n"
 
                 font.pixelSize: 15
 
-                text:"Words go to the second pack, when you repeat them in Sprint for the first time."
+                text:qsTr("Words go to the second pack, when you repeat them in Sprint for the first time.")
             }
         }
     }
@@ -256,7 +255,7 @@ Each word belongs to pack.\n"
 
                 font.pixelSize: 15
 
-                text:"Words go to the third pack, when you repeat them in Sprint the next day after their first repeat."
+                text:qsTr("Words go to the third pack, when you repeat them in Sprint the next day after their first repeat.")
             }
         }
     }
@@ -335,7 +334,7 @@ Each word belongs to pack.\n"
 
                 font.pixelSize: 15
 
-                text:"Words go to the fourth pack, when you repeat them in Sprint a week after their first repeat."
+                text:qsTr("Words go to the fourth pack, when you repeat them in Sprint a week after their first repeat.")
             }
         }
     }
@@ -413,7 +412,7 @@ Each word belongs to pack.\n"
 
                 font.pixelSize: 15
 
-                text:"Words go to the fifth pack, when you repeat them in Sprint in 2 weeks after their first repeat."
+                text:qsTr("Words go to the fifth pack, when you repeat them in Sprint in 2 weeks after their first repeat.")
             }
         }
     }
@@ -491,8 +490,7 @@ Each word belongs to pack.\n"
 
                 font.pixelSize: 15
 
-                text:"Words go to the sixth pack, when you repeat them in Sprint in a month after their first repeat.\n
-So that, you repeat each word 5 times in different periods of time. This way you will remember words for a very long time."
+                text:qsTr("Words go to the sixth pack, when you repeat them in Sprint in a month after their first repeat. \n\n So that, you repeat each word 5 times in different periods of time. This way you will remember words for a very long time.")
             }
         }
     }

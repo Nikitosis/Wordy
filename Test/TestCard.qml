@@ -118,7 +118,7 @@ Rectangle {
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
 
-            text:"Start"
+            text:qsTr("Start")
             font.pixelSize: width/5
 
             MouseArea{
@@ -171,7 +171,7 @@ Rectangle {
                         verticalAlignment: Text.AlignVCenter
                         wrapMode: Text.Wrap
 
-                        text:"Only words between"
+                        text:qsTr("Only words between")
                         font.pixelSize: Math.max(15,width/16)
                     }
                 }
@@ -237,6 +237,8 @@ Rectangle {
                 wrapMode: Text.Wrap
                 font.pixelSize: Math.min(parent.width/18,parent.height/4)
 
+                color:"white"
+
                 text:firstOption.text
             }
 
@@ -269,6 +271,8 @@ Rectangle {
                 wrapMode: Text.Wrap
                 font.pixelSize: Math.min(parent.width/18,parent.height/4)
 
+                color:"white"
+
                 text:secondOption.text
             }
 
@@ -300,6 +304,8 @@ Rectangle {
                 wrapMode: Text.Wrap
                 font.pixelSize: Math.min(parent.width/18,parent.height/4)
 
+                color:"white"
+
                 text:thirdOption.text
             }
 
@@ -330,6 +336,8 @@ Rectangle {
                 verticalAlignment: Text.AlignVCenter
                 wrapMode: Text.Wrap
                 font.pixelSize: Math.min(parent.width/18,parent.height/4)
+
+                color:"white"
 
                 text:fourthOption.text
             }
@@ -379,7 +387,7 @@ Rectangle {
     MessageDialog{
         id:warningDialog
         title: "Warning"
-        text:"You can't run test,because there are less then 4 words in the vocabulary,which correspond to the selected pack range."
+        text:qsTr("You can't run test,because there are less then 4 words in the vocabulary,which correspond to the selected pack range.")
 
     }
 

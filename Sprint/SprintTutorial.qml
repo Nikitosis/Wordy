@@ -38,9 +38,7 @@ Item {
 
                 font.pixelSize: 15
 
-                text:"This is Sprint. Here you learn new words.\n
-Everyday sprint gives you new words and upgrades previous ones to next pack.\n
-So you don't have to worry, which words to repeat today. Let our algorithms do all of the routine."
+                text:qsTr("This is Sprint. Here you learn new words. \n\n Everyday sprint gives you new words and upgrades previous ones to next pack. \n\n So you don't have to worry, which words to repeat today. Let our algorithms do all of the routine.")
             }
         }
     }
@@ -66,9 +64,7 @@ So you don't have to worry, which words to repeat today. Let our algorithms do a
 
                 font.pixelSize: 15
 
-                text:"Here every word represents a card. Each card has word and definition on oposite sides.\n
-Slide up or down to rotate card.\n
-Slide left or right to change the word."
+                text:qsTr("Here every word represents a card. Each card has word and definition on oposite sides. \n\n Slide up or down to rotate card. \n\n Slide left or right to change the word.")
             }
         }
     }
@@ -94,7 +90,7 @@ Slide left or right to change the word."
 
                 font.pixelSize: 15
 
-                text:"If you want every card to be rotated by default, click this button:"
+                text:qsTr("If you want every card to be rotated by default, click this button:")
             }
 
             Image{

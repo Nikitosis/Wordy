@@ -173,7 +173,7 @@ Rectangle {
         wrapMode: Text.Wrap
 
         font.pixelSize: Math.min(parent.width/30,parent.height/15)
-        text:"There are no words for you to repeat today. Add more words in vocabulary."
+        text:qsTr("There are no words for you to repeat today. Add more words in vocabulary.")
     }
 
 }

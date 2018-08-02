@@ -69,7 +69,7 @@ Rectangle{
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                text:"Word"
+                text:qsTr("Word")
                 color:"white"
                 font.bold: true
             }
@@ -110,7 +110,7 @@ Rectangle{
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
 
-                text:"Definition"
+                text:qsTr("Definition")
                 color:"white"
                 font.bold: true
             }
@@ -145,7 +145,7 @@ Rectangle{
         anchors.margins: 10
         Text{
             anchors.centerIn: parent
-            text:"Apply"
+            text:qsTr("Apply")
             color:"black"
         }
         onClicked: {
@@ -162,7 +162,7 @@ Rectangle{
         anchors.margins: 10
         Text{
             anchors.centerIn: parent
-            text:"Cancel"
+            text:qsTr("Cancel")
             color:"black"
         }
 

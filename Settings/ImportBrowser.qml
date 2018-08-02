@@ -174,7 +174,7 @@ Rectangle {
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
 
-                            text:"Choose file"
+                            text:qsTr("Choose file")
                             wrapMode: Text.Wrap
                         }
 

@@ -52,7 +52,7 @@ import QtGraphicalEffects 1.0
             x:0
             y:0
 
-            mainText:"Vocabulary"
+            mainText:qsTr("Vocabulary")
             backgroundColor: "#a6f3a0"
             deselectedY: 0
             shadowSize: parent.height/100
@@ -89,7 +89,7 @@ import QtGraphicalEffects 1.0
             x:0
             y:parent.height/4
 
-            mainText:"Sprint"
+            mainText:qsTr("Sprint")
             backgroundColor:"#e78a8a"
             deselectedY: parent.height/4
             shadowSize: parent.height/100
@@ -127,7 +127,7 @@ import QtGraphicalEffects 1.0
             x:0
             y:parent.height/4 *2
 
-            mainText:"Test"
+            mainText:qsTr("Test")
             backgroundColor: "#61d5f2"
             deselectedY: parent.height/4 *2
             shadowSize: parent.height/100
@@ -161,7 +161,7 @@ import QtGraphicalEffects 1.0
             x:0
             y:parent.height/4 *3
 
-            mainText:"Settings"
+            mainText:qsTr("Settings")
             backgroundColor: "#d98af9"
             deselectedY: parent.height/4 *3
             shadowSize: parent.height/100

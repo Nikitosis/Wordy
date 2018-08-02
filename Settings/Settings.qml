@@ -48,7 +48,7 @@ Rectangle {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: Math.min(parent.width/17,parent.height/4)
-                    text:"Sprint settings"
+                    text:qsTr("Sprint settings")
                 }
             }
 
@@ -68,7 +68,7 @@ Rectangle {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignLeft
                     font.pixelSize: Math.min(section1Property1.width/16,section1Property1.height/4)
-                    text:"Amount of new words to learn per day"
+                    text:qsTr("Amount of new words to learn per day")
                     wrapMode: Text.Wrap
                 }
 
@@ -133,7 +133,7 @@ Rectangle {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: Math.min(parent.width/17,parent.height/4)
-                    text:"Data settings"
+                    text:qsTr("Data settings")
                 }
             }
 
@@ -179,7 +179,7 @@ Rectangle {
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
 
-                            text:"Export database"
+                            text:qsTr("Export database")
                             font.pixelSize: Math.min(parent.width/18,parent.height/5)
                             color:"white"
                         }
@@ -216,7 +216,7 @@ Rectangle {
                             horizontalAlignment: Text.AlignHCenter
                             verticalAlignment: Text.AlignVCenter
 
-                            text:"Import database"
+                            text:qsTr("Import database")
                             font.pixelSize: Math.min(parent.width/18,parent.height/5)
                             color:"white"
                         }
@@ -256,7 +256,7 @@ Rectangle {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
                     font.pixelSize: Math.min(parent.width/17,parent.height/4)
-                    text:"Help settings"
+                    text:qsTr("Help settings")
                 }
             }
 
@@ -281,7 +281,7 @@ Rectangle {
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
 
-                        text:"Turn on tutorials"
+                        text:qsTr("Turn on tutorials")
                         color:"white"
                         font.pixelSize: Math.min(parent.width/18,parent.height/5)
                     }
@@ -292,7 +292,7 @@ Rectangle {
 
                         onClicked: {
                             tutorials.resetTutorials()
-                            messageDialog.text="Tutorials are turned on"
+                            messageDialog.text=qsTr("Tutorials are turned on")
                             messageDialog.open()
                         }
                     }
@@ -407,11 +407,11 @@ Rectangle {
 
                 if(database.importDatabase(correctFilePath))
                 {
-                    messageDialog.text="succesfully loaded"
+                    messageDialog.text=qsTr("succesfully loaded")
                 }
                 else
                 {
-                    messageDialog.text="error loading database"
+                    messageDialog.text=qsTr("error loading database")
                 }
 
                 messageDialog.open()
@@ -421,8 +421,8 @@ Rectangle {
 
     MessageDialog {
         id: acceptImport
-        title: "Warning"
-        text:"Do you want to load chosen database? You will lose current one."
+        title: qsTr("Warning")
+        text:qsTr("Do you want to load chosen database? You will lose current one.")
         standardButtons: StandardButton.Apply | StandardButton.Cancel
     }
 
@@ -543,7 +543,7 @@ Rectangle {
     MessageDialog {
         id: acceptReplaceDialog
         title: "Warning"
-        text:"Database with this name already exists. Do you want to replace it?"
+        text:qsTr("Database with this name already exists. Do you want to replace it?")
         standardButtons: StandardButton.Apply | StandardButton.Cancel
     }
 

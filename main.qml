@@ -14,7 +14,7 @@ Window {
     visible: true
     width: 640
     height: 480
-    title: qsTr("WordyWorld")
+    title: "WordyWorld"
 
     MainMenu{
         id:mainMenu
