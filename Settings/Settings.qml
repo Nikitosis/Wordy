@@ -162,11 +162,10 @@ Rectangle {
                         anchors.fill: parent
 
                         Image{
-                            anchors.top: parent.top
-                            anchors.bottom: parent.bottom
-                            anchors.bottomMargin: height/10
-
+                            height: parent.height
                             width: parent.width/5
+
+                            anchors.bottomMargin: height/10
 
                             fillMode: Image.PreserveAspectFit
                             source: "qrc:/img/ExportIcon.png"
@@ -221,10 +220,8 @@ Rectangle {
                             color:"white"
                         }
                         Image{
-                            anchors.top: parent.top
-                            anchors.bottom: parent.bottom
+                            height: parent.height
                             width: parent.width/5
-                            //anchors.rightMargin: parent.width/5
                             anchors.bottomMargin: height/10
 
                             fillMode: Image.PreserveAspectFit
