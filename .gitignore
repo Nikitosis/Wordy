@@ -1,1 +1,3 @@
 Additional/
+android/local*
+android/gradle.properties*
