@@ -164,7 +164,7 @@ Rectangle {
 
                         width:Math.min(parent.height*2,parent.width/3)
                         height: parent.height
-                        color:selectedFile!=="" ? "green" : "#97d287"
+                        color:selectedFile!=="" ? "#eaab31" : "#ffd686"
 
                         enabled: selectedFile!=="" ? true : false
 

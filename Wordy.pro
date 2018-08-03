@@ -51,6 +51,9 @@ android {
     DEFINES +=myandroid
 }
 
+TRANSLATIONS+= Translation/Wordy_ru_RU.ts \
+               Translation/Wordy_ua_UA.ts
+
 HEADERS += \
     database.h \
     listmodel.h \

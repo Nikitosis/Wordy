@@ -150,7 +150,7 @@ Rectangle {
 
                         width:Math.min(parent.height*2,parent.width/3)
                         height: parent.height
-                        color:"green"
+                        color:"#eaab31"
 
                         Text{
                             anchors.fill: parent

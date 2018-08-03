@@ -43,6 +43,20 @@
 <context>
     <name>SaveDialog</name>
     <message>
+        <location filename="../Settings/SaveDialog.qml" line="43"/>
+        <source>You want to copy WordyWorld&apos;s database to </source>
+        <translation>Ви хочете зберегти базу даних WordyWorld до </translation>
+    </message>
+    <message>
+        <location filename="../Settings/SaveDialog.qml" line="43"/>
+        <source>
+
+Enter the name of the copy</source>
+        <translation>
+
+Введіть назву копії</translation>
+    </message>
+    <message>
         <location filename="../Settings/SaveDialog.qml" line="96"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
@@ -71,52 +85,52 @@
         <translation>Налаштування даних</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="182"/>
+        <location filename="../Settings/Settings.qml" line="181"/>
         <source>Export database</source>
         <translation>Експорт бази даних</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="219"/>
+        <location filename="../Settings/Settings.qml" line="218"/>
         <source>Import database</source>
         <translation>Імпорт бази даних</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="259"/>
+        <location filename="../Settings/Settings.qml" line="256"/>
         <source>Help settings</source>
         <translation>Налаштування допомоги</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="284"/>
+        <location filename="../Settings/Settings.qml" line="281"/>
         <source>Turn on tutorials</source>
         <translation>Ввімкнути навчання</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="295"/>
+        <location filename="../Settings/Settings.qml" line="292"/>
         <source>Tutorials are turned on</source>
         <translation>Навчання ввімкнено</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="410"/>
+        <location filename="../Settings/Settings.qml" line="407"/>
         <source>succesfully loaded</source>
         <translation>успішно завантажено</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="414"/>
+        <location filename="../Settings/Settings.qml" line="411"/>
         <source>error loading database</source>
         <translation>помилка при завантаженні бази даних</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="424"/>
+        <location filename="../Settings/Settings.qml" line="421"/>
         <source>Warning</source>
         <translation>Попередження</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="425"/>
+        <location filename="../Settings/Settings.qml" line="422"/>
         <source>Do you want to load chosen database? You will lose current one.</source>
         <translation>Ви хочете завантажити обрану базу даних? Поточна база даних не збережеться.</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="546"/>
+        <location filename="../Settings/Settings.qml" line="543"/>
         <source>Database with this name already exists. Do you want to replace it?</source>
         <translation>База даних з таким ім&apos;ям вже існує. Ви хочете замінити її?</translation>
     </message>
@@ -176,7 +190,7 @@
         <translation>Тільки слова між</translation>
     </message>
     <message>
-        <location filename="../Test/TestCard.qml" line="382"/>
+        <location filename="../Test/TestCard.qml" line="390"/>
         <source>You can&apos;t run test,because there are less then 4 words in the vocabulary,which correspond to the selected pack range.</source>
         <translation>Ви не можете запустити тест, тому що в вашому словнику менше 4х слів, які відповідають обраній області паків.</translation>
     </message>

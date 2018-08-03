@@ -9,6 +9,8 @@ Dialog {
     property string path
     property alias fileName:fileNameField.text
 
+
+
     //height: dialogHeight
    // width: dialogWidth
 
@@ -40,7 +42,7 @@ Dialog {
             Text {
                 id: textLabel
                 anchors.fill: parent
-                text: "You want to copy WordyWorld's database to "+path+"\n\nEnter the name of the copy"
+                text: qsTr("You want to copy WordyWorld's database to ")+path+qsTr("\n\nEnter the name of the copy")
                 color: "#34aadc"
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter

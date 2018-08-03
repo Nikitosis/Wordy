@@ -47,5 +47,7 @@
         <file>img/SettingButtonBackground.png</file>
         <file>Translation/Wordy_ru_RU.qm</file>
         <file>Translation/Wordy_ua_UA.qm</file>
+        <file>Translation/Wordy_ru_RU.ts</file>
+        <file>Translation/Wordy_ua_UA.ts</file>
     </qresource>
 </RCC>

@@ -43,6 +43,20 @@
 <context>
     <name>SaveDialog</name>
     <message>
+        <location filename="../Settings/SaveDialog.qml" line="43"/>
+        <source>You want to copy WordyWorld&apos;s database to </source>
+        <translation>Вы хотите сохранить базу данных WordyWorld в </translation>
+    </message>
+    <message>
+        <location filename="../Settings/SaveDialog.qml" line="43"/>
+        <source>
+
+Enter the name of the copy</source>
+        <translation>
+
+Введите название копии</translation>
+    </message>
+    <message>
         <location filename="../Settings/SaveDialog.qml" line="96"/>
         <source>Cancel</source>
         <translation>Отмена</translation>
@@ -71,52 +85,52 @@
         <translation>Настройка данных</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="182"/>
+        <location filename="../Settings/Settings.qml" line="181"/>
         <source>Export database</source>
         <translation>Экспорт базы данных</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="219"/>
+        <location filename="../Settings/Settings.qml" line="218"/>
         <source>Import database</source>
         <translation>Импорт базы данных</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="259"/>
+        <location filename="../Settings/Settings.qml" line="256"/>
         <source>Help settings</source>
         <translation>Настройки помощи</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="284"/>
+        <location filename="../Settings/Settings.qml" line="281"/>
         <source>Turn on tutorials</source>
         <translation>Включить обучение</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="295"/>
+        <location filename="../Settings/Settings.qml" line="292"/>
         <source>Tutorials are turned on</source>
         <translation>Обучение включено</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="410"/>
+        <location filename="../Settings/Settings.qml" line="407"/>
         <source>succesfully loaded</source>
         <translation>успешно загружено</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="414"/>
+        <location filename="../Settings/Settings.qml" line="411"/>
         <source>error loading database</source>
         <translation>ошибка загрузки базы данных</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="424"/>
+        <location filename="../Settings/Settings.qml" line="421"/>
         <source>Warning</source>
         <translation>Предупреждение</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="425"/>
+        <location filename="../Settings/Settings.qml" line="422"/>
         <source>Do you want to load chosen database? You will lose current one.</source>
         <translation>Вы хотите загрузить выбранную базу данных? Текущая база данных не сохранится.</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="546"/>
+        <location filename="../Settings/Settings.qml" line="543"/>
         <source>Database with this name already exists. Do you want to replace it?</source>
         <translation>База данных с таким именем уже существует. Вы хотите заменить ее?</translation>
     </message>
@@ -176,7 +190,7 @@
         <translation>Только слова между</translation>
     </message>
     <message>
-        <location filename="../Test/TestCard.qml" line="382"/>
+        <location filename="../Test/TestCard.qml" line="390"/>
         <source>You can&apos;t run test,because there are less then 4 words in the vocabulary,which correspond to the selected pack range.</source>
         <translation>Вы не можете запустить тест, потому что в вашем словаре меньше 4х слов, которые соответствуют выбранной области паков.</translation>
     </message>
