@@ -25,13 +25,11 @@ Rectangle {
     {
         if(path!=="")
             selectedFile=path
-        console.log("selected:",selectedFile)
     }
 
     function diselectFile()
     {
         selectedFile=""
-        console.log("diselectFile")
     }
 
     function show() {
@@ -237,7 +235,6 @@ Rectangle {
                     if (folders.isFolder(index))
                     {
                         root.downDir(path);
-                        console.log("updir")
                     }
                 }
 

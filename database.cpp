@@ -26,14 +26,36 @@ bool Database::connectToDatabase()
     if(!QDir(MYPATH).exists())
         QDir().mkdir(MYPATH);
 
+    bool noError=true;
+
     if(!QFile(MYPATH DATABASE_NAME).exists())   //if doesn't exist
-        return this->restoreDataBase();    //create new db
+        noError= this->restoreDataBase();    //create new db
     else
     {
         QFile(MYPATH DATABASE_NAME).copy("./" DATABASE_NAME);
         QFile::setPermissions("./" DATABASE_NAME,QFile::WriteOwner |     QFile::ReadOwner);
-        return this->openDataBase();       //open existing
+        noError= this->openDataBase();       //open existing
     }
+
+    if(noError)
+        updateDatabaseVersion();
+
+    return noError;
+}
+
+//implement database migration
+//for each new database version,create new resource txt file,which represent queries for transition from previous to current version of db
+//loop through these files and run queries
+//If FINAL_DATABASE_VERSION=5, but getDatabaseVersion=2, it updates v.2->v.3->v.4->v.5
+void Database::updateDatabaseVersion()
+{
+    qDebug()<<"Database Version="<< getDatabaseVersion();
+    if(getDatabaseVersion()!=FINAL_DATABASE_VERSION)
+    {
+            //...
+    }
+
+    setDatabaseVersion(FINAL_DATABASE_VERSION);
 }
 
 bool Database::insertIntoTableVocabulary(const QVariantList &data)
@@ -207,7 +229,7 @@ bool Database::openDataBase()
     db.setHostName(DATABASE_HOSTNAME);
     db.setDatabaseName(MYPATH DATABASE_NAME);
 
-    qDebug()<<MYPATH DATABASE_NAME;
+    //qDebug()<<MYPATH DATABASE_NAME;
 
     if(db.open())
         return true;
@@ -218,7 +240,7 @@ bool Database::openDataBase()
 bool Database::restoreDataBase()
 {
     if(this->openDataBase())
-        return this->createTable() ? true : false;    //if we created db,we create table
+        return this->createTable();    //if we created db,we create table
     else
     {
         qDebug()<< "Failed to restore DataBase";
@@ -227,9 +249,15 @@ bool Database::restoreDataBase()
     return false;
 }
 
+//we use connection to fully remove connection to DB
 void Database::closeDataBase()
 {
+    QString connection;
+    connection=db.connectionName();
+
     db.close();
+    db=QSqlDatabase();
+    db.removeDatabase(connection);
 }
 
 bool Database::createTable()
@@ -257,4 +285,26 @@ bool Database::createTable()
     if(query.exec() && query1.exec())
         return true;
     return false;
+}
+
+void Database::setDatabaseVersion(int version)
+{
+    QSqlQuery setVersion;
+    setVersion.exec("PRAGMA user_version="+QString::number(version));
+}
+
+int Database::getDatabaseVersion()
+{
+    QSqlQuery getVersion;
+    getVersion.exec("PRAGMA user_version;");
+
+    if(getVersion.next())        //if user_version exist
+    {
+        return getVersion.value(0).toInt();
+    }
+    else
+    {
+        setDatabaseVersion(1);
+        return 1;
+    }
 }

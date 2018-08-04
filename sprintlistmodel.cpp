@@ -59,7 +59,6 @@ bool SprintListModel::isAnyWords()
 
 void SprintListModel::readSettings()
 {
-    qDebug()<<"read Settings";
     QSettings settings("PupovCorp","Wordy");
     settings.beginGroup("SprintModel");
 
@@ -71,7 +70,6 @@ void SprintListModel::readSettings()
 
 void SprintListModel::writeSettings()
 {
-     qDebug()<<"write Settings";
     QSettings settings("PupovCorp","Wordy");
     settings.beginGroup("SprintModel");
 

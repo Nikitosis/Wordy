@@ -23,6 +23,8 @@
 #define LEARNED_VOCABULARY_INDEX  "Vocabulary_Index"
 #define LEARNED_DATE              "Date"
 
+#define FINAL_DATABASE_VERSION  1
+
 
 #ifdef myandroid                             //change paths according to our machine
     #define MYPATH QDir::currentPath()+"/db/"
@@ -41,6 +43,8 @@ public:
     ~Database();
 
     bool connectToDatabase();
+
+    void updateDatabaseVersion();
 
 signals:
 
@@ -63,11 +67,14 @@ public slots:
 private:
     QSqlDatabase db;
 
-private:
+protected:
     bool openDataBase();
     bool restoreDataBase();
     void closeDataBase();
     bool createTable();
+
+    void setDatabaseVersion(int version);
+    int  getDatabaseVersion();
 };
 
 #endif // DATABASE_H

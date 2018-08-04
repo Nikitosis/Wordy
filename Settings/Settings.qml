@@ -453,6 +453,7 @@ Rectangle {
             onBackgroundClicked:exportBrowser.closeClick()
         }
 
+
         //folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.DesktopLocation)
         folderPath: "file:///mnt/sdcard/"
     }

@@ -19,9 +19,7 @@ int main(int argc, char *argv[])
     translator.load(":/Translation/Wordy_"+QLocale::system().name()+".qm");
 
     app.installTranslator(&translator);
-    qDebug()<<QLocale::system().name();
-    qDebug()<<":/Translation/Wordy_"+QLocale::system().name()+".qm";
-    qDebug()<<QFile::exists(":/Translation/Wordy_"+QLocale::system().name()+".qm");
+    qDebug()<<"Language: "<<QLocale::system().name();
 
     Database db;
     db.connectToDatabase();  //connect to DB

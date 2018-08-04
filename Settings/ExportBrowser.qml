@@ -221,7 +221,6 @@ Rectangle {
                     if (foldersModel.isFolder(index))
                     {
                         root.downDir(path);
-                        console.log("updir")
                     }
                 }
 
