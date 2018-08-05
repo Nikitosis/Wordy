@@ -3,6 +3,8 @@
 SprintListModel::SprintListModel(Database *db, QObject *parent):ListModel(parent)
 {
     this->db=db;
+
+    //install packs,where first number-pack num; second-days untill next revision of the word
     packs.push_back({1,0});
     packs.push_back({2,1});
     packs.push_back({3,5});
@@ -79,33 +81,34 @@ void SprintListModel::writeSettings()
 
 }
 
+//if we have words in Learned,which date < currentDate , then we update these words(increase their pack
+//+change their date to the date,when they were repeated last time
 void SprintListModel::increaseLearnedPacks()
 {
     QSqlQuery prevWords;
-    prevWords.prepare("SELECT " TABLE_VOCABULARY".* "
+    prevWords.prepare("SELECT " TABLE_VOCABULARY".* " " , "
+                                TABLE_LEARNED"."LEARNED_DATE " AS LearnedDate "
                       " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX
                       " WHERE " TABLE_LEARNED"."LEARNED_DATE " < :DATE");                 //used join to combine two tables(all vocabulary words, which are in learned with late date
     prevWords.bindValue(":DATE",QDate::currentDate().toString("yyyy-MM-dd"));
     prevWords.exec();
 
-    QSqlQuery learnedWords;
-    learnedWords.exec("SELECT * FROM "TABLE_LEARNED);
     qDebug()<<"----Started Updating Packs ------";
     while(prevWords.next())                                                                            //if we found words,which date is old
     {
-        learnedWords.next();
-        QDate learnedDate=learnedWords.value("date").toDate();
             db->changeRecordVocabulary(  prevWords.value("id").toInt(),                                //update to next pack
                                          prevWords.value("word").toString(),
                                          prevWords.value("translation").toString(),
                                          prevWords.value("pack").toInt()+1,
-                                         learnedDate);
+                                         prevWords.value("LearnedDate").toDate());                    //change date to date, when they were repeated
 
     }
     qDebug()<<"----Ended Updating Packs ------";
 
 }
 
+//fill Learned with new words
+//in Learned we assign words' date to currentDate, so tomorrow we can find out, which words have already been repeated
 void SprintListModel::fillLearned()
 {
     QSqlQuery addWords;

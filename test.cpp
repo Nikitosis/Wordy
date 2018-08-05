@@ -105,6 +105,8 @@ QString Test::getOption(int num)
     }
 }
 
+//we take every word,which pack corresponds to our pack range(fromPack,toPack)
+//and check if their amount>=4(if less, we cannot build test, because we have 4 options)
 bool Test::canBuildTest(int fromPack, int toPack)
 {
     if(fromPack>toPack)

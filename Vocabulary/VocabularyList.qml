@@ -11,7 +11,7 @@ Item {
     ListView{
         id:list
         anchors.fill: parent
-        model:myModel
+        model:vocabularyModel
 
 
         property int lastItemIndex:-1
@@ -100,7 +100,7 @@ Item {
                         height: parent.height/2.3
                         anchors.bottom: parent.bottom
                         anchors.horizontalCenter: parent.horizontalCenter
-                        onChangePack: box.changePack(myModel.getId(index),word,translation,newRating,new Date())
+                        onChangePack: box.changePack(vocabularyModel.getId(index),word,translation,newRating,new Date())
                         z:3
 
                     }

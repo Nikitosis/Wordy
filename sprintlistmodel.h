@@ -35,7 +35,8 @@ private:
     void increaseLearnedPacks();
     void fillLearned();
 protected:
-    QString      getSprintQuery();
+    QString getSprintQuery();
+
     QVector<Pack> packs;
     int wordsInPack;
     Database *db;

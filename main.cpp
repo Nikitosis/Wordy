@@ -15,28 +15,30 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
+    //install Translation
+
     QTranslator translator;
     translator.load(":/Translation/Wordy_"+QLocale::system().name()+".qm");
 
     app.installTranslator(&translator);
     qDebug()<<"Language: "<<QLocale::system().name();
 
+
+
     Database db;
     db.connectToDatabase();  //connect to DB
 
-    ListModel *model=new ListModel(&app);  //create listModel(without the pointer won't work)
+    ListModel *vocabularyModel=new ListModel(&app);  //create models(without the pointer won't work)
     SprintListModel *sprintModel=new SprintListModel(&db,&app);
-    //sprintModel->updateModel();
 
-
-    Test *test=new Test(&app);
+    Test *test=new Test(&app);                       //create test backend
     Tutorials *tutorials=new Tutorials(&app);
 
 
     QQmlApplicationEngine engine;
 
     QQmlContext * context= engine.rootContext();
-    context->setContextProperty("myModel",model);
+    context->setContextProperty("vocabularyModel",vocabularyModel);
     context->setContextProperty("database",&db);
     context->setContextProperty("sprintModel",sprintModel);
     context->setContextProperty("testInfo",test);

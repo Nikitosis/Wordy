@@ -10,6 +10,7 @@ Database::~Database()
     closeDataBase();
 }
 
+
 bool Database::connectToDatabase()
 {
 
@@ -32,8 +33,8 @@ bool Database::connectToDatabase()
         noError= this->restoreDataBase();    //create new db
     else
     {
-        QFile(MYPATH DATABASE_NAME).copy("./" DATABASE_NAME);
-        QFile::setPermissions("./" DATABASE_NAME,QFile::WriteOwner |     QFile::ReadOwner);
+        //QFile(MYPATH DATABASE_NAME).copy("./" DATABASE_NAME);
+        //QFile::setPermissions("./" DATABASE_NAME,QFile::WriteOwner |     QFile::ReadOwner);
         noError= this->openDataBase();       //open existing
     }
 
@@ -206,16 +207,13 @@ bool Database::importDatabase(const QString path)
 
 bool Database::exportDatabase(const QString path, const QString fileName)
 {
-    if(QFile::exists(path+"/"+fileName))
+    if(QFile::exists(path+"/"+fileName))        //delete existed file
         QFile::remove(path+"/"+fileName);
+
     qDebug()<<"From "<<MYPATH DATABASE_NAME<<" To "<<path+"/"+fileName;
 
     return QFile::copy(MYPATH DATABASE_NAME,path+"/"+fileName);
     //qDebug()<<QFile::copy(DATABASE_NAME,"/release");
-
-    //qDebug()<<
-
-
 }
 
 bool Database::isFileExist(const QString path, const QString fileName)
@@ -229,14 +227,13 @@ bool Database::openDataBase()
     db.setHostName(DATABASE_HOSTNAME);
     db.setDatabaseName(MYPATH DATABASE_NAME);
 
-    //qDebug()<<MYPATH DATABASE_NAME;
-
     if(db.open())
         return true;
 
     return false;
 }
 
+//create new database
 bool Database::restoreDataBase()
 {
     if(this->openDataBase())
@@ -260,6 +257,7 @@ void Database::closeDataBase()
     db.removeDatabase(connection);
 }
 
+//create all tables
 bool Database::createTable()
 {
     QSqlQuery query;
@@ -287,10 +285,17 @@ bool Database::createTable()
     return false;
 }
 
-void Database::setDatabaseVersion(int version)
+bool Database::setDatabaseVersion(int version)
 {
     QSqlQuery setVersion;
-    setVersion.exec("PRAGMA user_version="+QString::number(version));
+    setVersion.prepare("PRAGMA user_version="+QString::number(version));
+
+    if(!setVersion.exec())
+    {
+        qDebug()<<"Error when setting database version!";
+        return false;
+    }
+    return true;
 }
 
 int Database::getDatabaseVersion()
@@ -304,7 +309,7 @@ int Database::getDatabaseVersion()
     }
     else
     {
-        setDatabaseVersion(1);
+        setDatabaseVersion(1);   //if user_version doesn't exist,we set version to 1
         return 1;
     }
 }

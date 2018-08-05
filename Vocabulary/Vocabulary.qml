@@ -27,7 +27,7 @@ Rectangle {
         }
 
         console.log("Vocabulary opened")
-        myModel.updateModel()
+        vocabularyModel.updateModel()
     }
     function close()
     {
@@ -109,8 +109,8 @@ Rectangle {
             MouseArea{
                 anchors.fill: parent
                 onClicked: {
-                    dialogUpdateWord.newWordName.text=myModel.getWord(list.listView.currentIndex)        //assign newWordName current word's name
-                    dialogUpdateWord.newWordTranslation.text=myModel.getTranslation(list.listView.currentIndex) //assign current word's translation
+                    dialogUpdateWord.newWordName.text=vocabularyModel.getWord(list.listView.currentIndex)        //assign newWordName current word's name
+                    dialogUpdateWord.newWordTranslation.text=vocabularyModel.getTranslation(list.listView.currentIndex) //assign current word's translation
                     console.log(list.listView.currentIndex)
                     dialogUpdateWord.state="opened"
                 }
@@ -186,7 +186,7 @@ Rectangle {
                                     newWordTranslation.text,
                                     1,
                                     date);
-           myModel.updateModel()
+           vocabularyModel.updateModel()
        }
    }
 
@@ -200,13 +200,13 @@ Rectangle {
        onAccepted: {
            console.log("updated", newWordName.text,newWordTranslation.text)
 
-           database.changeRecordVocabulary(myModel.getId(list.listView.currentIndex),
+           database.changeRecordVocabulary(vocabularyModel.getId(list.listView.currentIndex),
                                  newWordName.text,
                                  newWordTranslation.text,
                                  1,
-                                 myModel.getDate(list.listView.currentIndex));
+                                 vocabularyModel.getDate(list.listView.currentIndex));
 
-           myModel.updateModel()
+           vocabularyModel.updateModel()
        }
    }
 
@@ -215,14 +215,14 @@ Rectangle {
    MessageDialog{
        id:dialogDeleteWord
        title:qsTr("Delete word")
-       text:qsTr("Confirm deletion of the word\n")+myModel.getId(list.listView.currentIndex)
+       text:qsTr("Confirm deletion of the word\n")+vocabularyModel.getId(list.listView.currentIndex)
 
        standardButtons: StandardButton.Cancel | StandardButton.Apply
 
 
        onApply: {
-           database.removeRecordVocabulary(myModel.getId(list.listView.currentIndex))
-           myModel.updateModel()
+           database.removeRecordVocabulary(vocabularyModel.getId(list.listView.currentIndex))
+           vocabularyModel.updateModel()
        }
    }
 

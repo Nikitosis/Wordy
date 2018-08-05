@@ -44,7 +44,6 @@ public:
 
     bool connectToDatabase();
 
-    void updateDatabaseVersion();
 
 signals:
 
@@ -73,8 +72,9 @@ protected:
     void closeDataBase();
     bool createTable();
 
-    void setDatabaseVersion(int version);
+    bool setDatabaseVersion(int version);
     int  getDatabaseVersion();
+    void updateDatabaseVersion();
 };
 
 #endif // DATABASE_H
