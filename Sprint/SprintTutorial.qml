@@ -36,7 +36,7 @@ Item {
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
 
-                font.pixelSize: 15
+                font.pixelSize: Math.max(15,Math.min(mainBox.height/3,mainBox.width/25/1.3))
 
                 text:qsTr("This is Sprint. Here you learn new words. \n\n Everyday sprint gives you new words and upgrades previous ones to next pack. \n\n So you don't have to worry, which words to repeat today. Let our algorithms do all of the routine.")
             }
@@ -62,7 +62,7 @@ Item {
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
 
-                font.pixelSize: 15
+                font.pixelSize: Math.max(15,Math.min(mainBox.height/3,mainBox.width/25/1.3))
 
                 text:qsTr("Here every word represents a card. Each card has word and definition on oposite sides. \n\n Slide up or down to rotate card. \n\n Slide left or right to change the word.")
             }
@@ -88,7 +88,7 @@ Item {
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
 
-                font.pixelSize: 15
+                font.pixelSize: Math.max(15,Math.min(mainBox.height/3,mainBox.width/25/1.3))
 
                 text:qsTr("If you want every card to be rotated by default, click this button:")
             }

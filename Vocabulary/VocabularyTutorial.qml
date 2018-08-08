@@ -36,7 +36,7 @@ Item {
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
 
-                font.pixelSize: 15
+                font.pixelSize: Math.max(15,Math.min(mainBox.height/3,mainBox.width/25/1.3))
 
                 text:qsTr("This is your vocabulary. Here you can add new words, change and delete them. \n\n Each word belongs to pack.\n")
             }
@@ -98,7 +98,7 @@ Item {
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
 
-                font.pixelSize: 15
+                font.pixelSize: Math.max(15,Math.min(mainBox.height/3,mainBox.width/25/1.3))
 
                 text:qsTr("Words,which belong to first pack are new. You haven't repeated them in sprint yet.")
             }
@@ -175,7 +175,7 @@ Item {
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
 
-                font.pixelSize: 15
+                font.pixelSize: Math.max(15,Math.min(mainBox.height/3,mainBox.width/25/1.3))
 
                 text:qsTr("Words go to the second pack, when you repeat them in Sprint for the first time.")
             }
@@ -253,7 +253,7 @@ Item {
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
 
-                font.pixelSize: 15
+                font.pixelSize: Math.max(15,Math.min(mainBox.height/3,mainBox.width/25/1.3))
 
                 text:qsTr("Words go to the third pack, when you repeat them in Sprint the next day after their first repeat.")
             }
@@ -332,7 +332,7 @@ Item {
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
 
-                font.pixelSize: 15
+                font.pixelSize: Math.max(15,Math.min(mainBox.height/3,mainBox.width/25/1.3))
 
                 text:qsTr("Words go to the fourth pack, when you repeat them in Sprint a week after their first repeat.")
             }
@@ -410,7 +410,7 @@ Item {
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
 
-                font.pixelSize: 15
+                font.pixelSize: Math.max(15,Math.min(mainBox.height/3,mainBox.width/25/1.3))
 
                 text:qsTr("Words go to the fifth pack, when you repeat them in Sprint in 2 weeks after their first repeat.")
             }
@@ -488,7 +488,7 @@ Item {
                 wrapMode: Text.Wrap
                 horizontalAlignment: Text.AlignHCenter
 
-                font.pixelSize: 15
+                font.pixelSize: Math.max(15,Math.min(mainBox.height/3,mainBox.width/25/1.3))
 
                 text:qsTr("Words go to the sixth pack, when you repeat them in Sprint in a month after their first repeat. \n\n So that, you repeat each word 5 times in different periods of time. This way you will remember words for a very long time.")
             }

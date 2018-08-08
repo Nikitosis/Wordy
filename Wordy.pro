@@ -3,6 +3,7 @@ TEMPLATE = app
 QT += qml quick
 QT += sql
 QT += widgets
+QT += androidextras
 CONFIG += c++11
 CONFIG += resources_big
 

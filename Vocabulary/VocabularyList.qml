@@ -108,7 +108,7 @@ Item {
                     Text{
                         anchors.left: parent.left
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.leftMargin: 5
+                        anchors.leftMargin: parent.width/23
                         horizontalAlignment: Text.AlignLeft
                         verticalAlignment: Text.AlignVCenter
 
@@ -122,7 +122,7 @@ Item {
 
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
-                        anchors.rightMargin: 5
+                        anchors.rightMargin: parent.width/23
                         horizontalAlignment: Text.AlignRight
                         verticalAlignment: Text.AlignVCenter
 

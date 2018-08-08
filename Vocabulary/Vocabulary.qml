@@ -217,7 +217,7 @@ Rectangle {
        title:qsTr("Delete word")
        text:qsTr("Confirm deletion of the word\n")+vocabularyModel.getId(list.listView.currentIndex)
 
-       standardButtons: StandardButton.Cancel | StandardButton.Apply
+       standardButtons: StandardButton.Apply | StandardButton.Cancel
 
 
        onApply: {
@@ -249,12 +249,6 @@ Rectangle {
        from: "closed"
        to: "opened"
        reversible: true
-       /*onRunningChanged: {
-           if(state=="closed")
-               z=0
-           else
-               z=10
-       }*/
 
        NumberAnimation{
            properties: "opacity"

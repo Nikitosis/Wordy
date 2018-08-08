@@ -383,7 +383,8 @@ Rectangle {
         }
 
         //folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.HomeLocation)
-        folderPath: "file:///mnt/sdcard/"
+        //folderPath: "file:///mnt/sdcard/"
+        folderPath: storagePath
     }
 
     Item{                          //imports database
@@ -455,7 +456,8 @@ Rectangle {
 
 
         //folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.DesktopLocation)
-        folderPath: "file:///mnt/sdcard/"
+        //folderPath: "file:///mnt/sdcard/"
+        folderPath: storagePath
     }
 
     Item{                    //exports Database

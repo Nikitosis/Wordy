@@ -5,11 +5,31 @@
 #include <QTranslator>
 #include <QLocale>
 
+#include <QAndroidJniObject>
+#include <QAndroidJniEnvironment>
+
 #include <database.h>
 #include <listmodel.h>
 #include <sprintlistmodel.h>
 #include <test.h>
 #include <tutorials.h>
+
+QString getStoragePath()
+{
+    QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
+    QAndroidJniObject mediaPath = mediaDir.callObjectMethod( "getAbsolutePath", "()Ljava/lang/String;" );
+    QString storagePath = mediaPath.toString();
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck()) {
+            // Handle exception here.
+            env->ExceptionClear();
+    }
+
+    //return "file:///sdcard/DCIM";
+    //storagePath.remove(0,5);
+    storagePath="file://"+storagePath;
+    return storagePath;
+}
 
 int main(int argc, char *argv[])
 {
@@ -34,6 +54,8 @@ int main(int argc, char *argv[])
     Test *test=new Test(&app);                       //create test backend
     Tutorials *tutorials=new Tutorials(&app);
 
+    QString storagePath=getStoragePath();
+
 
     QQmlApplicationEngine engine;
 
@@ -43,6 +65,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("sprintModel",sprintModel);
     context->setContextProperty("testInfo",test);
     context->setContextProperty("tutorials",tutorials);
+    context->setContextProperty("storagePath",QVariant::fromValue(storagePath));
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())
