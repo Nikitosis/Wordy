@@ -25,6 +25,8 @@ Rectangle {
         //loader.item.parent = fileBrowser
         //loader.item.anchors.fill = fileBrowser
         foldersModel.folder = fileBrowser.folderPath
+
+        textPath.text=fileBrowser.folderPath
         fileBrowser.state="opened"
 
         console.log("show ExportBrowse")
@@ -338,6 +340,7 @@ Rectangle {
             view.x = -root.width;
 
             foldersModel.folder = path;
+            textPath.text=path
             view.state = "current";
         }
 
@@ -348,6 +351,7 @@ Rectangle {
             animationTimer.startingX=root.width
 
             view.currentIndex=-1
+
 
             animationTimer.start()
         }

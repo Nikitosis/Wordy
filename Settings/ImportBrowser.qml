@@ -37,6 +37,8 @@ Rectangle {
         //loader.item.parent = fileBrowser
         //loader.item.anchors.fill = fileBrowser
         folders.folder = fileBrowser.folderPath
+
+        textPath.text=fileBrowser.folderPath
         fileBrowser.state="opened"
 
         console.log("show ImportBrowser")
@@ -366,10 +368,12 @@ Rectangle {
             view.x = -root.width;
 
             folders.folder = path;
+            textPath.text=path
             view.state = "current";
         }
 
         function downDir(path) {
+
             view.state="exitLeft"
 
             animationTimer.path=path
@@ -382,6 +386,7 @@ Rectangle {
         }
 
         function upDir() {
+
             var path = folders.parentFolder;
             if (path.toString().length == 0 || path.toString() == 'file:')
                 return;
