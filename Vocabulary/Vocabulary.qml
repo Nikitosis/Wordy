@@ -215,7 +215,7 @@ Rectangle {
    MessageDialog{
        id:dialogDeleteWord
        title:qsTr("Delete word")
-       text:qsTr("Confirm deletion of the word\n")+vocabularyModel.getId(list.listView.currentIndex)
+       text:qsTr("Confirm deletion of the word\n")+vocabularyModel.getWord(list.listView.currentIndex)
 
        standardButtons: StandardButton.Apply | StandardButton.Cancel
 

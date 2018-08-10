@@ -8,6 +8,7 @@
 #include <QFile>
 #include <QDate>
 #include <QDebug>
+#include <QStandardPaths>
 
 
 #define DATABASE_HOSTNAME  "WordyDB"
@@ -27,7 +28,7 @@
 
 
 #ifdef myandroid                             //change paths according to our machine
-    #define MYPATH QDir::currentPath()+"/db/"
+    #define MYPATH QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)+"/db/"
 #else
     #define MYPATH QDir::currentPath()+"/db/"
 #endif

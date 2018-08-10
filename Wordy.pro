@@ -3,7 +3,6 @@ TEMPLATE = app
 QT += qml quick
 QT += sql
 QT += widgets
-QT += androidextras
 CONFIG += c++11
 CONFIG += resources_big
 
@@ -50,6 +49,7 @@ android {
     database.path = assets/db
     INSTALLS += database
     DEFINES +=myandroid
+    QT += androidextras
 }
 
 TRANSLATIONS+= Translation/Wordy_ru_RU.ts \

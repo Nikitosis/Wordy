@@ -5,8 +5,10 @@
 #include <QTranslator>
 #include <QLocale>
 
+#ifdef myandroid
 #include <QAndroidJniObject>
 #include <QAndroidJniEnvironment>
+#endif
 
 #include <database.h>
 #include <listmodel.h>
@@ -14,21 +16,28 @@
 #include <test.h>
 #include <tutorials.h>
 
+//QAndroidJniObject gives us ability to call java functions
 QString getStoragePath()
 {
+#ifdef myandroid
+    //call getExternalStorageDirectory() function,that returns File
     QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
+    //call this File's method getAbsolutePath()
     QAndroidJniObject mediaPath = mediaDir.callObjectMethod( "getAbsolutePath", "()Ljava/lang/String;" );
+
     QString storagePath = mediaPath.toString();
+
     QAndroidJniEnvironment env;
     if (env->ExceptionCheck()) {
             // Handle exception here.
             env->ExceptionClear();
     }
 
-    //return "file:///sdcard/DCIM";
-    //storagePath.remove(0,5);
-    storagePath="file://"+storagePath;
+    storagePath="file://"+storagePath;  //to work with FolderListModel(QML)
     return storagePath;
+#else
+    return QDir::currentPath();
+#endif
 }
 
 int main(int argc, char *argv[])

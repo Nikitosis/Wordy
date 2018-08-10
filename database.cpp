@@ -27,7 +27,10 @@ bool Database::connectToDatabase()
     if(!QDir(MYPATH).exists())
         QDir().mkdir(MYPATH);
 
+    qDebug()<<"Database: "+MYPATH DATABASE_NAME;
+
     bool noError=true;
+
 
     if(!QFile(MYPATH DATABASE_NAME).exists())   //if doesn't exist
         noError= this->restoreDataBase();    //create new db
