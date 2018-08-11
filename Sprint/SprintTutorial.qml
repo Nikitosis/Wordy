@@ -130,7 +130,7 @@ Item {
                 onClicked: {
                     mainBox.opacity=0
                     mainBox.enabled=false
-                    tutorials.passSprintTutorial()
+                    settingsManager.passSprintTutorial()
                 }
             }
         }

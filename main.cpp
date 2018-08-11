@@ -14,7 +14,6 @@
 #include <listmodel.h>
 #include <sprintlistmodel.h>
 #include <test.h>
-#include <tutorials.h>
 
 //QAndroidJniObject gives us ability to call java functions
 QString getStoragePath()
@@ -61,7 +60,6 @@ int main(int argc, char *argv[])
     SprintListModel *sprintModel=new SprintListModel(&db,&app);
 
     Test *test=new Test(&app);                       //create test backend
-    Tutorials *tutorials=new Tutorials(&app);
 
     QString storagePath=getStoragePath();
 
@@ -73,7 +71,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("database",&db);
     context->setContextProperty("sprintModel",sprintModel);
     context->setContextProperty("testInfo",test);
-    context->setContextProperty("tutorials",tutorials);
+    context->setContextProperty("settingsManager",&SettingsManager::getInstance());
     context->setContextProperty("storagePath",QVariant::fromValue(storagePath));
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));

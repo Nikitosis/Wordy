@@ -1,11 +1,21 @@
-#include "tutorials.h"
+#include "settingsmanager.h"
 
-Tutorials::Tutorials(QObject *parent) : QObject(parent)
+SettingsManager::SettingsManager()
 {
 
 }
 
-bool Tutorials::isVocabularyTutorial()
+SettingsManager &SettingsManager::getInstance()
+{
+    static SettingsManager *_instance=nullptr;
+    if(_instance==nullptr)
+    {
+        _instance=new SettingsManager();
+    }
+    return *_instance;
+}
+
+bool SettingsManager::isVocabularyTutorial()
 {
     QSettings settings("PupovCorp","Wordy");
     settings.beginGroup("Tutorials");
@@ -17,7 +27,7 @@ bool Tutorials::isVocabularyTutorial()
     return res;
 }
 
-bool Tutorials::isSprintTutorial()
+bool SettingsManager::isSprintTutorial()
 {
     QSettings settings("PupovCorp","Wordy");
     settings.beginGroup("Tutorials");
@@ -29,7 +39,7 @@ bool Tutorials::isSprintTutorial()
     return res;
 }
 
-void Tutorials::passVocabularyTutorial()
+void SettingsManager::passVocabularyTutorial()
 {
     QSettings settings("PupovCorp","Wordy");
     settings.beginGroup("Tutorials");
@@ -39,7 +49,7 @@ void Tutorials::passVocabularyTutorial()
     settings.endGroup();
 }
 
-void Tutorials::passSprintTutorial()
+void SettingsManager::passSprintTutorial()
 {
     QSettings settings("PupovCorp","Wordy");
     settings.beginGroup("Tutorials");
@@ -49,13 +59,35 @@ void Tutorials::passSprintTutorial()
     settings.endGroup();
 }
 
-void Tutorials::resetTutorials()
+void SettingsManager::resetTutorials()
 {
     QSettings settings("PupovCorp","Wordy");
     settings.beginGroup("Tutorials");
 
     settings.setValue("isSprintTutorial",1);
     settings.setValue("isVocabularyTutorial",1);
+
+    settings.endGroup();
+}
+
+int SettingsManager::getWordsInPack()
+{
+    QSettings settings("PupovCorp","Wordy");
+    settings.beginGroup("SprintModel");
+
+    int res=settings.value("wordsInPack",5).toInt();
+
+    settings.endGroup();
+
+    return res;
+}
+
+void SettingsManager::setWordsInPack(int wordsInPack)
+{
+    QSettings settings("PupovCorp","Wordy");
+    settings.beginGroup("SprintModel");
+
+    settings.setValue("wordsInPack",wordsInPack);
 
     settings.endGroup();
 }

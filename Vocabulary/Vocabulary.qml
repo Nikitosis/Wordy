@@ -14,7 +14,7 @@ Rectangle {
     {
         vocabulary.state="opened"
         vocabulary.list.listView.currentIndex=-1                //open vocabulary without selected item
-        if(tutorials.isVocabularyTutorial())
+        if(settingsManager.isVocabularyTutorial())
         {
             tutorial.opacity=1
             tutorial.pageNum=0

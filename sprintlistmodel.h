@@ -6,8 +6,10 @@
 #include <QVector>
 #include <QDate>
 #include <QtGlobal>
+
 #include <database.h>
 #include <listmodel.h>
+#include <settingsmanager.h>
 
 struct Pack{
     int packNum;
@@ -25,15 +27,12 @@ public:
 public slots:
     void updateModel();
     void updateModelShuffle();
-    void setWordsInPack(int newWordsInPack);
-    int  getWordsInPack();
+
     bool isAnyWords();
 
 private:
     void updateLearned();
-    void writeSettings();
-    void readSettings();
-    void increaseLearnedPacks();
+    void increasePacksOfLearnedWords();
     void fillLearned();
 protected:
     QString getSprintQuery();

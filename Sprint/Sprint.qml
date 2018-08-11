@@ -23,7 +23,7 @@ Rectangle {
             warningText.visible=false
         }
 
-        if(tutorials.isSprintTutorial())
+        if(settingsManager.isSprintTutorial())
         {
             tutorial.opacity=1
             tutorial.pageNum=0

@@ -10,7 +10,7 @@ Rectangle {
     property color      sectionHeaderColor: "#dbbde6"
     property color      sectionPropertyColor:"white"
 
-    property int        wordsInPack:sprintModel.getWordsInPack()
+    property int        wordsInPack:settingsManager.getWordsInPack()
 
     function open()
     {
@@ -288,7 +288,7 @@ Rectangle {
                         anchors.fill: parent
 
                         onClicked: {
-                            tutorials.resetTutorials()
+                            settingsManager.resetTutorials()
                             messageDialog.text=qsTr("Tutorials are turned on")
                             messageDialog.open()
                         }
@@ -587,7 +587,7 @@ Rectangle {
     onStateChanged: {
         if(state=="closed")
         {
-            sprintModel.setWordsInPack(wordsInPack)
+            settingsManager.setWordsInPack(wordsInPack)
         }
     }
 

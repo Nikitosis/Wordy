@@ -10,13 +10,10 @@ SprintListModel::SprintListModel(Database *db, QObject *parent):ListModel(parent
     packs.push_back({3,5});
     packs.push_back({4,7});
     packs.push_back({5,16});
-
-    readSettings();
 }
 
 SprintListModel::~SprintListModel()
 {
-    writeSettings();
 }
 
 
@@ -44,22 +41,12 @@ void SprintListModel::updateModelShuffle()
 
 void SprintListModel::updateLearned()
 {
-    increaseLearnedPacks();    //if we have already learned some words,we increase their packs
+    increasePacksOfLearnedWords();    //if we have already learned some words,we increase their packs
 
     db->clearLearned();
     qDebug()<<"Cleared Learned";
 
     fillLearned();            //fill Learned table with new words to learn
-}
-
-void SprintListModel::setWordsInPack(int newWordsInPack)
-{
-    wordsInPack=newWordsInPack;
-}
-
-int SprintListModel::getWordsInPack()
-{
-    return wordsInPack;
 }
 
 bool SprintListModel::isAnyWords()
@@ -73,31 +60,9 @@ bool SprintListModel::isAnyWords()
     return false;
 }
 
-void SprintListModel::readSettings()
-{
-    QSettings settings("PupovCorp","Wordy");
-    settings.beginGroup("SprintModel");
-
-    setWordsInPack(settings.value("wordsInPack",5).toInt());
-
-    settings.endGroup();
-
-}
-
-void SprintListModel::writeSettings()
-{
-    QSettings settings("PupovCorp","Wordy");
-    settings.beginGroup("SprintModel");
-
-    settings.setValue("wordsInPack",getWordsInPack());
-
-    settings.endGroup();
-
-}
-
 //if we have words in Learned,which date < currentDate , then we update these words(increase their pack
 //+change their date to the date,when they were repeated last time
-void SprintListModel::increaseLearnedPacks()
+void SprintListModel::increasePacksOfLearnedWords()
 {
     QSqlQuery prevWords;
     prevWords.prepare("SELECT " TABLE_VOCABULARY".* " " , "
@@ -153,7 +118,7 @@ QString SprintListModel::getSprintQuery()      //get query that selects new word
                                   " WHERE (pack= "+QString::number(packs[0].packNum)+
                                   " AND  julianday( " +"'"+QDate::currentDate().toString("yyyy-MM-dd")+"') -julianday(date)>= "+QString::number(packs[0].daysToUpdate)+")"
                                   " ORDER BY id DESC  "
-                                  " LIMIT " +QString::number(getWordsInPack())+
+                                  " LIMIT " +QString::number(SettingsManager::getInstance().getWordsInPack())+
                                   ") "
                                   " UNION ";      //for first pack
 
