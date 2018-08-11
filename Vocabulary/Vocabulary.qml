@@ -66,6 +66,7 @@ Rectangle {
             color:"#399c4c"
 
             opacity: list.listView.currentIndex==-1 ? 0 : 1     //not visible,if haven't selected any word
+            enabled: list.listView.currentIndex==-1 ? false : true
 
             Image {
                 anchors.centerIn: parent
@@ -96,6 +97,8 @@ Rectangle {
             color:"#399c4c"
 
             opacity: list.listView.currentIndex==-1 ? 0 : 1     //not visible,if haven't selected any word
+            enabled: list.listView.currentIndex==-1 ? false : true
+
 
             Image {
                 anchors.centerIn: parent

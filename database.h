@@ -12,7 +12,7 @@
 
 
 #define DATABASE_HOSTNAME  "WordyDB"
-#define DATABASE_NAME      "Wordy1.db"
+#define DATABASE_NAME      "Wordy.db"
 
 #define TABLE_VOCABULARY        "Vocabulary"
 #define VOCABULARY_WORD         "Word"
@@ -43,12 +43,13 @@ public:
     explicit Database(QObject *parent = nullptr);
     ~Database();
 
-    bool connectToDatabase();
 
 
 signals:
 
 public slots:
+    bool connectToDatabase();
+
     bool insertIntoTableVocabulary(const QVariantList &data);
     bool insertIntoTableVocabulary(const QString &word, const QString &translation, int pack,const QDate date);
     bool removeRecordVocabulary(const int id);

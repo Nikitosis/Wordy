@@ -28,6 +28,20 @@ void SprintListModel::updateModel()
                    " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX);
 }
 
+void SprintListModel::updateModelShuffle()
+{
+    updateLearned();
+
+    this->setQuery(" SELECT "TABLE_VOCABULARY".* "
+                   " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX
+                   " ORDER BY random()");
+
+    QString query=" SELECT "TABLE_VOCABULARY".* "
+                  " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX
+                  " ORDER BY random()";
+    qDebug()<<query;
+}
+
 void SprintListModel::updateLearned()
 {
     increaseLearnedPacks();    //if we have already learned some words,we increase their packs
@@ -91,7 +105,11 @@ void SprintListModel::increaseLearnedPacks()
                       " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX
                       " WHERE " TABLE_LEARNED"."LEARNED_DATE " < :DATE");                 //used join to combine two tables(all vocabulary words, which are in learned with late date
     prevWords.bindValue(":DATE",QDate::currentDate().toString("yyyy-MM-dd"));
-    prevWords.exec();
+    if(!prevWords.exec())
+    {
+        qDebug()<<"Error: can't get PrevWords in Sprint";
+        return;
+    }
 
     qDebug()<<"----Started Updating Packs ------";
     while(prevWords.next())                                                                            //if we found words,which date is old
@@ -112,7 +130,11 @@ void SprintListModel::increaseLearnedPacks()
 void SprintListModel::fillLearned()
 {
     QSqlQuery addWords;
-    addWords.exec(getSprintQuery());
+    if(!addWords.exec(getSprintQuery()))
+    {
+        qDebug()<<"Error: can't fill Learned table";
+        return;
+    }
 
     while(addWords.next())                                                                          //add words to learned pack
     {

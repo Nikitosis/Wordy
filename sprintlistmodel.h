@@ -24,12 +24,13 @@ public:
 
 public slots:
     void updateModel();
-    void updateLearned();
+    void updateModelShuffle();
     void setWordsInPack(int newWordsInPack);
     int  getWordsInPack();
     bool isAnyWords();
 
 private:
+    void updateLearned();
     void writeSettings();
     void readSettings();
     void increaseLearnedPacks();

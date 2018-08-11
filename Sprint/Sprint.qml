@@ -165,6 +165,35 @@ Rectangle {
         }
     }
 
+    Item{
+        id:shuffleButton
+
+        anchors.left: parent.left
+        anchors.top: parent.top
+
+        height: Math.min(parent.height/8,parent.width/4)
+        width: Math.min(parent.height/8,parent.width/4)
+
+        anchors.topMargin:  Math.min(sprint.height/25,sprint.width/25)
+        anchors.leftMargin: Math.min(sprint.height/25,sprint.width/25)
+
+        smooth:true
+
+        Image{
+            anchors.fill: parent
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:/img/ShuffleButton.png"
+        }
+
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                list.listView.currentIndex=0
+                sprintModel.updateModelShuffle()
+            }
+        }
+    }
+
     Text{
         id:warningText
         anchors.fill: parent

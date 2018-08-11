@@ -36,6 +36,14 @@ Item {
 
         highlightRangeMode: ListView.StrictlyEnforceRange   //in order to change currentIndex, when swiping
 
+        populate: Transition {
+            NumberAnimation {
+                properties: "x"
+                duration: 500
+                from:-1000
+                easing.type:Easing.OutBack
+            }
+        }
 
         delegate: SwipeView{
             id:mainDelegate

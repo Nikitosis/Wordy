@@ -35,6 +35,8 @@ public:
 
 public slots:
     void newTest(int fromPack,int toPack);
+    QVector<Word> getAllWords(int fromPack,int toPack);
+    int getUnusedWordNum(int wordsAmount);
     void resetWords();
     QString getMainWord();
     QString getMainAnsver();

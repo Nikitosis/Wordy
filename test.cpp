@@ -12,24 +12,7 @@ void Test::newTest(int fromPack, int toPack)
     if(fromPack>toPack)
         std::swap(fromPack,toPack);
 
-    QSqlQuery query;
-    query.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE "VOCABULARY_PACK " >= :FROMPACK AND " VOCABULARY_PACK " <= :TOPACK");
-    query.bindValue(":FROMPACK",fromPack);
-    query.bindValue(":TOPACK",toPack);
-    query.exec();
-
-    QVector<Word> words;
-    while(query.next())
-    {
-        words.push_back({query.value(0).toInt(),
-                            query.value(1).toString(),
-                            query.value(2).toString(),
-                            query.value(3).toInt(),
-                            query.value(4).toDate()
-                        });
-        qDebug()<<"added";
-    }
-    qDebug()<<"Test words amount:"<<words.size();
+    QVector<Test::Word> words=getAllWords(fromPack,toPack);
 
     if(words.size()<4)
     {
@@ -38,19 +21,8 @@ void Test::newTest(int fromPack, int toPack)
     }
 
     qsrand(QTime(0,0,0).msecsTo(QTime::currentTime()));
-    int wordNum= qrand()% words.size();
 
-    int amount=0;
-    while(usedWords.contains(wordNum))
-    {
-        wordNum=(wordNum+1) % words.size();
-        amount++;
-        if(amount>words.size())
-        {
-            resetWords();
-            amount=0;
-        }
-    }
+    int wordNum= getUnusedWordNum(words.size());
 
 
     mainWord=words[wordNum].word;
@@ -59,12 +31,12 @@ void Test::newTest(int fromPack, int toPack)
     usedWords.insert(wordNum);
 
 
+    //fill options with false ansvers
     QSet<int> UsedOption;
     UsedOption.insert(wordNum);
     for(int i=0;i<3;i++)
     {
         int randNum=rand()% words.size();
-        amount=0;
         while(UsedOption.contains(randNum))
         {
             randNum=(randNum+1)%words.size();
@@ -78,6 +50,57 @@ void Test::newTest(int fromPack, int toPack)
     qDebug()<<options[0]<<" "<<options[1]<<" "<<options[2]<<" "<<options[3];
 
 
+}
+
+//get all words from Vocabulary,wich packs are between fromPack and toPack
+QVector<Test::Word> Test::getAllWords(int fromPack, int toPack)
+{
+    if(fromPack>toPack)
+        std::swap(fromPack,toPack);
+
+    QSqlQuery getMatchWords;
+    getMatchWords.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE "VOCABULARY_PACK " >= :FROMPACK AND " VOCABULARY_PACK " <= :TOPACK");
+    getMatchWords.bindValue(":FROMPACK",fromPack);
+    getMatchWords.bindValue(":TOPACK",toPack);
+
+    if(!getMatchWords.exec())
+    {
+        qDebug()<<"Error: can't get words from Vocabulary from FromPack to ToPack";
+        return {};
+    }
+
+    QVector<Word> words;
+    while(getMatchWords.next())
+    {
+        words.push_back({getMatchWords.value(0).toInt(),
+                            getMatchWords.value(1).toString(),
+                            getMatchWords.value(2).toString(),
+                            getMatchWords.value(3).toInt(),
+                            getMatchWords.value(4).toDate()
+                        });
+        qDebug()<<"added";
+    }
+    qDebug()<<"Test words amount:"<<words.size();
+    return words;
+}
+
+//get index of unused word
+int Test::getUnusedWordNum(int wordsAmount)
+{
+    int wordNum= qrand()% wordsAmount;
+
+    int amount=0;
+    while(usedWords.contains(wordNum))
+    {
+        wordNum=(wordNum+1) % wordsAmount;
+        amount++;
+        if(amount>wordsAmount)
+        {
+            resetWords();
+            amount=0;
+        }
+    }
+    return wordNum;
 }
 
 void Test::resetWords()
@@ -112,21 +135,8 @@ bool Test::canBuildTest(int fromPack, int toPack)
     if(fromPack>toPack)
         std::swap(fromPack,toPack);
 
-    QSqlQuery query;
-    query.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE "VOCABULARY_PACK " >= :FROMPACK AND " VOCABULARY_PACK " <= :TOPACK");
-    query.bindValue(":FROMPACK",fromPack);
-    query.bindValue(":TOPACK",toPack);
-    query.exec();
+    QVector<Test::Word> words=getAllWords(fromPack,toPack);
 
-    int amount=0;
-    while(query.next())
-    {
-        amount++;
-
-        if(amount>=4)
-            break;
-    }
-
-    return amount>=4;
+    return words.size()>=4;
 }
 

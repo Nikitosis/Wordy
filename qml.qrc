@@ -49,5 +49,6 @@
         <file>Translation/Wordy_ua_UA.qm</file>
         <file>Translation/Wordy_ru_RU.ts</file>
         <file>Translation/Wordy_ua_UA.ts</file>
+        <file>img/ShuffleButton.png</file>
     </qresource>
 </RCC>
