@@ -4,7 +4,7 @@
 <context>
     <name>ExportBrowser</name>
     <message>
-        <location filename="../Settings/ExportBrowser.qml" line="161"/>
+        <location filename="../Settings/ExportBrowser.qml" line="163"/>
         <source>Choose folder</source>
         <translation>Обрати папку</translation>
     </message>
@@ -43,12 +43,12 @@
 <context>
     <name>SaveDialog</name>
     <message>
-        <location filename="../Settings/SaveDialog.qml" line="43"/>
+        <location filename="../Settings/SaveDialog.qml" line="45"/>
         <source>You want to copy WordyWorld&apos;s database to </source>
         <translation>Ви хочете зберегти базу даних WordyWorld до </translation>
     </message>
     <message>
-        <location filename="../Settings/SaveDialog.qml" line="43"/>
+        <location filename="../Settings/SaveDialog.qml" line="45"/>
         <source>
 
 Enter the name of the copy</source>
@@ -57,12 +57,12 @@ Enter the name of the copy</source>
 Введіть назву копії</translation>
     </message>
     <message>
-        <location filename="../Settings/SaveDialog.qml" line="96"/>
+        <location filename="../Settings/SaveDialog.qml" line="98"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../Settings/SaveDialog.qml" line="132"/>
+        <location filename="../Settings/SaveDialog.qml" line="134"/>
         <source>Ok</source>
         <translation>Ок</translation>
     </message>
@@ -110,27 +110,27 @@ Enter the name of the copy</source>
         <translation>Навчання ввімкнено</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="407"/>
+        <location filename="../Settings/Settings.qml" line="408"/>
         <source>succesfully loaded</source>
         <translation>успішно завантажено</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="411"/>
+        <location filename="../Settings/Settings.qml" line="412"/>
         <source>error loading database</source>
         <translation>помилка при завантаженні бази даних</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="421"/>
+        <location filename="../Settings/Settings.qml" line="422"/>
         <source>Warning</source>
         <translation>Попередження</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="422"/>
+        <location filename="../Settings/Settings.qml" line="423"/>
         <source>Do you want to load chosen database? You will lose current one.</source>
         <translation>Ви хочете завантажити обрану базу даних? Поточна база даних не збережеться.</translation>
     </message>
     <message>
-        <location filename="../Settings/Settings.qml" line="543"/>
+        <location filename="../Settings/Settings.qml" line="546"/>
         <source>Database with this name already exists. Do you want to replace it?</source>
         <translation>База даних з таким ім&apos;ям вже існує. Ви хочете замінити її?</translation>
     </message>
@@ -138,7 +138,7 @@ Enter the name of the copy</source>
 <context>
     <name>Sprint</name>
     <message>
-        <location filename="../Sprint/Sprint.qml" line="176"/>
+        <location filename="../Sprint/Sprint.qml" line="205"/>
         <source>There are no words for you to repeat today. Add more words in vocabulary.</source>
         <translation>На сьогодні немає слів для повторення. Додайте більше слів у Словник.</translation>
     </message>
@@ -172,9 +172,14 @@ Enter the name of the copy</source>
 Проведіть пальцем  вліво і вправо, щоб перейти до іншої картки.</translation>
     </message>
     <message>
-        <location filename="../Sprint/SprintTutorial.qml" line="93"/>
+        <location filename="../Sprint/SprintTutorial.qml" line="94"/>
         <source>If you want every card to be rotated by default, click this button:</source>
         <translation>Якщо ви хочете, щоб кожна картка була повернена за замовчуванням, натисніть кнопку:</translation>
+    </message>
+    <message>
+        <location filename="../Sprint/SprintTutorial.qml" line="114"/>
+        <source>Also,you can shuffle cards clicking this button:</source>
+        <translation>Також ви можете перемішати карточки натисканням на кнопку:</translation>
     </message>
 </context>
 <context>
@@ -198,12 +203,12 @@ Enter the name of the copy</source>
 <context>
     <name>Vocabulary</name>
     <message>
-        <location filename="../Vocabulary/Vocabulary.qml" line="217"/>
+        <location filename="../Vocabulary/Vocabulary.qml" line="220"/>
         <source>Delete word</source>
         <translation>Видалення слова</translation>
     </message>
     <message>
-        <location filename="../Vocabulary/Vocabulary.qml" line="218"/>
+        <location filename="../Vocabulary/Vocabulary.qml" line="221"/>
         <source>Confirm deletion of the word
 </source>
         <translation>Підтвердіть видалення слова

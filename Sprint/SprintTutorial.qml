@@ -94,11 +94,32 @@ Item {
             }
 
             Image{
-                width: mainBox.width
-                height: mainBox.height/7
+                width: Math.min(mainBox.width,mainBox.height/7)
+                height: Math.min(mainBox.width,mainBox.height/7)
                 horizontalAlignment: Image.AlignHCenter
+                anchors.horizontalCenter: parent.horizontalCenter
 
                 source: "qrc:/img/RotationButton.png"
+
+                fillMode: Image.PreserveAspectFit
+            }
+
+            Text{
+                width: parent.width
+                wrapMode: Text.Wrap
+                horizontalAlignment: Text.AlignHCenter
+
+                font.pixelSize: Math.max(15,Math.min(mainBox.height/3,mainBox.width/25/1.3))
+
+                text:qsTr("Also,you can shuffle cards clicking this button:")
+            }
+            Image{
+                width: Math.min(mainBox.width,mainBox.height/7)
+                height: Math.min(mainBox.width,mainBox.height/7)
+                horizontalAlignment: Image.AlignHCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+
+                source: "qrc:/img/ShuffleButton.png"
 
                 fillMode: Image.PreserveAspectFit
             }
