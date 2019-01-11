@@ -21,20 +21,20 @@ void SprintListModel::updateModel()
 {
     updateLearned();
 
-    this->setQuery("SELECT "TABLE_VOCABULARY".* "
-                   " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX);
+    this->setQuery("SELECT " TABLE_VOCABULARY".* "
+                   " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"." LEARNED_VOCABULARY_INDEX);
 }
 
 void SprintListModel::updateModelShuffle()
 {
     updateLearned();
 
-    this->setQuery(" SELECT "TABLE_VOCABULARY".* "
-                   " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX
+    this->setQuery(" SELECT " TABLE_VOCABULARY".* "
+                   " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"." LEARNED_VOCABULARY_INDEX
                    " ORDER BY random()");
 
-    QString query=" SELECT "TABLE_VOCABULARY".* "
-                  " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX
+    QString query=" SELECT " TABLE_VOCABULARY".* "
+                  " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"." LEARNED_VOCABULARY_INDEX
                   " ORDER BY random()";
     qDebug()<<query;
 }
@@ -65,10 +65,10 @@ bool SprintListModel::isAnyWords()
 void SprintListModel::increasePacksOfLearnedWords()
 {
     QSqlQuery prevWords;
-    prevWords.prepare("SELECT " TABLE_VOCABULARY".* " " , "
-                                TABLE_LEARNED"."LEARNED_DATE " AS LearnedDate "
-                      " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY".id " " = " TABLE_LEARNED"."LEARNED_VOCABULARY_INDEX
-                      " WHERE " TABLE_LEARNED"."LEARNED_DATE " < :DATE");                 //used join to combine two tables(all vocabulary words, which are in learned with late date
+    prevWords.prepare("SELECT " TABLE_VOCABULARY ".* " " , "
+                                TABLE_LEARNED "." LEARNED_DATE " AS LearnedDate "
+                      " FROM " TABLE_VOCABULARY " JOIN " TABLE_LEARNED " ON " TABLE_VOCABULARY ".id " " = " TABLE_LEARNED "." LEARNED_VOCABULARY_INDEX
+                      " WHERE " TABLE_LEARNED "." LEARNED_DATE " < :DATE");                 //used join to combine two tables(all vocabulary words, which are in learned with late date
     prevWords.bindValue(":DATE",QDate::currentDate().toString("yyyy-MM-dd"));
     if(!prevWords.exec())
     {

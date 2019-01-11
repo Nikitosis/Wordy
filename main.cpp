@@ -5,6 +5,9 @@
 #include <QTranslator>
 #include <QLocale>
 
+#include "SystemConfigManagers/isystemconfigmanager.h"
+#include "SystemConfigManagers/configmanagerfactory.h"
+
 #ifdef myandroid
 #include <QAndroidJniObject>
 #include <QAndroidJniEnvironment>
@@ -14,30 +17,6 @@
 #include <listmodel.h>
 #include <sprintlistmodel.h>
 #include <test.h>
-
-//QAndroidJniObject gives us ability to call java functions
-QString getStoragePath()
-{
-#ifdef myandroid
-    //call getExternalStorageDirectory() function,that returns File
-    QAndroidJniObject mediaDir = QAndroidJniObject::callStaticObjectMethod("android/os/Environment", "getExternalStorageDirectory", "()Ljava/io/File;");
-    //call this File's method getAbsolutePath()
-    QAndroidJniObject mediaPath = mediaDir.callObjectMethod( "getAbsolutePath", "()Ljava/lang/String;" );
-
-    QString storagePath = mediaPath.toString();
-
-    QAndroidJniEnvironment env;
-    if (env->ExceptionCheck()) {
-            // Handle exception here.
-            env->ExceptionClear();
-    }
-
-    storagePath="file://"+storagePath;  //to work with FolderListModel(QML)
-    return storagePath;
-#else
-    return QDir::currentPath();
-#endif
-}
 
 int main(int argc, char *argv[])
 {
@@ -61,8 +40,8 @@ int main(int argc, char *argv[])
 
     Test *test=new Test(&app);                       //create test backend
 
-    QString storagePath=getStoragePath();
-
+    ISystemConfigManager *configManager=ConfigManagerFactory::getConfigManager();   //to control permissions and get storagePath
+    configManager->requestPermissions();  //toDo: ask for permission only when import/export buttons are clicked
 
     QQmlApplicationEngine engine;
 
@@ -72,7 +51,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("sprintModel",sprintModel);
     context->setContextProperty("testInfo",test);
     context->setContextProperty("settingsManager",&SettingsManager::getInstance());
-    context->setContextProperty("storagePath",QVariant::fromValue(storagePath));
+    context->setContextProperty("configManager",configManager);
 
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     if (engine.rootObjects().isEmpty())

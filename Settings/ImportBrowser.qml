@@ -229,6 +229,7 @@ Rectangle {
                 color: view.currentIndex==index ? "grey" :"transparent"
 
                 function launch() {                             //when we click on file,folder
+                    console.log("launch")
                     var path = "file://";
                     if (filePath.length > 2 && filePath[1] === ':') // Windows drive logic, see QUrl::fromLocalFile()
                         path += '/';
@@ -386,7 +387,7 @@ Rectangle {
         }
 
         function upDir() {
-
+            console.log("Updir")
             var path = folders.parentFolder;
             if (path.toString().length == 0 || path.toString() == 'file:')
                 return;

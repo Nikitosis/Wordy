@@ -6,21 +6,27 @@ QT += widgets
 CONFIG += c++11
 CONFIG += resources_big
 
-SOURCES += main.cpp \
+SOURCES +=main.cpp \
     database.cpp \
     listmodel.cpp \
     sprintlistmodel.cpp \
     test.cpp \
-    settingsmanager.cpp
+    settingsmanager.cpp \
+    SystemConfigManagers/androidconfigmanager.cpp \
+    SystemConfigManagers/configmanagerfabric.cpp \
+    SystemConfigManagers/isystemconfigmanager.cpp \
+    SystemConfigManagers/windowsconfigmanager.cpp
 
 RESOURCES += qml.qrc
 
 
-android {
-    database.files += mybase.sqlite
-    database.path = assets/
-    INSTALLS += database
-}
+#android {
+#    database.files += mybase.sqlite
+#    database.path = assets/
+#    INSTALLS += database
+#}
+
+
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 
@@ -55,13 +61,15 @@ android {
 TRANSLATIONS+= Translation/Wordy_ru_RU.ts \
                Translation/Wordy_ua_UA.ts
 
-HEADERS += \
-    database.h \
+HEADERS +=database.h \
     listmodel.h \
     sprintlistmodel.h \
     test.h \
-    tutorials.h \
-    settingsmanager.h
+    settingsmanager.h \
+    SystemConfigManagers/androidconfigmanager.h \
+    SystemConfigManagers/configmanagerfactory.h \
+    SystemConfigManagers/isystemconfigmanager.h \
+    SystemConfigManagers/windowsconfigmanager.h
 
 DISTFILES += \
     android/AndroidManifest.xml \

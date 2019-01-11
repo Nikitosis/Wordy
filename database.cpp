@@ -280,7 +280,7 @@ bool Database::createTable()
                     "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     LEARNED_VOCABULARY_INDEX    " INT, "
                     LEARNED_DATE                " DATE, "
-                    "FOREIGN KEY ("LEARNED_VOCABULARY_INDEX") REFERENCES " TABLE_VOCABULARY "(id)"
+                    "FOREIGN KEY (" LEARNED_VOCABULARY_INDEX") REFERENCES " TABLE_VOCABULARY "(id)"
                     " )"
                   );
     if(query.exec() && query1.exec())

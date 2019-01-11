@@ -188,6 +188,7 @@ Rectangle {
                         id:exportDatabaseMouseArea
                         anchors.fill: parent
                         onClicked: {
+                            configManager.requestPermissions()    //get permission to write/read from storage
                             dialogBackground.state="opened"
                             exportBrowser.show()
                         }
@@ -233,6 +234,7 @@ Rectangle {
                         id:importDatabaseMouseArea
                         anchors.fill: parent
                         onClicked: {
+                            configManager.requestPermissions()   //get permission to write/read from storage
                             dialogBackground.state="opened"
                             importBrowser.show()
                         }
@@ -384,7 +386,7 @@ Rectangle {
 
         //folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.HomeLocation)
         //folderPath: "file:///mnt/sdcard/"
-        folderPath: storagePath
+        folderPath: configManager.getStoragePath()
     }
 
     Item{                          //imports database
@@ -457,7 +459,7 @@ Rectangle {
 
         //folderPath: Platform.StandardPaths.writableLocation(Platform.StandardPaths.DesktopLocation)
         //folderPath: "file:///mnt/sdcard/"
-        folderPath: storagePath
+        folderPath: configManager.getStoragePath()
     }
 
     Item{                    //exports Database

@@ -59,7 +59,7 @@ QVector<Test::Word> Test::getAllWords(int fromPack, int toPack)
         std::swap(fromPack,toPack);
 
     QSqlQuery getMatchWords;
-    getMatchWords.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE "VOCABULARY_PACK " >= :FROMPACK AND " VOCABULARY_PACK " <= :TOPACK");
+    getMatchWords.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE " VOCABULARY_PACK " >= :FROMPACK AND " VOCABULARY_PACK " <= :TOPACK");
     getMatchWords.bindValue(":FROMPACK",fromPack);
     getMatchWords.bindValue(":TOPACK",toPack);
 
