@@ -63,6 +63,9 @@ public slots:
     bool exportDatabase(const QString path, QString fileName);
     bool importDatabase(const QString path);
 
+    int getWordPack(int id);
+    QDate getWordDate(int id);
+
     bool isFileExist(const QString path,QString fileName);
 
 private:

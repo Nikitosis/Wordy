@@ -208,6 +208,40 @@ bool Database::importDatabase(const QString path)
 
 }
 
+int Database::getWordPack(int id)
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE id=:ID");
+    query.bindValue(":ID",id);
+
+    if(!query.exec()){
+        qDebug() <<"error getting word pack. Word id="<<id;
+        qDebug() <<query.lastError().text();
+        return 1;
+    }
+
+    query.next();
+
+    return query.value(VOCABULARY_PACK).toInt();
+}
+
+QDate Database::getWordDate(int id)
+{
+    QSqlQuery query;
+    query.prepare("SELECT * FROM " TABLE_VOCABULARY " WHERE id=:ID");
+    query.bindValue(":ID",id);
+
+    if(!query.exec()){
+        qDebug() <<"error getting word pack. Word id="<<id;
+        qDebug() <<query.lastError().text();
+        return QDate();
+    }
+
+    query.next();
+
+    return query.value(VOCABULARY_DATE).toDate();
+}
+
 bool Database::exportDatabase(const QString path, const QString fileName)
 {
     if(QFile::exists(path+"/"+fileName))        //delete existed file

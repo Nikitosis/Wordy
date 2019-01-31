@@ -165,7 +165,7 @@ Rectangle {
 
         onChangePack: {
             database.changeRecordVocabulary(id,word,translation,pack,date)
-            console.log("Pack changed id=",id," pack=",pack)
+            console.log("Pack changed id=",id," pack=",pack,"listIndex=")
             //myModel.updateModel()
         }
 
@@ -201,13 +201,14 @@ Rectangle {
 
        state:"closed"
        onAccepted: {
-           console.log("updated", newWordName.text,newWordTranslation.text)
+           console.log("updated", newWordName.text,newWordTranslation.text," index: ",list.listView.currentIndex)
 
-           database.changeRecordVocabulary(vocabularyModel.getId(list.listView.currentIndex),
+           var wordId=vocabularyModel.getId(list.listView.currentIndex);
+           database.changeRecordVocabulary(wordId,
                                  newWordName.text,
                                  newWordTranslation.text,
-                                 1,
-                                 vocabularyModel.getDate(list.listView.currentIndex));
+                                 database.getWordPack(wordId),
+                                 database.getWordDate(wordId));
 
            vocabularyModel.updateModel()
        }
