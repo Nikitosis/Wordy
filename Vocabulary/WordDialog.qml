@@ -137,38 +137,46 @@ Rectangle{
         }
     }
 
-    Button{
-        anchors.bottom: parent.bottom
+    Rectangle{
+        id:applyButton
+        anchors.bottom: cancelButton.top
         anchors.left: parent.left
-        height: parent.height/7
-        width: parent.width/3
-        anchors.margins: 10
+        anchors.right: parent.right
+        height: parent.height/9
+        color:"#87de80"
         Text{
             anchors.centerIn: parent
             text:qsTr("Apply")
             color:"black"
         }
-        onClicked: {
-            accepted()
-            dialogWord.state="closed"
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                accepted()
+                dialogWord.state="closed"
+            }
         }
     }
 
-    Button{
+    Rectangle{
+        id:cancelButton
         anchors.bottom: parent.bottom
+        anchors.left: parent.left
         anchors.right: parent.right
-        height: parent.height/7
-        width: parent.width/3
-        anchors.margins: 10
+        height: parent.height/9
+        color:"#e08080"
         Text{
             anchors.centerIn: parent
             text:qsTr("Cancel")
             color:"black"
         }
 
-        onClicked: {
-            cancel()
-            dialogWord.state="closed"
+        MouseArea{
+            anchors.fill: parent
+            onClicked: {
+                cancel()
+                dialogWord.state="closed"
+            }
         }
     }
 
